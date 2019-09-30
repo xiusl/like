@@ -92,7 +92,6 @@
 				FF1C1F3A2340827E00D635A6 /* Assets.xcassets */,
 				FF1C1F3C2340827E00D635A6 /* LaunchScreen.storyboard */,
 				FF1C1F3F2340827E00D635A6 /* Info.plist */,
-				FF1C1F56234090A000D635A6 /* UIScrollViewExtension.swift */,
 				FF7478102341B7350017DC74 /* InfoPlist.strings */,
 				FF1C1F582340A44000D635A6 /* Refresh */,
 			);
@@ -113,6 +112,7 @@
 		FF1C1F582340A44000D635A6 /* Refresh */ = {
 			isa = PBXGroup;
 			children = (
+				FF1C1F56234090A000D635A6 /* UIScrollViewExtension.swift */,
 				FF1C1F592340A44B00D635A6 /* RefreshComponent.swift */,
 				FF1C1F5B2340A98600D635A6 /* RefreshFooter.swift */,
 				FF1C1F5D2341978800D635A6 /* UIViewFrameEx.swift */,
