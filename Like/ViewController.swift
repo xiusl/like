@@ -21,7 +21,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        
+        self.title = "123"
         self.view.addSubview(self.tableView)
         self.tableView.estimatedRowHeight = 0
         self.tableView.estimatedSectionHeaderHeight = 0
@@ -44,9 +44,9 @@ class ViewController: UIViewController {
     }
     func loadData() {
         self.page = 1
-        let url = URL(string: "https://ins-api.sleen.top/articles")!
+        let url = URL(string: "http://api.ins.com/articles")!
         AF.request(url).validate().responseJSON { response in
-            debugPrint("Response: \(response)")
+//            debugPrint("Response: \(response)")
             if response.result.isSuccess {
                 let v = response.result.value
                 let j = JSON(v as Any)
@@ -56,6 +56,13 @@ class ViewController: UIViewController {
             } else {
                 
             }
+        }
+        
+        
+        ApiManager.shared.request(request: ArtApiRequest.getArticles(()), success: { (result) in
+            
+        }) { (error) in
+            
         }
     }
     @objc func loadMoreData() {
