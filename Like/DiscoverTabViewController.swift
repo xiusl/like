@@ -1,14 +1,14 @@
 //
-//  MainNaviagtionController.swift
+//  DiscoverTabViewController.swift
 //  Like
 //
-//  Created by xiusl on 2019/10/9.
+//  Created by xiusl on 2019/10/11.
 //  Copyright © 2019 likeeee. All rights reserved.
 //
 
 import UIKit
 
-class MainNaviagtionController: UINavigationController {
+class DiscoverTabViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
