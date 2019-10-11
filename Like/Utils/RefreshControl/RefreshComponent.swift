@@ -9,13 +9,29 @@
 
 import UIKit
 
+/** 刷新控件的状态 */
 public enum RefreshState: Int {
+    
+    /** 普通闲置状态 */
     case idle
+    /** 松开就可以进行刷新的状态 */
     case pulling
+    /** 正在刷新中的状态 */
     case refreshing
+    /** 即将刷新的状态 */
     case willRefresh
-    case noMoreData
+    /** 所有数据加载完毕，没有更多的数据了 */
+    case noMoreData  
 }
+
+/** 进入刷新状态的回调 */
+typealias MjRefreshComponentRefreshingBlock = () -> ()
+/** 开始刷新后的回调(进入刷新状态后的回调) */
+typealias MjRefreshComponentBeginRefreshingCompletionBlock = () -> ()
+/** 结束刷新后的回调 */
+typealias MjRefreshComponentEndRefreshingCompletionBlock = () -> ()
+
+
 
 class RefreshComponent: UIView {
     
@@ -38,15 +54,72 @@ class RefreshComponent: UIView {
     }
     
     // MARK: - Property
+    /** 记录scrollView刚开始的inset */
     var scrollViewOriginalInset: UIEdgeInsets = UIEdgeInsets.zero
+    /** 父控件 */
     weak var scrollView: UIScrollView?
     weak var pan: UIPanGestureRecognizer?
     
+    // MARK: - 刷新回调
+    /** 正在刷新的回调 */
+    open var refreshingBlock: MjRefreshComponentRefreshingBlock?
+    /** 设置回调对象和回调方法 */
+    open func setRefreshingTarget(_ target: AnyObject?, selector aSelector: Selector?) {
+        self.refreshingTarget = target
+        self.refreshingAction = aSelector
+    }
+    /** 回调对象 */
+    open weak var refreshingTarget: AnyObject?
+    /** 回调方法 */
+    open var refreshingAction: Selector?
+    
+    
+    // MARK: - 刷新状态控制
+    /** 进入刷新状态 */
+    open func beginRefreshing() {
+        UIView.animate(withDuration: 0.25) {
+            self.alpha = 1.0
+        }
+        self.pullingPercent = 1.0
+        if self.window != nil {
+            self.setState(.refreshing)
+        } else {
+            if self.state != .refreshing {
+                self.setState(.willRefresh)
+                self.setNeedsDisplay()
+            }
+        }
+    }
+    open func beginRefreshing(completionBlock: @escaping () -> ()) {
+        self.beginRefreshingCompletionBlock = completionBlock
+        self.beginRefreshing()
+    }
+    /** 开始刷新后的回调(进入刷新状态后的回调) */
+    open var beginRefreshingCompletionBlock: MjRefreshComponentBeginRefreshingCompletionBlock?
+    /** 带动画的结束刷新的回调 */
+    open var endRefreshingAnimateCompletionBlock: MjRefreshComponentEndRefreshingCompletionBlock?
+    /** 结束刷新的回调 */
+    open var endRefreshingCompletionBlock: MjRefreshComponentEndRefreshingCompletionBlock?
+//    open var completionBlock: (() -> ())?
+    
+    /** 结束刷新状态 */
+    open func endRefreshing() {
+        self.setState(.idle)
+    }
+    open func endRefreshing(completionBlock: @escaping () -> ()) {
+        self.endRefreshingCompletionBlock = completionBlock
+        self.endRefreshing()
+    }
+    
+    /** 是否正在刷新 */
     open var isRefreshing: Bool {
         return self.state == .refreshing || self.state == .willRefresh
     }
+    /** 刷新状态 一般交给子类内部实现 */
     open var state: RefreshState = .idle
     
+    
+    // MARK: - 其他
     open var pullingPercent: CGFloat = 0 {
         didSet {
             if self.isRefreshing { return }
@@ -72,37 +145,8 @@ class RefreshComponent: UIView {
                 self.alpha = 1.0
             }
         }
-    }
-    var lastBottomDelta: CGFloat = 0
-    
-    // MARK: Call Back
-    open var refreshingBlock: (() -> ())?
-    open weak var refreshingTarget: AnyObject?
-    open var refreshingAction: Selector?
-    open var completionBlock: (() -> ())?
-    open var beginRefreshingCompletionBlock: (() -> ())?
-    
-    
-    // MARK: - Open Method
-    open func beginRefreshing() {
-        UIView.animate(withDuration: 0.25) {
-            self.alpha = 1.0
-        }
-        self.pullingPercent = 1.0
-        if self.window != nil {
-            self.setState(.refreshing)
-        } else {
-            if self.state != .refreshing {
-                self.setState(.willRefresh)
-                self.setNeedsDisplay()
-            }
-        }
-    }
-    
-    open func endRefreshing() {
-        self.setState(.idle)
-    }
-    
+    }  
+
     // MARK: - Layout
     override func layoutSubviews() {
         self.placeSubviews()
@@ -127,6 +171,8 @@ class RefreshComponent: UIView {
         self.addObservers()
     }
 
+    
+    // MARK: - 交给子类去实现
     open func prepare() {
         self.autoresizingMask = .flexibleWidth
         self.backgroundColor = .clear
@@ -175,61 +221,10 @@ class RefreshComponent: UIView {
     
     // MARK: - Open Method
     func setState(_ state: RefreshState) {
-        let oldState = self.state
-        if oldState == state {return}
-        self.state = state
         
-        if self.scrollView == nil {return}
-        let scrollView = self.scrollView!
-        
-        if state == .noMoreData || state == .idle {
-            if oldState == .refreshing {
-                UIView.animate(withDuration: 0.4, animations: {
-                    
-                    scrollView.contentInset.bottom = scrollView.contentInset.bottom - self.lastBottomDelta
-                    
-                }) { (complated) in
-                    self.pullingPercent = 0.0
-                }
-            }
-            
-            let deltaH = self.heightForContentBreakView()
-            if oldState == .refreshing && deltaH > 0 {
-                scrollView.setExOffsetY(scrollView.ex_offsetY)
-            }
-        } else if state == .refreshing {
-            
-            UIView.animate(withDuration: 0.25, animations: {
-                var bottom = self.frame.size.height + self.scrollViewOriginalInset.bottom
-                let deltaH = self.heightForContentBreakView()
-                if deltaH < 0 {
-                    bottom -= deltaH
-                }
-                self.lastBottomDelta = bottom - scrollView.contentInset.bottom
+    }
+    
 
-                scrollView.contentInset.bottom = bottom
-                scrollView.setExOffsetY(self.happenOffsetY()+self.ex_h)
-            }) { (complated) in
-                self.executeRefreshingCallback()
-            }
-        }
-    }
-    
-    func heightForContentBreakView() -> CGFloat {
-        if self.scrollView == nil {return 0}
-        let scrollView = self.scrollView!
-        let h = scrollView.frame.size.height - self.scrollViewOriginalInset.bottom - self.scrollViewOriginalInset.top
-        return scrollView.contentSize.height - h
-    }
-    
-    func happenOffsetY() -> CGFloat {
-        let deltaH = self.heightForContentBreakView()
-        if deltaH > 0 {
-            return deltaH - self.scrollViewOriginalInset.top
-        } else {
-            return -self.scrollViewOriginalInset.top
-        }
-    }
     
     func executeRefreshingCallback() {
         DispatchQueue.main.async { [weak self] in

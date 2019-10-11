@@ -30,8 +30,9 @@ class HomeTabViewController: BaseViewController {
         self.tableView.refreshControl = refresh
         self.refresh = refresh
         
-        let refFooter = RefreshAutoNormalFooter()
-        self.tableView.refFooter = refFooter
+        let refFooter = RefreshBackFooter()
+        self.tableView.mjFooter = refFooter
+//        self.tableView.mjFooter = refFooter
         
         //        refFooter.refreshingBlock = { [weak self] in
         //            guard let `self` = self else { return }
@@ -56,12 +57,11 @@ class HomeTabViewController: BaseViewController {
             }
         }
         
-        
-        ApiManager.shared.request(request: ArtApiRequest.getArticles(()), success: { (result) in
-            
-        }) { (error) in
-            
-        }
+//        ApiManager.shared.request(request: ArtApiRequest.getArticles(()), success: { (result) in
+//
+//        }) { (error) in
+//
+//        }
     }
     @objc func loadMoreData() {
         self.page += 1
@@ -72,7 +72,7 @@ class HomeTabViewController: BaseViewController {
             let adata = j["data"]["articles"].array!
             self.data.append(contentsOf: adata)
             self.tableView.reloadData()
-            self.tableView.refFooter?.endRefreshing()
+            self.tableView.mjFooter?.endRefreshing()
         }
     }
     @objc func addcount(_ refresh: UIRefreshControl) {
