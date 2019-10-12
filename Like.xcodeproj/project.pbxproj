@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF1190532351A3C8004E87E8 /* RefreshBackNormalFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1190522351A3C8004E87E8 /* RefreshBackNormalFooter.swift */; };
+		FF1190552351A4EE004E87E8 /* RefreshBackStateFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1190542351A4EE004E87E8 /* RefreshBackStateFooter.swift */; };
 		FF1C1F322340827C00D635A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1C1F312340827C00D635A6 /* AppDelegate.swift */; };
 		FF1C1F3B2340827E00D635A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF1C1F3A2340827E00D635A6 /* Assets.xcassets */; };
 		FF1C1F3E2340827E00D635A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF1C1F3C2340827E00D635A6 /* LaunchScreen.storyboard */; };
@@ -45,6 +47,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FF1190522351A3C8004E87E8 /* RefreshBackNormalFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshBackNormalFooter.swift; sourceTree = "<group>"; };
+		FF1190542351A4EE004E87E8 /* RefreshBackStateFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshBackStateFooter.swift; sourceTree = "<group>"; };
 		FF1C1F2E2340827C00D635A6 /* ll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1C1F312340827C00D635A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF1C1F3A2340827E00D635A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,6 +107,35 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		FF1190562351B399004E87E8 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				FF1C1F592340A44B00D635A6 /* RefreshComponent.swift */,
+				FF4135F12350780200B27792 /* RefreshHeader.swift */,
+				FF1C1F5B2340A98600D635A6 /* RefreshFooter.swift */,
+				FF4135F32350821F00B27792 /* RefreshBackFooter.swift */,
+				FF4135F5235083BC00B27792 /* RefreshAutoFooter.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		FF1190572351B3E4004E87E8 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				FF1C1F56234090A000D635A6 /* UIScrollViewMjRefresh.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		FF1190582351B3F0004E87E8 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				FF1190542351A4EE004E87E8 /* RefreshBackStateFooter.swift */,
+				FF1190522351A3C8004E87E8 /* RefreshBackNormalFooter.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
 		FF1C1F252340827C00D635A6 = {
 			isa = PBXGroup;
 			children = (
@@ -152,12 +185,9 @@
 		FF1C1F582340A44000D635A6 /* RefreshControl */ = {
 			isa = PBXGroup;
 			children = (
-				FF1C1F56234090A000D635A6 /* UIScrollViewMjRefresh.swift */,
-				FF1C1F592340A44B00D635A6 /* RefreshComponent.swift */,
-				FF1C1F5B2340A98600D635A6 /* RefreshFooter.swift */,
-				FF4135F32350821F00B27792 /* RefreshBackFooter.swift */,
-				FF4135F5235083BC00B27792 /* RefreshAutoFooter.swift */,
-				FF4135F12350780200B27792 /* RefreshHeader.swift */,
+				FF1190582351B3F0004E87E8 /* Custom */,
+				FF1190572351B3E4004E87E8 /* Extension */,
+				FF1190562351B399004E87E8 /* Base */,
 			);
 			path = RefreshControl;
 			sourceTree = "<group>";
@@ -353,7 +383,9 @@
 				FF4135EE2350733A00B27792 /* BaseTableView.swift in Sources */,
 				FF2CA585234DB46C00D1B433 /* ApiManager.swift in Sources */,
 				FF1C1F57234090A000D635A6 /* UIScrollViewMjRefresh.swift in Sources */,
+				FF1190552351A4EE004E87E8 /* RefreshBackStateFooter.swift in Sources */,
 				FF4135F42350821F00B27792 /* RefreshBackFooter.swift in Sources */,
+				FF1190532351A3C8004E87E8 /* RefreshBackNormalFooter.swift in Sources */,
 				FF4135EA235070DD00B27792 /* ColorUtil.swift in Sources */,
 				FF4135E7235070DD00B27792 /* UIFontExten.swift in Sources */,
 				FF4135DA2350702900B27792 /* BaseViewController.swift in Sources */,

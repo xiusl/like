@@ -221,11 +221,14 @@ class RefreshComponent: UIView {
     
     // MARK: - Open Method
     func setState(_ state: RefreshState) {
-        
+        self.state = state
+
+        DispatchQueue.main.async {
+            self.setNeedsLayout()
+        }
     }
     
 
-    
     func executeRefreshingCallback() {
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
@@ -241,5 +244,28 @@ class RefreshComponent: UIView {
     open func addRefreshingTarget(_ target: AnyObject?, selector aSelector: Selector?) {
         self.refreshingTarget = target
         self.refreshingAction = aSelector
+    }
+}
+
+
+extension UILabel {
+    class func mjLabel() -> UILabel {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14, weight: .bold)
+        label.textColor = UIColor(red: 90/255.0, green: 90/255.0, blue: 90/255.0, alpha: 1.0)
+        label.autoresizingMask = .flexibleWidth
+        label.textAlignment = .center
+        label.backgroundColor = .clear
+        return label
+    }
+    
+    func mjTextWidth() -> CGFloat {
+        var stringWidth: CGFloat = 0
+        let size = CGSize(width: CGFloat(MAXFLOAT), height: CGFloat(MAXFLOAT))
+        if (self.text?.count ?? 0) > 0 {
+            let s = NSString(string: self.text ?? "")
+            stringWidth = s.boundingRect(with: size, options: .usesLineFragmentOrigin, attributes: [.font: self.font ??  UIFont.systemFont(ofSize: 14, weight: .bold)], context: nil).size.width
+        }
+        return stringWidth
     }
 }

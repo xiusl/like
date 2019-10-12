@@ -80,10 +80,10 @@ class RefreshBackFooter: RefreshFooter {
     
     
     override func setState(_ state: RefreshState) {
-        super.setState(state)
         
         let oldState = self.state
         if oldState == state {return}
+        super.setState(state)
         self.state = state
         
         if self.scrollView == nil {return}

@@ -30,7 +30,7 @@ class HomeTabViewController: BaseViewController {
         self.tableView.refreshControl = refresh
         self.refresh = refresh
         
-        let refFooter = RefreshBackFooter()
+        let refFooter = RefreshBackNormalFooter.footer(withRefreshingTarget: self, refreshingAction: #selector(loadMoreData))
         self.tableView.mjFooter = refFooter
 //        self.tableView.mjFooter = refFooter
         
@@ -38,7 +38,7 @@ class HomeTabViewController: BaseViewController {
         //            guard let `self` = self else { return }
         //            self.loadMoreData()
         //        }
-        refFooter.addRefreshingTarget(self, selector: #selector(loadMoreData))
+//        refFooter.addRefreshingTarget(self, selector: #selector(loadMoreData))
         self.loadData()
     }
     func loadData() {
@@ -67,12 +67,20 @@ class HomeTabViewController: BaseViewController {
         self.page += 1
         let url = URL(string: "https://ins-api.sleen.top/articles?count="+String(self.count)+"&page="+String(self.page))!
         AF.request(url).validate().responseJSON { response in
-            let v = response.result.value
-            let j = JSON(v as Any)
-            let adata = j["data"]["articles"].array!
-            self.data.append(contentsOf: adata)
-            self.tableView.reloadData()
-            self.tableView.mjFooter?.endRefreshing()
+            
+//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+3) {
+
+                let v = response.result.value
+                let j = JSON(v as Any)
+                let adata = j["data"]["articles"].array!
+                self.data.append(contentsOf: adata)
+                self.tableView.reloadData()
+                self.tableView.mjFooter?.endRefreshing()
+                
+                if adata.count < self.count {
+                    self.tableView.mjFooter?.setState(.noMoreData)
+                }
+//            }
         }
     }
     @objc func addcount(_ refresh: UIRefreshControl) {
