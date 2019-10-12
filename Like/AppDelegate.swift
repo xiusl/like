@@ -18,8 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         self.window = UIWindow.init(frame: UIScreen.main.bounds)
         
-        let vc = MainTabBarController()
-        self.window?.rootViewController = vc
+//        let vc = MainTabBarController()
+        let vc = PasswordLoginViewController()
+        let nav = MainNavigationController(rootViewController: vc)
+        self.window?.rootViewController = nav
         self.window?.makeKeyAndVisible()
         
         return true

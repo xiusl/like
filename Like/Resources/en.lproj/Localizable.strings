@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  Like
+
+  Created by xiusl on 2019/10/12.
+  Copyright © 2019 likeeee. All rights reserved.
+*/
+
+
+"LoginPhonePlaceholder" = "Email or phone";
+"LoginPwdPlaceholder" = "Password";
+"LoginButtonTitle" = "Login";
+"LoginWithSMSTitle" = "Log in via SMS";
+"LoginFailedTitle" = "Failed to Login";

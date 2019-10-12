@@ -32,4 +32,8 @@ extension UIColor {
             blue: CGFloat(b) / 0xff, alpha: alpha
         )
     }
+    
+    open class var theme: UIColor {
+        return UIColor(hex: 0x44C7FB)
+    }
 }

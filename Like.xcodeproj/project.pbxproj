@@ -35,6 +35,10 @@
 		FF4135F22350780200B27792 /* RefreshHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135F12350780200B27792 /* RefreshHeader.swift */; };
 		FF4135F42350821F00B27792 /* RefreshBackFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135F32350821F00B27792 /* RefreshBackFooter.swift */; };
 		FF4135F6235083BC00B27792 /* RefreshAutoFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135F5235083BC00B27792 /* RefreshAutoFooter.swift */; };
+		FF4135F92351604700B27792 /* PasswordLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135F82351604700B27792 /* PasswordLoginViewController.swift */; };
+		FF4135FB2351608200B27792 /* AuthInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135FA2351608200B27792 /* AuthInputView.swift */; };
+		FF4135FE2351633F00B27792 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF4136002351633F00B27792 /* Localizable.strings */; };
+		FF4136032351645300B27792 /* StringLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4136022351645300B27792 /* StringLocalizable.swift */; };
 		FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF7478102341B7350017DC74 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +73,11 @@
 		FF4135F12350780200B27792 /* RefreshHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshHeader.swift; sourceTree = "<group>"; };
 		FF4135F32350821F00B27792 /* RefreshBackFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshBackFooter.swift; sourceTree = "<group>"; };
 		FF4135F5235083BC00B27792 /* RefreshAutoFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshAutoFooter.swift; sourceTree = "<group>"; };
+		FF4135F82351604700B27792 /* PasswordLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordLoginViewController.swift; sourceTree = "<group>"; };
+		FF4135FA2351608200B27792 /* AuthInputView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthInputView.swift; sourceTree = "<group>"; };
+		FF4135FF2351633F00B27792 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		FF4136012351634000B27792 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		FF4136022351645300B27792 /* StringLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLocalizable.swift; sourceTree = "<group>"; };
 		FF74780B2341B5350017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		FF74780F2341B7350017DC74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF7478112341B7380017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -116,6 +125,7 @@
 				FF4135DD2350704F00B27792 /* DiscoverTabViewController.swift */,
 				FF4135DF2350705800B27792 /* MeTabViewController.swift */,
 				FF1C1F5423408B3D00D635A6 /* ArticleDetailViewController.swift */,
+				FF4135F72351602400B27792 /* Auth */,
 				FF4135F02350758D00B27792 /* Resources */,
 				FF4135E1235070DD00B27792 /* Utils */,
 			);
@@ -173,6 +183,7 @@
 				FF4135E3235070DD00B27792 /* UIFontExten.swift */,
 				FF4135E4235070DD00B27792 /* ConstUtil.swift */,
 				FF4135E6235070DD00B27792 /* ColorUtil.swift */,
+				FF4136022351645300B27792 /* StringLocalizable.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -210,8 +221,18 @@
 				FF1C1F3C2340827E00D635A6 /* LaunchScreen.storyboard */,
 				FF1C1F3F2340827E00D635A6 /* Info.plist */,
 				FF7478102341B7350017DC74 /* InfoPlist.strings */,
+				FF4136002351633F00B27792 /* Localizable.strings */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		FF4135F72351602400B27792 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				FF4135FA2351608200B27792 /* AuthInputView.swift */,
+				FF4135F82351604700B27792 /* PasswordLoginViewController.swift */,
+			);
+			path = Auth;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF1C1F3E2340827E00D635A6 /* LaunchScreen.storyboard in Resources */,
+				FF4135FE2351633F00B27792 /* Localizable.strings in Resources */,
 				FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */,
 				FF1C1F3B2340827E00D635A6 /* Assets.xcassets in Resources */,
 			);
@@ -332,7 +354,10 @@
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
 				FF1C1F5523408B3D00D635A6 /* ArticleDetailViewController.swift in Sources */,
 				FF4135DE2350704F00B27792 /* DiscoverTabViewController.swift in Sources */,
+				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,
 				FF1C1F5E2341978800D635A6 /* UIViewFrameEx.swift in Sources */,
+				FF4135F92351604700B27792 /* PasswordLoginViewController.swift in Sources */,
+				FF4135FB2351608200B27792 /* AuthInputView.swift in Sources */,
 				FF2CA586234DB46C00D1B433 /* ApiRequest.swift in Sources */,
 				FF4135F22350780200B27792 /* RefreshHeader.swift in Sources */,
 				FF4135E02350705800B27792 /* MeTabViewController.swift in Sources */,
@@ -350,6 +375,15 @@
 				FF74780B2341B5350017DC74 /* zh-Hans */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		FF4136002351633F00B27792 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FF4135FF2351633F00B27792 /* zh-Hans */,
+				FF4136012351634000B27792 /* en */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 		FF7478102341B7350017DC74 /* InfoPlist.strings */ = {

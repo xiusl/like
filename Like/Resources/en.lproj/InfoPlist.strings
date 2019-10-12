@@ -6,4 +6,4 @@
   Copyright © 2019 likeeee. All rights reserved.
 */
 
-"CFBundleDisplayName" = "Like";
+CFBundleDisplayName = "Like";

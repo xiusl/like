@@ -1,0 +1,14 @@
+/* 
+  Localizable.strings
+  Like
+
+  Created by xiusl on 2019/10/12.
+  Copyright © 2019 likeeee. All rights reserved.
+*/
+
+
+"LoginPhonePlaceholder" = "邮箱或手机号";
+"LoginPwdPlaceholder" = "密码";
+"LoginButtonTitle" = "登录";
+"LoginWithSMSTitle" = "验证码登录";
+"LoginFailedTitle" = "登录失败？";
