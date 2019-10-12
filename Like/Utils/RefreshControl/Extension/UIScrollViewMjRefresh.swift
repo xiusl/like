@@ -29,7 +29,7 @@ extension UIScrollView {
             return objc_getAssociatedObject(self, &mjHeaderKey) as? RefreshHeader
         }
         set {
-            self.mjFooter?.removeFromSuperview()
+            self.mjHeader?.removeFromSuperview()
             self.insertSubview(newValue!, at: 0)
             objc_setAssociatedObject(self, &mjHeaderKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
         }

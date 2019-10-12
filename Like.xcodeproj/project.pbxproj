@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		FF1190532351A3C8004E87E8 /* RefreshBackNormalFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1190522351A3C8004E87E8 /* RefreshBackNormalFooter.swift */; };
 		FF1190552351A4EE004E87E8 /* RefreshBackStateFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1190542351A4EE004E87E8 /* RefreshBackStateFooter.swift */; };
+		FF11905A2351BB99004E87E8 /* RefreshStateHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1190592351BB99004E87E8 /* RefreshStateHeader.swift */; };
+		FF11905C2351C354004E87E8 /* RefreshNormalHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF11905B2351C354004E87E8 /* RefreshNormalHeader.swift */; };
 		FF1C1F322340827C00D635A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1C1F312340827C00D635A6 /* AppDelegate.swift */; };
 		FF1C1F3B2340827E00D635A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF1C1F3A2340827E00D635A6 /* Assets.xcassets */; };
 		FF1C1F3E2340827E00D635A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF1C1F3C2340827E00D635A6 /* LaunchScreen.storyboard */; };
@@ -49,6 +51,8 @@
 /* Begin PBXFileReference section */
 		FF1190522351A3C8004E87E8 /* RefreshBackNormalFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshBackNormalFooter.swift; sourceTree = "<group>"; };
 		FF1190542351A4EE004E87E8 /* RefreshBackStateFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshBackStateFooter.swift; sourceTree = "<group>"; };
+		FF1190592351BB99004E87E8 /* RefreshStateHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshStateHeader.swift; sourceTree = "<group>"; };
+		FF11905B2351C354004E87E8 /* RefreshNormalHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshNormalHeader.swift; sourceTree = "<group>"; };
 		FF1C1F2E2340827C00D635A6 /* ll.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ll.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF1C1F312340827C00D635A6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		FF1C1F3A2340827E00D635A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -132,6 +136,8 @@
 			children = (
 				FF1190542351A4EE004E87E8 /* RefreshBackStateFooter.swift */,
 				FF1190522351A3C8004E87E8 /* RefreshBackNormalFooter.swift */,
+				FF1190592351BB99004E87E8 /* RefreshStateHeader.swift */,
+				FF11905B2351C354004E87E8 /* RefreshNormalHeader.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -394,10 +400,12 @@
 				FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */,
 				FF4135DC2350704100B27792 /* HomeTabViewController.swift in Sources */,
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
+				FF11905A2351BB99004E87E8 /* RefreshStateHeader.swift in Sources */,
 				FF1C1F5523408B3D00D635A6 /* ArticleDetailViewController.swift in Sources */,
 				FF4135DE2350704F00B27792 /* DiscoverTabViewController.swift in Sources */,
 				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,
 				FF1C1F5E2341978800D635A6 /* UIViewFrameEx.swift in Sources */,
+				FF11905C2351C354004E87E8 /* RefreshNormalHeader.swift in Sources */,
 				FF4135F92351604700B27792 /* PasswordLoginViewController.swift in Sources */,
 				FF4135FB2351608200B27792 /* AuthInputView.swift in Sources */,
 				FF2CA586234DB46C00D1B433 /* ApiRequest.swift in Sources */,

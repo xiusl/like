@@ -25,27 +25,24 @@ class HomeTabViewController: BaseViewController {
         self.tableView.estimatedSectionHeaderHeight = 0
         self.tableView.estimatedSectionFooterHeight = 0
         
-        let refresh = UIRefreshControl()
-        refresh.addTarget(self, action: #selector(addcount(_ :)), for: .valueChanged)
-        self.tableView.refreshControl = refresh
-        self.refresh = refresh
+//        let refresh = UIRefreshControl()
+//        refresh.addTarget(self, action: #selector(addcount(_ :)), for: .valueChanged)
+//        self.tableView.refreshControl = refresh
+//        self.refresh = refresh
         
         let refFooter = RefreshBackNormalFooter.footer(withRefreshingTarget: self, refreshingAction: #selector(loadMoreData))
         self.tableView.mjFooter = refFooter
-//        self.tableView.mjFooter = refFooter
-        
-        //        refFooter.refreshingBlock = { [weak self] in
-        //            guard let `self` = self else { return }
-        //            self.loadMoreData()
-        //        }
-//        refFooter.addRefreshingTarget(self, selector: #selector(loadMoreData))
         self.loadData()
+        
+        let refHeader = RefreshNormalHeader.header(withRefreshingTarget: self, refreshingAction: #selector(loadData))
+        self.tableView.mjHeader = refHeader
     }
-    func loadData() {
+    @objc func loadData() {
         self.page = 1
         let url = URL(string: "http://ins-api.sleen.top/articles")!
         AF.request(url).validate().responseJSON { response in
             //            debugPrint("Response: \(response)")
+             self.tableView.mjHeader?.endRefreshing()
             if response.result.isSuccess {
                 let v = response.result.value
                 let j = JSON(v as Any)
