@@ -39,6 +39,8 @@
 		FF4135FB2351608200B27792 /* AuthInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135FA2351608200B27792 /* AuthInputView.swift */; };
 		FF4135FE2351633F00B27792 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF4136002351633F00B27792 /* Localizable.strings */; };
 		FF4136032351645300B27792 /* StringLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4136022351645300B27792 /* StringLocalizable.swift */; };
+		FF41360523516CD900B27792 /* KMNavigationBarTransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF41360423516CD900B27792 /* KMNavigationBarTransition.framework */; };
+		FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4136082351753C00B27792 /* UserApiRequest.swift */; };
 		FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF7478102341B7350017DC74 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -78,6 +80,8 @@
 		FF4135FF2351633F00B27792 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		FF4136012351634000B27792 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		FF4136022351645300B27792 /* StringLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLocalizable.swift; sourceTree = "<group>"; };
+		FF41360423516CD900B27792 /* KMNavigationBarTransition.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KMNavigationBarTransition.framework; path = Carthage/Build/iOS/KMNavigationBarTransition.framework; sourceTree = "<group>"; };
+		FF4136082351753C00B27792 /* UserApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiRequest.swift; sourceTree = "<group>"; };
 		FF74780B2341B5350017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		FF74780F2341B7350017DC74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF7478112341B7380017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -88,6 +92,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF41360523516CD900B27792 /* KMNavigationBarTransition.framework in Frameworks */,
 				FF1C1F522340868100D635A6 /* SwiftyJSON.framework in Frameworks */,
 				FF1C1F4F2340867600D635A6 /* SnapKit.framework in Frameworks */,
 				FF1C1F4C2340866000D635A6 /* Kingfisher.framework in Frameworks */,
@@ -135,6 +140,7 @@
 		FF1C1F462340865000D635A6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FF41360423516CD900B27792 /* KMNavigationBarTransition.framework */,
 				FF1C1F512340868100D635A6 /* SwiftyJSON.framework */,
 				FF1C1F4E2340867600D635A6 /* SnapKit.framework */,
 				FF1C1F4B2340866000D635A6 /* Kingfisher.framework */,
@@ -161,6 +167,7 @@
 			children = (
 				FF2CA583234DB46C00D1B433 /* ApiManager.swift */,
 				FF2CA584234DB46C00D1B433 /* ApiRequest.swift */,
+				FF4136082351753C00B27792 /* UserApiRequest.swift */,
 			);
 			path = ApiManager;
 			sourceTree = "<group>";
@@ -317,6 +324,7 @@
 				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
 				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/KMNavigationBarTransition.framework",
 			);
 			outputFileListPaths = (
 			);
@@ -325,6 +333,7 @@
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftyJSON.framework",
 				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Kingfisher.framework",
+				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/KMNavigationBarTransition.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -350,6 +359,7 @@
 				FF4135DA2350702900B27792 /* BaseViewController.swift in Sources */,
 				FF1C1F322340827C00D635A6 /* AppDelegate.swift in Sources */,
 				FF4135E8235070DD00B27792 /* ConstUtil.swift in Sources */,
+				FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */,
 				FF4135DC2350704100B27792 /* HomeTabViewController.swift in Sources */,
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
 				FF1C1F5523408B3D00D635A6 /* ArticleDetailViewController.swift in Sources */,

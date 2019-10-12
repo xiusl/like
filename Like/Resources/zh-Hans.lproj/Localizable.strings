@@ -8,7 +8,10 @@
 
 
 "LoginPhonePlaceholder" = "邮箱或手机号";
+"LoginPhoneInputError" = "请输入正确的邮箱或手机号";
+"LoginPwdInputError" = "6-12位密码";
 "LoginPwdPlaceholder" = "密码";
 "LoginButtonTitle" = "登录";
 "LoginWithSMSTitle" = "验证码登录";
 "LoginFailedTitle" = "登录失败？";
+"Login2RegisterTitle" = "注册";

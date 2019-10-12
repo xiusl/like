@@ -9,6 +9,9 @@
 
 "LoginPhonePlaceholder" = "Email or phone";
 "LoginPwdPlaceholder" = "Password";
+"LoginPhoneInputError" = "Check Email or phone";
+"LoginPwdInputError" = "6-12 Password";
 "LoginButtonTitle" = "Login";
 "LoginWithSMSTitle" = "Log in via SMS";
 "LoginFailedTitle" = "Failed to Login";
+"Login2RegisterTitle" = "Sign up";

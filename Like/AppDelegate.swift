@@ -20,6 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
 //        let vc = MainTabBarController()
         let vc = PasswordLoginViewController()
+        vc.isPrefersHidden = true
         let nav = MainNavigationController(rootViewController: vc)
         self.window?.rootViewController = nav
         self.window?.makeKeyAndVisible()

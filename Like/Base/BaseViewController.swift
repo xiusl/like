@@ -10,6 +10,13 @@ import UIKit
 
 class BaseViewController: UIViewController {
 
+    var isPrefersHidden: Bool = false
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(self.isPrefersHidden, animated: animated)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

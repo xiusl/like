@@ -30,6 +30,12 @@ class SLUtil {
         return regextestPhone.evaluate(with: phone)
     }
     
+    class func checkEmail(email: String) -> Bool {
+        let re = "^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\\.[a-zA-Z0-9_-]+)+$"
+        let regextest = NSPredicate(format:"SELF MATCHES %@", re)
+        return regextest.evaluate(with: email)
+    }
+    
     class func checkIdCard(idCard: String) -> Bool {
         let idCardRe: String = "(^[1-9]\\d{5}(18|19|([23]\\d))\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{3}[0-9Xx]$)|(^[1-9]\\d{5}\\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\\d{2}$)"
         
@@ -77,4 +83,36 @@ extension Notification.Name {
     static let UserLoginNoti = Notification.Name(rawValue:"UserLoginNoti")
     /// 用户认证
     static let UserVerifyNoti = Notification.Name(rawValue:"UserVerifyNoti")
+}
+
+var indicatorViewKey = "indicatorView_key"
+extension UIButton {
+    var indicatorView: UIActivityIndicatorView? {
+        get {
+            return objc_getAssociatedObject(self, &indicatorViewKey) as? UIActivityIndicatorView
+        }
+        set {
+            self.indicatorView?.removeFromSuperview()
+            self.addSubview(newValue!)
+            objc_setAssociatedObject(self, &indicatorViewKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+    func startLoading() {
+        self.isUserInteractionEnabled = false
+        
+        if self.indicatorView == nil {
+            let indicatorView = UIActivityIndicatorView(style: .white)
+            let x = (self.titleLabel?.ex_x ?? 0) - 34
+            let y = (self.ex_h - 30) / 2.0
+            indicatorView.frame = CGRect(x: x, y: y, width: 30, height: 30)
+            self.indicatorView = indicatorView
+        }
+        self.indicatorView?.isHidden = false
+        self.indicatorView?.startAnimating()
+    }
+    func endLoading() {
+        self.isUserInteractionEnabled = true
+        self.indicatorView?.startAnimating()
+        self.indicatorView?.isHidden = true
+    }
 }
