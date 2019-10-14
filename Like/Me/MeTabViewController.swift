@@ -41,6 +41,15 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.headerView.avatarView.kf.setImage(with: URL(string: self.user?.avatar ?? "")!)
         
         NotificationCenter.default.addObserver(self, selector: #selector(userChange), name: .UserLogoutNoti, object: nil)
+        
+        let gest = UITapGestureRecognizer(target: self, action: #selector(bac))
+        self.headerView.addGestureRecognizer(gest)
+    }
+    
+    @objc func bac() {
+        let vc = UserDetailViewController()
+        vc.userId = self.user!.id
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func userChange() {

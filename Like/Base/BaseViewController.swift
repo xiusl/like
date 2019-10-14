@@ -23,6 +23,10 @@ class BaseViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .white
         self.automaticallyAdjustsScrollViewInsets = false
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
+        let backImage = UIImage(named: "nav_back_w")?.withRenderingMode(.alwaysOriginal)
+        self.navigationController?.navigationBar.backIndicatorImage = backImage
+        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backImage
     }
     
 
@@ -35,5 +39,7 @@ class BaseViewController: UIViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .default
+    }
 }

@@ -12,6 +12,7 @@ enum UserApiRequest {
     case login(account: String, password: String)
     case getVerifyCode(key: String)
     case resgiterOrLogin(phone: String, code: String)
+    case getUser(id: String)
     case deafultApi(Void)
 }
 
@@ -39,6 +40,8 @@ extension UserApiRequest: ApiRequest {
             return "verifycodes"
         case .resgiterOrLogin(_, _):
             return "authorizations"
+        case .getUser(let id):
+            return "users/"+id
         default:
             return ""
         }

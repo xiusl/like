@@ -54,4 +54,9 @@ class MainTabBarController: UITabBarController {
             
             self.addChild(navVc)
         }
+    
+    
+    override var childForStatusBarStyle: UIViewController? {
+        return self.selectedViewController
+    }
 }

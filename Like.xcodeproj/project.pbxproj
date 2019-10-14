@@ -52,6 +52,7 @@
 		FF41360523516CD900B27792 /* KMNavigationBarTransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF41360423516CD900B27792 /* KMNavigationBarTransition.framework */; };
 		FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4136082351753C00B27792 /* UserApiRequest.swift */; };
 		FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF7478102341B7350017DC74 /* InfoPlist.strings */; };
+		FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -105,6 +106,7 @@
 		FF74780B2341B5350017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		FF74780F2341B7350017DC74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF7478112341B7380017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableHeaderView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -200,6 +202,7 @@
 				FF4135DD2350704F00B27792 /* DiscoverTabViewController.swift */,
 				FF1C1F5423408B3D00D635A6 /* ArticleDetailViewController.swift */,
 				FF101C64235429C200B78D41 /* UserDetailViewController.swift */,
+				FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */,
 				FF101C5F23541CAA00B78D41 /* Me */,
 				FF101C582354044000B78D41 /* Models */,
 				FF4135F72351602400B27792 /* Auth */,
@@ -420,6 +423,7 @@
 				FF1C1F5A2340A44B00D635A6 /* RefreshComponent.swift in Sources */,
 				FF2CA588234DC68D00D1B433 /* MainNavigationController.swift in Sources */,
 				FF4135E9235070DD00B27792 /* ProgressHUD.swift in Sources */,
+				FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */,
 				FF4135D823506F1F00B27792 /* MainTabBarController.swift in Sources */,
 				FF101C5A2354044D00B78D41 /* User.swift in Sources */,
 				FF4135EE2350733A00B27792 /* BaseTableView.swift in Sources */,
