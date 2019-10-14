@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MeTabViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -35,8 +36,9 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         self.view.addSubview(self.tableView)
         self.tableView.tableHeaderView = self.headerView
-        self.headerView.addSubview(self.nameLabel)
-        self.nameLabel.text = self.user?.name
+        self.headerView.descLabel.text = self.user?.desc
+        self.headerView.nameLabel.text = self.user?.name
+        self.headerView.avatarView.kf.setImage(with: URL(string: self.user?.avatar ?? "")!)
         
         NotificationCenter.default.addObserver(self, selector: #selector(userChange), name: .UserLogoutNoti, object: nil)
     }
@@ -120,7 +122,7 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         let tableView: BaseTableView = BaseTableView.init(frame: frame, style: .grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .cF2F4F8
         tableView.separatorStyle = .none
         if #available(iOS 11.0, *) {
             tableView.contentInsetAdjustmentBehavior = .never
@@ -130,21 +132,10 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         return tableView
     }()
     
-    lazy var headerView: UIView = {
-        let headerView = UIView()
-        headerView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 90)
-        let view = UIView(frame: CGRect(x: 0, y: 80, width: ScreenWidth, height: 10))
-                   view.backgroundColor = UIColor(hex: 0xF2F4F8)
-        headerView.addSubview(view)
+    lazy var headerView: MeTableHeaderView = {
+        let headerView = Bundle.main.loadNibNamed("MeTableHeaderView", owner: nil, options: nil)?.first as! MeTableHeaderView
+        headerView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 92)
         return headerView
-    }()
-    
-    lazy var nameLabel: UILabel = {
-        let nameLabel = UILabel()
-        nameLabel.frame = CGRect(x: 32, y: 0, width: ScreenWidth, height: 80)
-        nameLabel.font = UIFont.systemFontMedium(ofSize: 32)
-        nameLabel.textColor = UIColor(hex: 0x1A2C3F)
-        return nameLabel
     }()
         
     lazy var tableConfig: Array = { () -> [[[String : String]]] in

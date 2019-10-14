@@ -10,6 +10,9 @@
 		FF101C5A2354044D00B78D41 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C592354044D00B78D41 /* User.swift */; };
 		FF101C5C235408E000B78D41 /* MeTabTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */; };
 		FF101C5E23540C0E00B78D41 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C5D23540C0E00B78D41 /* RegisterViewController.swift */; };
+		FF101C6123541CED00B78D41 /* MeTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C6023541CED00B78D41 /* MeTableHeaderView.swift */; };
+		FF101C6323541CFE00B78D41 /* MeTableHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = FF101C6223541CFE00B78D41 /* MeTableHeaderView.xib */; };
+		FF101C65235429C200B78D41 /* UserDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C64235429C200B78D41 /* UserDetailViewController.swift */; };
 		FF1190532351A3C8004E87E8 /* RefreshBackNormalFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1190522351A3C8004E87E8 /* RefreshBackNormalFooter.swift */; };
 		FF1190552351A4EE004E87E8 /* RefreshBackStateFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1190542351A4EE004E87E8 /* RefreshBackStateFooter.swift */; };
 		FF11905A2351BB99004E87E8 /* RefreshStateHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1190592351BB99004E87E8 /* RefreshStateHeader.swift */; };
@@ -55,6 +58,9 @@
 		FF101C592354044D00B78D41 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTabTableViewCell.swift; sourceTree = "<group>"; };
 		FF101C5D23540C0E00B78D41 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
+		FF101C6023541CED00B78D41 /* MeTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTableHeaderView.swift; sourceTree = "<group>"; };
+		FF101C6223541CFE00B78D41 /* MeTableHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MeTableHeaderView.xib; sourceTree = "<group>"; };
+		FF101C64235429C200B78D41 /* UserDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetailViewController.swift; sourceTree = "<group>"; };
 		FF1190522351A3C8004E87E8 /* RefreshBackNormalFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshBackNormalFooter.swift; sourceTree = "<group>"; };
 		FF1190542351A4EE004E87E8 /* RefreshBackStateFooter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshBackStateFooter.swift; sourceTree = "<group>"; };
 		FF1190592351BB99004E87E8 /* RefreshStateHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshStateHeader.swift; sourceTree = "<group>"; };
@@ -125,6 +131,17 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		FF101C5F23541CAA00B78D41 /* Me */ = {
+			isa = PBXGroup;
+			children = (
+				FF4135DF2350705800B27792 /* MeTabViewController.swift */,
+				FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */,
+				FF101C6023541CED00B78D41 /* MeTableHeaderView.swift */,
+				FF101C6223541CFE00B78D41 /* MeTableHeaderView.xib */,
+			);
+			path = Me;
+			sourceTree = "<group>";
+		};
 		FF1190562351B399004E87E8 /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -181,9 +198,9 @@
 				FF4135EB2350731000B27792 /* Main */,
 				FF4135DB2350704100B27792 /* HomeTabViewController.swift */,
 				FF4135DD2350704F00B27792 /* DiscoverTabViewController.swift */,
-				FF4135DF2350705800B27792 /* MeTabViewController.swift */,
-				FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */,
 				FF1C1F5423408B3D00D635A6 /* ArticleDetailViewController.swift */,
+				FF101C64235429C200B78D41 /* UserDetailViewController.swift */,
+				FF101C5F23541CAA00B78D41 /* Me */,
 				FF101C582354044000B78D41 /* Models */,
 				FF4135F72351602400B27792 /* Auth */,
 				FF4135F02350758D00B27792 /* Resources */,
@@ -356,6 +373,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				FF1C1F3E2340827E00D635A6 /* LaunchScreen.storyboard in Resources */,
+				FF101C6323541CFE00B78D41 /* MeTableHeaderView.xib in Resources */,
 				FF4135FE2351633F00B27792 /* Localizable.strings in Resources */,
 				FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */,
 				FF1C1F3B2340827E00D635A6 /* Assets.xcassets in Resources */,
@@ -420,6 +438,7 @@
 				FF4135DC2350704100B27792 /* HomeTabViewController.swift in Sources */,
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
 				FF11905A2351BB99004E87E8 /* RefreshStateHeader.swift in Sources */,
+				FF101C65235429C200B78D41 /* UserDetailViewController.swift in Sources */,
 				FF1C1F5523408B3D00D635A6 /* ArticleDetailViewController.swift in Sources */,
 				FF4135DE2350704F00B27792 /* DiscoverTabViewController.swift in Sources */,
 				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,
@@ -431,6 +450,7 @@
 				FF4135F22350780200B27792 /* RefreshHeader.swift in Sources */,
 				FF4135E02350705800B27792 /* MeTabViewController.swift in Sources */,
 				FF4135F6235083BC00B27792 /* RefreshAutoFooter.swift in Sources */,
+				FF101C6123541CED00B78D41 /* MeTableHeaderView.swift in Sources */,
 				FF101C5C235408E000B78D41 /* MeTabTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

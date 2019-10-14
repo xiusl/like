@@ -39,4 +39,9 @@ extension UIColor {
     open class var blackText: UIColor {
         return UIColor(hex: 0x1A2C3F)
     }
+    
+    open class var cF2F4F8: UIColor {
+        return UIColor(hex: 0xF2F4F8)
+    }
+    
 }
