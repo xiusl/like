@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class PasswordLoginViewController: BaseViewController {
 
@@ -20,7 +21,7 @@ class PasswordLoginViewController: BaseViewController {
         self.view.addSubview(self.phoneView)
         self.view.addSubview(self.passwdView)
         self.view.addSubview(self.confirmButton)
-        self.view.addSubview(self.loginFailureButton)
+//        self.view.addSubview(self.loginFailureButton)
         self.view.addSubview(self.loginSMSButton)
     }
     
@@ -37,7 +38,7 @@ class PasswordLoginViewController: BaseViewController {
     lazy var phoneView: AuthInputView = {
         let phoneView: AuthInputView = AuthInputView()
         phoneView.frame = CGRect(x: 0, y: 220, width: ScreenWidth, height: 60)
-        phoneView.type = .phone
+        phoneView.type = .phoneEmail
         phoneView.setupPlaceHolder(text: "LoginPhonePlaceholder".localized)
         phoneView.delegate = self
         phoneView.errorMessage = "LoginPhoneInputError".localized
@@ -72,19 +73,20 @@ class PasswordLoginViewController: BaseViewController {
     lazy var loginSMSButton: UIButton = {
         let loginSMSButton = UIButton()
         loginSMSButton.setTitle("LoginWithSMSTitle".localized, for: .normal)
-        loginSMSButton.setTitleColor(.theme, for: .normal)
+        loginSMSButton.setTitleColor(.blackText, for: .normal)
         loginSMSButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         loginSMSButton.titleLabel?.sizeToFit()
         let width = (loginSMSButton.titleLabel?.ex_w ?? 0)+4
         loginSMSButton.frame = CGRect(x: ScreenWidth-width-24, y: 426, width: width, height: 46)
         loginSMSButton.contentHorizontalAlignment = .right
+        loginSMSButton.addTarget(self, action: #selector(loginSMSButtonClick), for: .touchUpInside)
         return loginSMSButton
     }()
     
     lazy var loginFailureButton: UIButton = {
         let loginFailureButton = UIButton()
         loginFailureButton.setTitle("LoginFailedTitle".localized, for: .normal)
-        loginFailureButton.setTitleColor(.theme, for: .normal)
+        loginFailureButton.setTitleColor(.blackText, for: .normal)
         loginFailureButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         loginFailureButton.titleLabel?.sizeToFit()
         let width = (loginFailureButton.titleLabel?.ex_w ?? 0)+4
@@ -96,14 +98,26 @@ class PasswordLoginViewController: BaseViewController {
     lazy var registerButton: UIButton = {
         let registerButton = UIButton()
         registerButton.setTitle("Login2RegisterTitle".localized, for: .normal)
-        registerButton.setTitleColor(.theme, for: .normal)
+        registerButton.setTitleColor(.blackText, for: .normal)
         registerButton.titleLabel?.font = UIFont.systemFont(ofSize: 18)
         registerButton.titleLabel?.sizeToFit()
         let width = (registerButton.titleLabel?.ex_w ?? 0)+4
         registerButton.frame = CGRect(x: ScreenWidth-width-24, y: TopSafeHeight-46, width: width, height: 46)
         registerButton.contentHorizontalAlignment = .right
+        registerButton.addTarget(self, action: #selector(registerButtonClick), for: .touchUpInside)
         return registerButton
     }()
+    
+    @objc func registerButtonClick() {
+        let vc = RegisterViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc func loginSMSButtonClick() {
+        let vc = RegisterViewController()
+        vc.isLogin = true
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }
 
 extension PasswordLoginViewController: AuthInputViewDelegate {
@@ -132,6 +146,13 @@ extension PasswordLoginViewController: AuthInputViewDelegate {
         ApiManager.shared.request(request: UserApiRequest.login(account: phone, password: passwd), success: { (result) in
             debugPrint(result)
             self.confirmButton.endLoading()
+            let u = User(fromJson: JSON(result))
+            let _ = u.save()
+            
+            let vc = MainTabBarController()
+            let keyWidow = UIApplication.shared.keyWindow
+            keyWidow?.rootViewController = vc
+            
         }) { (error) in
         debugPrint(error)
             SLUtil.showMessage(error)

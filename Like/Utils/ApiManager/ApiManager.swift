@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-typealias RequestSuccessBlock = (_ result: [String: Any]) -> Void
+typealias RequestSuccessBlock = (_ result: Any) -> Void
 typealias RequestFailedBlock = (_ error: String) -> Void
 typealias RequestProgressBlock = (Double) -> Void
 
@@ -117,7 +117,9 @@ extension ApiManager {
             if (data as? NSDictionary) == nil {
                 failed("data error")
             } else {
-                success(data as! [String : Any])
+                let d = data as! [String: Any]
+                
+                success(d["data"] as! Any)
             }
         }
     }

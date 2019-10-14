@@ -13,5 +13,9 @@
 "LoginPwdInputError" = "6-12 Password";
 "LoginButtonTitle" = "Login";
 "LoginWithSMSTitle" = "Log in via SMS";
-"LoginFailedTitle" = "Failed to Login";
+"LoginFailedTitle" = "Forget password";
 "Login2RegisterTitle" = "Sign up";
+"RegisterVcTitle" = "Sign up";
+"RegisterPhonePlaceholder" = "Phone";
+"VerifyCode" = "Code";
+"VerifyCodeLogin" = "Confirmation Code Login";

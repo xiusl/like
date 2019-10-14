@@ -13,5 +13,9 @@
 "LoginPwdPlaceholder" = "密码";
 "LoginButtonTitle" = "登录";
 "LoginWithSMSTitle" = "验证码登录";
-"LoginFailedTitle" = "登录失败？";
+"LoginFailedTitle" = "忘记密码";
 "Login2RegisterTitle" = "注册";
+"RegisterVcTitle" = "注册";
+"RegisterPhonePlaceholder" = "手机号";
+"VerifyCode" = "验证码";
+"VerifyCodeLogin" = "验证码登录";

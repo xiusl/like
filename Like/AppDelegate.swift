@@ -17,12 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         self.window = UIWindow.init(frame: UIScreen.main.bounds)
-        
-        let vc = MainTabBarController()
-//        let vc = PasswordLoginViewController()
-//        vc.isPrefersHidden = true
-//        let nav = MainNavigationController(rootViewController: vc)
-        self.window?.rootViewController = vc
+        let _ = User.read()
+        if User.isLogin {
+            let vc = MainTabBarController()
+            self.window?.rootViewController = vc
+        } else {
+            let vc = PasswordLoginViewController()
+            vc.isPrefersHidden = true
+            let nav = MainNavigationController(rootViewController: vc)
+            self.window?.rootViewController = nav
+        }
         self.window?.makeKeyAndVisible()
         
         return true

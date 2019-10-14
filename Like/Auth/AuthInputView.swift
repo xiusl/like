@@ -16,14 +16,15 @@ protocol AuthInputViewDelegate {
 public enum AuthInputViewType : Int {
     
     case phone
-    
+    case phoneEmail
     case password
+    case verifyCode
 }
 
 class AuthInputView: UIView {
     var delegate: AuthInputViewDelegate?
     
-    var type: AuthInputViewType? {
+    var type: AuthInputViewType = .phone {
         didSet {
             self.reLayoutWithType()
         }
@@ -101,20 +102,32 @@ class AuthInputView: UIView {
     
     func reLayoutWithType() {
         switch self.type {
-        case .phone?:
+        case .phone:
+            textField.leftViewMode = .always
+            textField.textAlignment = .left
+            eyeButton.isHidden = true
+            textField.isSecureTextEntry = false
+            textField.keyboardType = .phonePad
+        case .phoneEmail:
             textField.leftViewMode = .never
             textField.textAlignment = .left
             eyeButton.isHidden = true
             textField.isSecureTextEntry = false
             textField.keyboardType = .emailAddress
-        case .password?:
+        case .password:
             textField.leftViewMode = .never
             textField.textAlignment = .left
             eyeButton.isHidden = false
             textField.isSecureTextEntry = true
             textField.keyboardType = .default
-        default:
+        case .verifyCode:
             textField.leftViewMode = .never
+            textField.textAlignment = .left
+            eyeButton.isHidden = true
+            textField.isSecureTextEntry = false
+            textField.keyboardType = .numberPad
+//        default:
+//            textField.leftViewMode = .never
         }
     }
     
@@ -142,14 +155,18 @@ class AuthInputView: UIView {
         let textField: UITextField = UITextField()
         textField.textAlignment = .right
         textField.font = UIFont.systemFont(ofSize: 18)
-        textField.textColor = UIColor(hex: 0x333333)
+        textField.textColor = .blackText
 
         let label = UILabel()
         label.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
         label.text = "+86"
-        label.textColor = UIColor(hex: 0x333333)
+        label.textColor = .blackText
         label.font = UIFont.systemFontMedium(ofSize: 18)
-        textField.leftView = label
+        
+        let view = UIView()
+        view.frame = CGRect(x: 0, y: 0, width: 50, height: 50)
+        view.addSubview(label)
+        textField.leftView = view
         
         textField.addTarget(self, action: #selector(textFieldValueChange), for: .editingChanged)
         return textField
