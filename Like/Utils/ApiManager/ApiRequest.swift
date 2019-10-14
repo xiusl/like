@@ -35,6 +35,7 @@ protocol ApiRequest {
 
 enum ArtApiRequest {
     case getArticles(Void)
+    case spiderArticle(url: String)
     case defaultOne(Void)
 }
 
@@ -43,19 +44,24 @@ extension ArtApiRequest: ApiRequest {
         switch self {
         case .getArticles():
             return .get
+        case .spiderArticle(_):
+            return .bodyPost
         default:
             return .get
         }
     }
     
     var baseUrl: String {
-        return "http://api.ins.com/"
+//        return "http://api.ins.com/"
+        return "https://ins-api.sleen.top/"
     }
     
     var path: String {
         switch self {
         case .getArticles():
             return "articles"
+        case .spiderArticle(_):
+            return "articles/spider"
         default:
             return ""
         }
@@ -65,6 +71,8 @@ extension ArtApiRequest: ApiRequest {
         switch self {
         case .getArticles():
             return "articles"
+        case .spiderArticle(let url):
+            return ["url": url]
         default:
             return []
         }

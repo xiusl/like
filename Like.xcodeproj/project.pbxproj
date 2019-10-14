@@ -53,6 +53,7 @@
 		FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4136082351753C00B27792 /* UserApiRequest.swift */; };
 		FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF7478102341B7350017DC74 /* InfoPlist.strings */; };
 		FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */; };
+		FFD8093B23546A5F00FE0FCB /* PostLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,6 +108,7 @@
 		FF74780F2341B7350017DC74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF7478112341B7380017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableHeaderView.swift; sourceTree = "<group>"; };
+		FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLinkView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -203,6 +205,7 @@
 				FF1C1F5423408B3D00D635A6 /* ArticleDetailViewController.swift */,
 				FF101C64235429C200B78D41 /* UserDetailViewController.swift */,
 				FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */,
+				FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */,
 				FF101C5F23541CAA00B78D41 /* Me */,
 				FF101C582354044000B78D41 /* Models */,
 				FF4135F72351602400B27792 /* Auth */,
@@ -448,6 +451,7 @@
 				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,
 				FF1C1F5E2341978800D635A6 /* UIViewFrameEx.swift in Sources */,
 				FF11905C2351C354004E87E8 /* RefreshNormalHeader.swift in Sources */,
+				FFD8093B23546A5F00FE0FCB /* PostLinkView.swift in Sources */,
 				FF4135F92351604700B27792 /* PasswordLoginViewController.swift in Sources */,
 				FF4135FB2351608200B27792 /* AuthInputView.swift in Sources */,
 				FF2CA586234DB46C00D1B433 /* ApiRequest.swift in Sources */,

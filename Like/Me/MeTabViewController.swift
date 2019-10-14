@@ -44,6 +44,22 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         let gest = UITapGestureRecognizer(target: self, action: #selector(bac))
         self.headerView.addGestureRecognizer(gest)
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "投稿", style: .plain, target: self, action: #selector(post))
+    }
+    
+    @objc func post() {
+        let view = PostLinkView()
+        view.show()
+        view.confirmClickHandle = { (url) in
+            print(url)
+            let request = ArtApiRequest.spiderArticle(url: url)
+            ApiManager.shared.request(request: request, success: { (result) in
+                print(result)
+            }) { (error) in
+                print(error)
+            }
+        }
     }
     
     @objc func bac() {
