@@ -57,7 +57,7 @@ extension UserApiRequest: ApiRequest {
         case .resgiterOrLogin(let phone, let code):
             return ["phone": phone, "code": code]
         default:
-            return ""
+            return [:]
         }
     }
     

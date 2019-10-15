@@ -41,6 +41,8 @@ class ApiManager: NSObject {
             break
         case .bodyPost:
             self.POST(url: url, data: request.params, headers: request.headers, encoding: URLEncoding.queryString, success: success, failed: failed)
+        case .delete:
+            self.DELETE(url: url, data: request.params, headers: request.headers, encoding: URLEncoding.queryString, success: success, failed: failed)
         default:
             break
         }
@@ -57,7 +59,9 @@ extension ApiManager {
                          success: @escaping RequestSuccessBlock,
                          failed: @escaping RequestFailedBlock) {
 //        self.manager.request(url, method: .get, parameters: params, encoder: encoding, headers: nil)
-        self.manager.request(url, method: .get, parameters: params, encoding: encoding, headers: HTTPHeaders(headers ?? [:])).validate().responseJSON { (response) in
+        var h = headers ?? [:]
+        h["X-Token"] = (User.current?.token ?? "")
+        self.manager.request(url, method: .get, parameters: params, encoding: encoding, headers: HTTPHeaders(h)).validate().responseJSON { (response) in
             debugPrint(response)
             self.handleResponse(response: response, success: success, failed: failed)
         }
@@ -76,16 +80,30 @@ extension ApiManager {
         }
     }
     
+    fileprivate func DELETE(url: String,
+                          data: Any,
+                          headers: [String: String]?,
+                          encoding: ParameterEncoding,
+                          success: @escaping RequestSuccessBlock,
+                          failed: @escaping RequestFailedBlock) {
+        var request = self.bodyRequest(url: url, data: data, headers: headers)
+        request.httpMethod = HTTPMethod.delete.rawValue
+        self.manager.request(request).validate().responseJSON { (response) in
+            self.handleResponse(response: response, success: success, failed: failed)
+        }
+    }
+    
     
     fileprivate func bodyRequest(url: String, data: Any, headers: [String: String]?) -> URLRequest {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = HTTPMethod.post.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-//        if let headers = headers {
-//            for (k, v) in headers {
-//                request.setValue(v, forHTTPHeaderField: k)
-//            }
-//        }
+        if let headers = headers {
+            for (k, v) in headers {
+                request.setValue(v, forHTTPHeaderField: k)
+            }
+        }
+        request.setValue((User.current?.token ?? ""), forHTTPHeaderField: "X-Token")
         do {
             let json = try JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
             request.httpBody = json
@@ -105,8 +123,7 @@ extension ApiManager {
                                     failed: RequestFailedBlock) {
         if let _ = response.result.error {
             do {
-            let json = try JSONSerialization.jsonObject(with: response.data ?? Data(), options: .mutableLeaves)
-            print(json)
+                let json = try JSONSerialization.jsonObject(with: response.data ?? Data(), options: .mutableLeaves)
                 let j = JSON(json)
                 failed(j["error"].stringValue)
             } catch {
@@ -119,7 +136,7 @@ extension ApiManager {
             } else {
                 let d = data as! [String: Any]
                 
-                success(d["data"] as! Any)
+                success(d["data"] as Any)
             }
         }
     }

@@ -23,6 +23,7 @@ class User : NSObject, NSCoding{
     var phone : String!
     var status : Int!
     var type : Int!
+    var token : String!
 
     /**
      * Instantiate the instance using the passed json values to set the properties values
@@ -45,6 +46,7 @@ class User : NSObject, NSCoding{
         phone = json["phone"].stringValue
         status = json["status"].intValue
         type = json["type"].intValue
+        token = json["token"].stringValue
     }
 
     /**
@@ -95,6 +97,9 @@ class User : NSObject, NSCoding{
         if type != nil{
             dictionary["type"] = type
         }
+        if token != nil{
+            dictionary["token"] = token
+        }
         return dictionary
     }
 
@@ -118,6 +123,7 @@ class User : NSObject, NSCoding{
         phone = aDecoder.decodeObject(forKey: "phone") as? String
         status = aDecoder.decodeObject(forKey: "status") as? Int
         type = aDecoder.decodeObject(forKey: "type") as? Int
+        token = aDecoder.decodeObject(forKey: "token") as? String
     }
 
     /**
@@ -168,7 +174,9 @@ class User : NSObject, NSCoding{
         if type != nil{
             aCoder.encode(type, forKey: "type")
         }
-
+        if token != nil{
+            aCoder.encode(token, forKey: "token")
+        }
     }
 
     func save() -> Bool {

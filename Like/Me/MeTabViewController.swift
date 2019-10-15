@@ -50,7 +50,8 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
     }
     
     @objc func postStatus() {
-        
+        let vc = PostStatusViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     @objc func post() {
         let view = PostLinkView()
