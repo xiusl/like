@@ -20,6 +20,8 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
         self.contentView.addSubview(self.titleLabel)
         self.contentView.addSubview(self.textView)
         self.contentView.addSubview(self.okButton)
+        self.textView.addSubview(self.clearButton)
+        self.textView.addSubview(self.pasteButton)
         
         let tapGest = UITapGestureRecognizer(target: self, action: #selector(hide))
         tapGest.delegate = self
@@ -44,6 +46,15 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
             UIApplication.shared.keyWindow?.addSubview(self)
         }
         self.textView.becomeFirstResponder()
+        self.checkPasteBoard()
+    }
+    
+    private func checkPasteBoard() {
+        let paste = UIPasteboard.general.string
+        if paste == nil { return }
+        if paste!.hasPrefix("http") || paste!.hasPrefix("https") {
+            self.textView.text = paste
+        }
     }
     
     @objc func hide() {
@@ -88,6 +99,26 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
         return textView
     }()
     
+    lazy var clearButton: UIButton = {
+        let clearButton = UIButton()
+        clearButton.frame = CGRect(x: 0, y: 50, width: 50, height: 30)
+        clearButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        clearButton.setTitle("清除", for: .normal)
+        clearButton.setTitleColor(.blackText, for: .normal)
+        clearButton.addTarget(self, action: #selector(clearButtonClick), for: .touchUpInside)
+        return clearButton
+    }()
+    
+    lazy var pasteButton: UIButton = {
+        let pasteButton = UIButton()
+        pasteButton.frame = CGRect(x: 240-50, y: 50, width: 50, height: 30)
+        pasteButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
+        pasteButton.setTitle("粘贴", for: .normal)
+        pasteButton.setTitleColor(.blackText, for: .normal)
+        pasteButton.addTarget(self, action: #selector(pasteButtonClick), for: .touchUpInside)
+        return pasteButton
+    }()
+    
     lazy var okButton: UIButton = {
         let okButton = UIButton()
         okButton.frame = CGRect(x: 40, y: 150, width: 200, height: 32)
@@ -101,8 +132,15 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
         return okButton
     }()
     
-    @objc func okButtonClick() {
+    @objc private func okButtonClick() {
         self.hide()
         self.confirmClickHandle(self.textView.text)
+    }
+    
+    @objc private func clearButtonClick() {
+        self.textView.text = ""
+    }
+    @objc private func pasteButtonClick() {
+        self.checkPasteBoard()
     }
 }

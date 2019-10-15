@@ -46,8 +46,12 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.headerView.addGestureRecognizer(gest)
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "投稿", style: .plain, target: self, action: #selector(post))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "发动态", style: .plain, target: self, action: #selector(postStatus))
     }
     
+    @objc func postStatus() {
+        
+    }
     @objc func post() {
         let view = PostLinkView()
         view.show()
