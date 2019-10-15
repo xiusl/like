@@ -11,7 +11,7 @@ import UIKit
 class RefreshStateHeader: RefreshHeader {
 
     
-    lazy var lastUpdatedTimeLabel: UILabel = {
+    open lazy var lastUpdatedTimeLabel: UILabel = {
         let lastUpdatedTimeLabel = UILabel.mjLabel()
         return lastUpdatedTimeLabel
     }()

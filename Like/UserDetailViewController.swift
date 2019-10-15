@@ -17,6 +17,7 @@ class UserDetailViewController: BaseViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
+    var data: Array<JSON> = Array()
     var userId: String = ""
     var user: User?
     
@@ -36,12 +37,19 @@ class UserDetailViewController: BaseViewController {
         
         self.tableView.contentInset = UIEdgeInsets(top: insetTop, left: 0, bottom: 0, right: 0)
 
-                self.tableView.tableHeaderView = self.headerView
+        self.tableView.tableHeaderView = self.headerView
         self.loadData()
         
+        let refHeader: RefreshNormalHeader = RefreshNormalHeader.header(withRefreshingTarget: self, refreshingAction: #selector(loadData)) as! RefreshNormalHeader
+        refHeader.ignoredScrollViewContentInsetTop = self.insetTop-TopSafeHeight+40
+        refHeader.lastUpdatedTimeLabel.isHidden = true
+        refHeader.stateLabel.textColor = .white
+        refHeader.activityIndicatorViewStyle = .white
+        self.tableView.mjHeader = refHeader
     }
     
-    func loadData() {
+    @objc func loadData() {
+    
         let request = UserApiRequest.getUser(id: self.userId)
         ApiManager.shared.request(request: request, success: { (result) in
             let u = User(fromJson: JSON(result))
@@ -49,6 +57,15 @@ class UserDetailViewController: BaseViewController {
             self.headerView.setupAvatar(u.avatar)
             self.headerView.setupName(u.name)
             self.nameLabel.text = u.name
+        }) { (error) in
+            
+        }
+        
+        let request2 = StatusApiRequest.getUserStatuses(userid: self.userId, page: 1, count: 10)
+        ApiManager.shared.request(request: request2, success: { (result) in
+            self.data = JSON(result).arrayValue
+            self.tableView.reloadData()
+            self.tableView.mjHeader?.endRefreshing()
         }) { (error) in
             
         }
@@ -108,7 +125,7 @@ class UserDetailViewController: BaseViewController {
     
     lazy var headerView: UserTableHeaderView = {
         let headerView = UserTableHeaderView()
-        headerView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 80)
+        headerView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: (ScreenWidth-self.insetTop)*0.5)
         headerView.backgroundColor = .white
         return headerView
     }()
@@ -120,13 +137,19 @@ class UserDetailViewController: BaseViewController {
     }
 }
 
-extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
+extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate, StatusViewCellDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return self.data.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let j = data[indexPath.row]
+        let cell = StatusViewCell.create(tableView: tableView)
+        cell.contentLabel.text = j["content"].stringValue
+        cell.likeButton.isSelected = j["is_liked"].boolValue
+        cell.delegate = self
+        cell.likeButton.setTitle(j["id"].stringValue, for: .disabled)
+        return cell
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -160,4 +183,28 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
             self.cView.transform = CGAffineTransform.identity
         }
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    func statusViewCellLikeButtonClick(_ button: UIButton) {
+        let id = button.title(for: .disabled) ?? ""
+        let request = button.isSelected ? StatusApiRequest.unlikeStatus(id: id) : StatusApiRequest.likeStatus(id: id)
+        ApiManager.shared.request(request: request, success: { (result) in
+            button.isSelected = !button.isSelected
+        }) { (error) in
+            debugPrint(error)
+        }
+    }
+    
+//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//        let view = UIView()
+//        view.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 10)
+//        view.backgroundColor = .cF2F4F8
+//        return view
+//    }
+//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//        return 10
+//    }
 }

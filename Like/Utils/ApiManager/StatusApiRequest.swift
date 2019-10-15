@@ -13,6 +13,7 @@ enum StatusApiRequest {
     case getStatuses(page: Int, count: Int)
     case likeStatus(id: String)
     case unlikeStatus(id: String)
+    case getUserStatuses(userid: String, page: Int, count: Int)
     case defaultReq(Void)
 }
 
@@ -46,6 +47,8 @@ extension StatusApiRequest: ApiRequest {
             return "statuses/"+id+"/likes"
         case .unlikeStatus(let id):
             return "statuses/"+id+"/likes"
+        case .getUserStatuses(let userid, _, _):
+            return "users/"+userid+"/statuses"
         default:
             return ""
         }
@@ -56,6 +59,8 @@ extension StatusApiRequest: ApiRequest {
         case .postStatus(let content):
             return ["content": content]
         case .getStatuses(let page, let count):
+            return ["page": page, "count": count]
+        case .getUserStatuses(_, let page, let count):
             return ["page": page, "count": count]
         default:
             return [:]
