@@ -41,7 +41,7 @@ class UserDetailViewController: BaseViewController {
         self.loadData()
         
         let refHeader: RefreshNormalHeader = RefreshNormalHeader.header(withRefreshingTarget: self, refreshingAction: #selector(loadData)) as! RefreshNormalHeader
-        refHeader.ignoredScrollViewContentInsetTop = self.insetTop-TopSafeHeight+40
+        refHeader.ignoredScrollViewContentInsetTop = self.insetTop-TopSafeHeight+54
         refHeader.lastUpdatedTimeLabel.isHidden = true
         refHeader.stateLabel.textColor = .white
         refHeader.activityIndicatorViewStyle = .white

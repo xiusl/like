@@ -146,8 +146,10 @@ extension PasswordLoginViewController: AuthInputViewDelegate {
         ApiManager.shared.request(request: UserApiRequest.login(account: phone, password: passwd), success: { (result) in
             debugPrint(result)
             self.confirmButton.endLoading()
-            let u = User(fromJson: JSON(result))
-            let _ = u.save()
+            DispatchQueue.global().async {
+                let u = User(fromJson: JSON(result))
+                let _ = u.save()
+            }
             
             let vc = MainTabBarController()
             let keyWidow = UIApplication.shared.keyWindow

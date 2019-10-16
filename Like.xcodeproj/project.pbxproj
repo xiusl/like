@@ -57,6 +57,7 @@
 		FFFC57FC2355B4F400D79270 /* PostStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC57FB2355B4F400D79270 /* PostStatusViewController.swift */; };
 		FFFC57FE2355B69100D79270 /* StatusApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC57FD2355B69100D79270 /* StatusApiRequest.swift */; };
 		FFFC58002355C1D300D79270 /* StatusViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC57FF2355C1D300D79270 /* StatusViewCell.swift */; };
+		FFFC58022356B66000D79270 /* SettingApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC58012356B66000D79270 /* SettingApiRequest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -115,6 +116,7 @@
 		FFFC57FB2355B4F400D79270 /* PostStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatusViewController.swift; sourceTree = "<group>"; };
 		FFFC57FD2355B69100D79270 /* StatusApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusApiRequest.swift; sourceTree = "<group>"; };
 		FFFC57FF2355C1D300D79270 /* StatusViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewCell.swift; sourceTree = "<group>"; };
+		FFFC58012356B66000D79270 /* SettingApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingApiRequest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -252,6 +254,7 @@
 				FF2CA584234DB46C00D1B433 /* ApiRequest.swift */,
 				FF4136082351753C00B27792 /* UserApiRequest.swift */,
 				FFFC57FD2355B69100D79270 /* StatusApiRequest.swift */,
+				FFFC58012356B66000D79270 /* SettingApiRequest.swift */,
 			);
 			path = ApiManager;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 				FF1190532351A3C8004E87E8 /* RefreshBackNormalFooter.swift in Sources */,
 				FF4135EA235070DD00B27792 /* ColorUtil.swift in Sources */,
 				FFFC58002355C1D300D79270 /* StatusViewCell.swift in Sources */,
+				FFFC58022356B66000D79270 /* SettingApiRequest.swift in Sources */,
 				FFFC57FE2355B69100D79270 /* StatusApiRequest.swift in Sources */,
 				FF101C5E23540C0E00B78D41 /* RegisterViewController.swift in Sources */,
 				FF4135E7235070DD00B27792 /* UIFontExten.swift in Sources */,

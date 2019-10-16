@@ -21,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if User.isLogin {
             let vc = MainTabBarController()
             self.window?.rootViewController = vc
+            self.reCheckUserAuth()
         } else {
             let vc = PasswordLoginViewController()
             vc.isPrefersHidden = true
@@ -34,7 +35,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     // MARK: UISceneSession Lifecycle
 
-
+    
+    func reCheckUserAuth() {
+        let request = SettingApiRequest.ping(())
+        ApiManager.shared.request(request: request, success: { (result) in
+            
+        }) { (error) in
+            if error == "Please login" {
+                User.delete()
+                let vc = PasswordLoginViewController()
+                vc.isPrefersHidden = true
+                let nav = MainNavigationController(rootViewController: vc)
+                self.window?.rootViewController = nav
+            }
+        }
+    }
 
 }
 
