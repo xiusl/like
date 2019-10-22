@@ -9,7 +9,7 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 
     var window: UIWindow?
 
@@ -29,6 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             self.window?.rootViewController = nav
         }
         self.window?.makeKeyAndVisible()
+        WXApi.registerApp("wxd07ead9c827a04f5", universalLink: "https://ins.sleen.top/")
         
         return true
     }
@@ -51,5 +52,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
+    func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
+        return WXApi.handleOpen(url, delegate: self)
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return WXApi.handleOpen(url, delegate: self)
+    }
+    
 }
 
