@@ -60,5 +60,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         return WXApi.handleOpen(url, delegate: self)
     }
     
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+        
+        if userActivity.activityType == NSUserActivityTypeBrowsingWeb {
+            let url = userActivity.webpageURL
+            if url != nil {
+                let urlStr = url!.absoluteString
+                if urlStr.contains("articles") {
+                    let vc = ArticleDetailViewController()
+                    vc.urlStr = urlStr
+                    self.getTopViewController().present(vc, animated: true, completion: nil)
+                }
+            }
+        }
+        return true
+    }
+    
+    func getTopViewController() -> UIViewController {
+        var topVC = UIApplication.shared.keyWindow?.rootViewController
+        while topVC?.presentedViewController != nil {
+            topVC = topVC?.presentedViewController!
+        }
+        return topVC!
+    }
 }
 

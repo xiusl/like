@@ -40,8 +40,9 @@ class HomeTabViewController: BaseViewController {
     @objc func loadData() {
         self.page = 1
         let url = URL(string: "http://ins-api.sleen.top/articles")!
-        AF.request(url).validate().responseJSON { response in
+        AF.request(url).validate().responseJSON { [weak self] response in
             //            debugPrint("Response: \(response)")
+            guard let `self` = self else { return }
              self.tableView.mjHeader?.endRefreshing()
             if response.result.isSuccess {
                 let v = response.result.value
@@ -54,11 +55,6 @@ class HomeTabViewController: BaseViewController {
             }
         }
         
-//        ApiManager.shared.request(request: ArtApiRequest.getArticles(()), success: { (result) in
-//
-//        }) { (error) in
-//
-//        }
     }
     @objc func loadMoreData() {
         self.page += 1
