@@ -83,5 +83,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         }
         return topVC!
     }
+    
+    func onReq(_ req: BaseReq) {
+        
+    }
+    
+    func onResp(_ resp: BaseResp) {
+        
+    }
 }
 

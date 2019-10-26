@@ -62,7 +62,6 @@ extension ApiManager {
         var h = headers ?? [:]
         h["X-Token"] = (User.current?.token ?? "")
         self.manager.request(url, method: .get, parameters: params, encoding: encoding, headers: HTTPHeaders(h)).validate().responseJSON { (response) in
-            debugPrint(response)
             self.handleResponse(response: response, success: success, failed: failed)
         }
         
@@ -121,6 +120,7 @@ extension ApiManager {
     fileprivate func handleResponse(response: DataResponse<Any>,
                                     success: RequestSuccessBlock,
                                     failed: RequestFailedBlock) {
+        debugPrint(response)
         if let _ = response.result.error {
             do {
                 let json = try JSONSerialization.jsonObject(with: response.data ?? Data(), options: .mutableLeaves)

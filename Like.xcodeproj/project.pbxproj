@@ -700,6 +700,10 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Like/Vendors/WeChatSDK1.8.6",
 				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.likeeee.test110120;
 				PRODUCT_NAME = ll;
 				PROVISIONING_PROFILE_SPECIFIER = like_dev;
@@ -730,6 +734,10 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Like/Vendors/WeChatSDK1.8.6",
+				);
+				OTHER_LDFLAGS = (
+					"-ObjC",
+					"-all_load",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.likeeee.test110120;
 				PRODUCT_NAME = ll;

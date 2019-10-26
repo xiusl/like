@@ -116,7 +116,25 @@ extension HomeTabViewController: UITableViewDataSource, UITableViewDelegate {
         let d = data[indexPath.row]
         let vc = ArticleDetailViewController()
         vc.urlStr = d["url"].stringValue
-        self.present(vc, animated: true, completion: nil)
+//        self.present(vc, animated: true, completion: nil)
+        
+//        SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
+//        req.bText = YES;
+//        req.text = @"分享的内容";
+//        req.scene = WXSceneSession;
+//        [WXApi sendReq:req];
+        let webpageObject = WXWebpageObject()
+        webpageObject.webpageUrl = d["url"].stringValue
+        let message = WXMediaMessage()
+        message.title = d["title"].stringValue
+        message.description = "哩嗑-发现更大世界"
+        message.mediaObject = webpageObject
+        
+        let req = SendMessageToWXReq()
+        req.bText = false
+        req.message = message
+        req.scene = Int32(WXSceneTimeline.rawValue)
+        WXApi.send(req, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
