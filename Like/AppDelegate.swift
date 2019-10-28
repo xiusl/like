@@ -89,7 +89,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     }
     
     func onResp(_ resp: BaseResp) {
-        
+        if resp.isKind(of: SendMessageToWXResp.self) {
+            let msgResp = resp as! SendMessageToWXResp
+            debugPrint(msgResp.errStr)
+        }
     }
 }
 

@@ -95,50 +95,39 @@ class HomeTabViewController: BaseViewController {
     }()
 }
 
-extension HomeTabViewController: UITableViewDataSource, UITableViewDelegate {
+extension HomeTabViewController: UITableViewDataSource, UITableViewDelegate, ArticleViewCellDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.data.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "UITableViewCellIdf")
-        if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "UITableViewCellIdf")
-        }
+
         let j = data[indexPath.row]
-        
-        cell!.textLabel?.numberOfLines = 0
-        cell!.textLabel?.text = j["title"].stringValue
-        
-        return cell!
+        let cell = ArticleViewCell.create(tableView: tableView)
+        cell.contentLabel.text = j["title"].stringValue
+        cell.delegate = self
+        cell.index = indexPath.row
+        return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let d = data[indexPath.row]
         let vc = ArticleDetailViewController()
         vc.urlStr = d["url"].stringValue
-//        self.present(vc, animated: true, completion: nil)
-        
-//        SendMessageToWXReq *req = [[SendMessageToWXReq alloc] init];
-//        req.bText = YES;
-//        req.text = @"分享的内容";
-//        req.scene = WXSceneSession;
-//        [WXApi sendReq:req];
-        let webpageObject = WXWebpageObject()
-        webpageObject.webpageUrl = d["url"].stringValue
-        let message = WXMediaMessage()
-        message.title = d["title"].stringValue
-        message.description = "哩嗑-发现更大世界"
-        message.mediaObject = webpageObject
-        
-        let req = SendMessageToWXReq()
-        req.bText = false
-        req.message = message
-        req.scene = Int32(WXSceneTimeline.rawValue)
-        WXApi.send(req, completion: nil)
+        self.present(vc, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
+    }
+    
+    func articleViewCellLikeButtonClick(_ button: UIButton) {
+    
+    }
+    
+    func articleViewCell(cell: ArticleViewCell, shareIndex: Int) {
+        let d = data[shareIndex]
+        let shareView = SocialShareView(url: d["url"].stringValue, title: d["title"].stringValue)
+        shareView.show()
     }
 }
 
