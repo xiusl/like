@@ -60,6 +60,8 @@
 		FF41360523516CD900B27792 /* KMNavigationBarTransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF41360423516CD900B27792 /* KMNavigationBarTransition.framework */; };
 		FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4136082351753C00B27792 /* UserApiRequest.swift */; };
 		FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF7478102341B7350017DC74 /* InfoPlist.strings */; };
+		FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0A236C02300083BE5F /* ConfirmActionView.swift */; };
+		FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */; };
 		FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */; };
 		FFD8093B23546A5F00FE0FCB /* PostLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */; };
 		FFFC57FC2355B4F400D79270 /* PostStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC57FB2355B4F400D79270 /* PostStatusViewController.swift */; };
@@ -132,6 +134,8 @@
 		FF74780B2341B5350017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		FF74780F2341B7350017DC74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF7478112341B7380017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		FF861D0A236C02300083BE5F /* ConfirmActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmActionView.swift; sourceTree = "<group>"; };
+		FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSheetView.swift; sourceTree = "<group>"; };
 		FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableHeaderView.swift; sourceTree = "<group>"; };
 		FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLinkView.swift; sourceTree = "<group>"; };
 		FFFC57FB2355B4F400D79270 /* PostStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatusViewController.swift; sourceTree = "<group>"; };
@@ -245,6 +249,8 @@
 				FFFC57FF2355C1D300D79270 /* StatusViewCell.swift */,
 				FF34B9B32366B6C800A702AB /* ArticleViewCell.swift */,
 				FF34B9B52366B7B200A702AB /* SocialShareView.swift */,
+				FF861D0A236C02300083BE5F /* ConfirmActionView.swift */,
+				FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */,
 				FF1F1934235F1CC600C77C64 /* Vendors */,
 				FF101C5F23541CAA00B78D41 /* Me */,
 				FF101C582354044000B78D41 /* Models */,
@@ -512,6 +518,7 @@
 				FFFC57FE2355B69100D79270 /* StatusApiRequest.swift in Sources */,
 				FF101C5E23540C0E00B78D41 /* RegisterViewController.swift in Sources */,
 				FF4135E7235070DD00B27792 /* UIFontExten.swift in Sources */,
+				FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */,
 				FF4135DA2350702900B27792 /* BaseViewController.swift in Sources */,
 				FF1C1F322340827C00D635A6 /* AppDelegate.swift in Sources */,
 				FF4135E8235070DD00B27792 /* ConstUtil.swift in Sources */,
@@ -524,6 +531,7 @@
 				FF4135DE2350704F00B27792 /* DiscoverTabViewController.swift in Sources */,
 				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,
 				FF1C1F5E2341978800D635A6 /* UIViewFrameEx.swift in Sources */,
+				FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */,
 				FF11905C2351C354004E87E8 /* RefreshNormalHeader.swift in Sources */,
 				FFD8093B23546A5F00FE0FCB /* PostLinkView.swift in Sources */,
 				FF4135F92351604700B27792 /* PasswordLoginViewController.swift in Sources */,

@@ -112,14 +112,28 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         let dic = arr[indexPath.row]
         let title = dic["title"]
         if title == "退出" {
-            User.delete()
-            let vc = PasswordLoginViewController()
-            vc.isPrefersHidden = true
-            let nav = MainNavigationController(rootViewController: vc)
+
             
-            let keyWidow = UIApplication.shared.keyWindow
-            keyWidow?.rootViewController = nav
+            let view = ConfirmSheetView.showInWindow(actions: ["退出"], title: "确定要退出吗？")
+            view.callback = { [weak self] (action) in
+                if action == "退出" {
+                    guard let `self` = self else { return }
+                    self.logout()
+                }
+            }
+        } else if title == "设置" {
+            ConfirmSheetView.showInWindow()
         }
+    }
+    
+    func logout() {
+        User.delete()
+        let vc = PasswordLoginViewController()
+        vc.isPrefersHidden = true
+        let nav = MainNavigationController(rootViewController: vc)
+        
+        let keyWidow = UIApplication.shared.keyWindow
+        keyWidow?.rootViewController = nav
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
