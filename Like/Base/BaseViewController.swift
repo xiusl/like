@@ -24,7 +24,7 @@ class BaseViewController: UIViewController {
         self.view.backgroundColor = .white
         self.automaticallyAdjustsScrollViewInsets = false
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        let backImage = UIImage(named: "nav_back_w")?.withRenderingMode(.alwaysOriginal)
+        let backImage = UIImage(named: "nav_back_g")?.withRenderingMode(.alwaysOriginal)
         self.navigationController?.navigationBar.backIndicatorImage = backImage
         self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backImage
     }

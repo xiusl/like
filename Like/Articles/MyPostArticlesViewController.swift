@@ -19,7 +19,7 @@ class MyPostArticlesViewController: BaseViewController {
         weak var refresh: UIRefreshControl?
         override func viewDidLoad() {
             super.viewDidLoad()
-            
+            self.title = "我的发布"
             self.view.addSubview(self.tableView)
             self.tableView.estimatedRowHeight = 0
             self.tableView.estimatedSectionHeaderHeight = 0

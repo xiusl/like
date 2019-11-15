@@ -122,7 +122,6 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
                 }
             }
         } else if title == "设置" {
-            ConfirmSheetView.showInWindow()
         } else if title == "我的发布" {
             let vc = MyPostArticlesViewController()
             self.navigationController?.pushViewController(vc, animated: true)
