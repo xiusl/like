@@ -16,16 +16,32 @@ class PostStatusViewController: BaseViewController {
         // Do any additional setup after loading the view.
         self.title = "发布动态"
         self.view.addSubview(self.textView)
+        self.view.addSubview(self.uploadButton)
         self.view.addSubview(self.okButton)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    
+        self.textView.becomeFirstResponder()
+    }
+    
+    @objc func keyboardFrameChange(_ noti: Notification) {
+        let userInfo = noti.userInfo as! Dictionary<String, Any>
+        let keybordRect = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
+        let endY = keybordRect.cgRectValue.origin.y
+        if endY == ScreenHeight {
+//            self.okButton.transform = CGAffineTransform.identity
+        } else {
+//            self.okButton.transform = CGAffineTransform.init(translationX: 0, y: -40)
+        }
     }
     
     lazy var textView: UITextView = {
         let textView = UITextView()
-        textView.frame = CGRect(x: 20, y: TopSafeHeight+10, width: ScreenWidth-40, height: 120)
-        textView.layer.cornerRadius = 2
-        textView.layer.borderColor = UIColor.cF2F4F8.cgColor
-        textView.layer.borderWidth = 1
-        textView.clipsToBounds = true
+        textView.frame = CGRect(x: 16, y: TopSafeHeight+16, width: ScreenWidth-32, height: 120)
+//        textView.layer.cornerRadius = 2
+//        textView.layer.borderColor = UIColor.cF2F4F8.cgColor
+//        textView.layer.borderWidth = 1
+//        textView.clipsToBounds = true
         textView.font = UIFont.systemFont(ofSize: 14)
         textView.textColor = .blackText
         return textView
@@ -53,5 +69,18 @@ class PostStatusViewController: BaseViewController {
         }) { (error) in
             debugPrint(error)
         }
+    }
+    
+    lazy var uploadButton: UIButton = {
+        let uploadButton = UIButton()
+        uploadButton.frame = CGRect(x: 16, y: TopSafeHeight+136+20, width: 64, height: 64)
+        uploadButton.setBackgroundImage(UIImage(named: "photo_upload"), for: .normal)
+        uploadButton.addTarget(self, action: #selector(uploadButtonClick), for: .touchUpInside)
+        return uploadButton
+    }()
+    
+    @objc func uploadButtonClick() {
+        let vc = LKPhotoPickerViewController(originalPhoto: true)
+        self.present(vc, animated: true, completion: nil)
     }
 }

@@ -60,6 +60,9 @@
 		FF4136032351645300B27792 /* StringLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4136022351645300B27792 /* StringLocalizable.swift */; };
 		FF41360523516CD900B27792 /* KMNavigationBarTransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF41360423516CD900B27792 /* KMNavigationBarTransition.framework */; };
 		FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4136082351753C00B27792 /* UserApiRequest.swift */; };
+		FF4470A32387C309002ED72D /* LKPhotoPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4470A22387C309002ED72D /* LKPhotoPickerViewController.swift */; };
+		FF4470A52387CF4B002ED72D /* LKAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4470A42387CF4B002ED72D /* LKAlbum.swift */; };
+		FF4470A72387D403002ED72D /* LKPhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4470A62387D403002ED72D /* LKPhotoViewCell.swift */; };
 		FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF7478102341B7350017DC74 /* InfoPlist.strings */; };
 		FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0A236C02300083BE5F /* ConfirmActionView.swift */; };
 		FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */; };
@@ -133,6 +136,9 @@
 		FF4136022351645300B27792 /* StringLocalizable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLocalizable.swift; sourceTree = "<group>"; };
 		FF41360423516CD900B27792 /* KMNavigationBarTransition.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = KMNavigationBarTransition.framework; path = Carthage/Build/iOS/KMNavigationBarTransition.framework; sourceTree = "<group>"; };
 		FF4136082351753C00B27792 /* UserApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiRequest.swift; sourceTree = "<group>"; };
+		FF4470A22387C309002ED72D /* LKPhotoPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoPickerViewController.swift; sourceTree = "<group>"; };
+		FF4470A42387CF4B002ED72D /* LKAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKAlbum.swift; sourceTree = "<group>"; };
+		FF4470A62387D403002ED72D /* LKPhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoViewCell.swift; sourceTree = "<group>"; };
 		FF74780B2341B5350017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		FF74780F2341B7350017DC74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF7478112341B7380017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -334,6 +340,7 @@
 		FF4135E1235070DD00B27792 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				FF4470A12387C2DF002ED72D /* PhotoPicker */,
 				FF2CA57E234DB17100D1B433 /* ApiManager */,
 				FF1C1F582340A44000D635A6 /* RefreshControl */,
 				FF4135EF2350755500B27792 /* ProgressHUD */,
@@ -400,6 +407,16 @@
 				FF101C5D23540C0E00B78D41 /* RegisterViewController.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		FF4470A12387C2DF002ED72D /* PhotoPicker */ = {
+			isa = PBXGroup;
+			children = (
+				FF4470A22387C309002ED72D /* LKPhotoPickerViewController.swift */,
+				FF4470A42387CF4B002ED72D /* LKAlbum.swift */,
+				FF4470A62387D403002ED72D /* LKPhotoViewCell.swift */,
+			);
+			path = PhotoPicker;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -512,6 +529,7 @@
 				FF34B9B42366B6C800A702AB /* ArticleViewCell.swift in Sources */,
 				FF2CA588234DC68D00D1B433 /* MainNavigationController.swift in Sources */,
 				FF4135E9235070DD00B27792 /* ProgressHUD.swift in Sources */,
+				FF4470A72387D403002ED72D /* LKPhotoViewCell.swift in Sources */,
 				FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */,
 				FF4135D823506F1F00B27792 /* MainTabBarController.swift in Sources */,
 				FF101C5A2354044D00B78D41 /* User.swift in Sources */,
@@ -524,6 +542,7 @@
 				FFFC57FC2355B4F400D79270 /* PostStatusViewController.swift in Sources */,
 				FF4135F42350821F00B27792 /* RefreshBackFooter.swift in Sources */,
 				FF1190532351A3C8004E87E8 /* RefreshBackNormalFooter.swift in Sources */,
+				FF4470A52387CF4B002ED72D /* LKAlbum.swift in Sources */,
 				FF4135EA235070DD00B27792 /* ColorUtil.swift in Sources */,
 				FFFC58002355C1D300D79270 /* StatusViewCell.swift in Sources */,
 				FFFC58022356B66000D79270 /* SettingApiRequest.swift in Sources */,
@@ -542,6 +561,7 @@
 				FF1C1F5523408B3D00D635A6 /* ArticleDetailViewController.swift in Sources */,
 				FF4135DE2350704F00B27792 /* DiscoverTabViewController.swift in Sources */,
 				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,
+				FF4470A32387C309002ED72D /* LKPhotoPickerViewController.swift in Sources */,
 				FF1C1F5E2341978800D635A6 /* UIViewFrameEx.swift in Sources */,
 				FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */,
 				FF11905C2351C354004E87E8 /* RefreshNormalHeader.swift in Sources */,
@@ -713,6 +733,7 @@
 				CODE_SIGN_ENTITLEMENTS = Like/ll.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3S73583C2C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -728,6 +749,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Like/Vendors/WeChatSDK1.8.6",
 				);
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
@@ -748,6 +770,7 @@
 				CODE_SIGN_ENTITLEMENTS = Like/ll.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3S73583C2C;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -763,6 +786,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/Like/Vendors/WeChatSDK1.8.6",
 				);
+				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
 					"-ObjC",
 					"-all_load",
