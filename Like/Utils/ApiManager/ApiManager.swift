@@ -20,7 +20,8 @@ public enum Method: String {
 
 class ApiManager: NSObject {
     static let shared = ApiManager()
-    
+//    let baseUrl = "https://ins-api.sleen.top/"
+    static let baseUrl = "http://127.0.0.1:5000/"
     private override init() {
         
     }
@@ -30,7 +31,11 @@ class ApiManager: NSObject {
         config.timeoutIntervalForRequest = 30
         
         let delegate: SessionDelegate = SessionDelegate()
-        return Session(startRequestsImmediately: true, configuration: config, delegate: delegate, rootQueue: DispatchQueue.main, requestQueue: nil, serializationQueue: nil, adapter: nil, serverTrustManager: nil, retrier: nil, eventMonitors: [])
+        let tr = ServerTrustManager(evaluators: [
+            "up-z2.qiniu.com": DisabledEvaluator()
+        ])
+        
+        return Session(startRequestsImmediately: true, configuration: config, delegate: delegate, rootQueue: DispatchQueue.main, requestQueue: nil, serializationQueue: nil, adapter: nil, serverTrustManager: tr, retrier: nil, eventMonitors: [])
     }()
     
     public func request(request: ApiRequest, success: @escaping RequestSuccessBlock, failed: @escaping RequestFailedBlock) {
@@ -47,6 +52,34 @@ class ApiManager: NSObject {
             break
         }
 
+    }
+    
+    public func uploadImage(image: UIImage, token: String, success: @escaping RequestSuccessBlock, failed: @escaping RequestFailedBlock) {
+        let url = "http://upload-z2.qiniup.com"
+        self.manager.upload(multipartFormData: { (formData) in
+            
+            formData.append(token.data(using: .utf8)!, withName: "token")
+            formData.append(image.jpegData(compressionQuality: 1)!, withName: "file")
+            },
+            usingThreshold: MultipartUpload.encodingMemoryThreshold, fileManager: .default, to: url, method: .post, headers: nil).validate().responseJSON { (response) in
+                if let _ = response.result.error {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: response.data ?? Data(), options: .mutableLeaves)
+                        let j = JSON(json)
+                        failed(j["error"].stringValue)
+                    } catch {
+                        failed("未知错误")
+                    }
+                    
+                } else if let data = response.result.value {
+                    if (data as? NSDictionary) == nil {
+                        failed("data error")
+                    } else {
+                        let d = data as! [String: Any]
+                        print(d)
+                    }
+                }
+            }
     }
 }
 

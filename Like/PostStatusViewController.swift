@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import SwiftyJSON
 
 class PostStatusViewController: BaseViewController {
 
+    var token: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -23,6 +25,14 @@ class PostStatusViewController: BaseViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     
         self.textView.becomeFirstResponder()
+        
+        ApiManager.shared.request(request: SettingApiRequest.qiniuToken(()), success: { (response) in
+            let token = JSON(response).stringValue
+            self.token = token
+            debugPrint(token)
+        }) { (error) in
+            
+        }
     }
     
     @objc func keyboardFrameChange(_ noti: Notification) {
@@ -100,6 +110,12 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
     func photoPickerViewController(controller: LKPhotoPickerViewController, selectAssets: Array<LKAsset>, selectPhotos: Array<UIImage>) {
         print(selectPhotos)
         self.setupPhotos(photos: selectPhotos)
+        
+        ApiManager.shared.uploadImage(image: selectPhotos[0], token: self.token, success: { (resp) in
+            
+        }) { (error) in
+            
+        }
     }
     
     func setupPhotos(photos: Array<UIImage>) {

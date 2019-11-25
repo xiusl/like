@@ -10,6 +10,7 @@ import UIKit
 
 enum SettingApiRequest {
     case ping(Void)
+    case qiniuToken(Void)
     case deafultApi(Void)
 }
 
@@ -23,13 +24,16 @@ extension SettingApiRequest: ApiRequest {
     
     var baseUrl: String {
 //        return "http://127.0.0.1:5000/"
-        return "https://ins-api.sleen.top/"
+////        return "https://ins-api.sleen.top/"
+        return ApiManager.baseUrl
     }
     
     var path: String {
         switch self {
         case .ping():
             return "setting/ping"
+        case .qiniuToken():
+            return "qiniu/token"
         default:
             return ""
         }
