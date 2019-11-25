@@ -1,25 +1,20 @@
 //
-//  LKPhotoViewCell.swift
+//  LKPhotoPreviewViewCell.swift
 //  Like
 //
-//  Created by xiusl on 2019/11/22.
+//  Created by xiusl on 2019/11/25.
 //  Copyright © 2019 likeeee. All rights reserved.
 //
 
 import UIKit
 import Photos
 
-protocol LKPhotoViewCellDelegate {
-    func photoViewCell(cell: LKPhotoViewCell, selectButton: UIButton)
-}
-
-class LKPhotoViewCell: UICollectionViewCell {
-    var delegate: LKPhotoViewCellDelegate?
-    
+class LKPhotoPreviewViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.contentView.addSubview(self.imageView)
-        self.contentView.addSubview(self.selectButton)
+        
+        self.contentView.addSubview(self.scrollView)
+        self.scrollView.addSubview(self.imageView)
     }
     
     required init?(coder: NSCoder) {
@@ -30,6 +25,13 @@ class LKPhotoViewCell: UICollectionViewCell {
         let imageView = UIImageView()
         imageView.frame = self.bounds
         return imageView
+    }()
+    
+    lazy var scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.frame = self.bounds
+        scrollView.contentSize = self.bounds.size
+        return scrollView
     }()
     
     func setup(asset: LKAsset) {
@@ -56,22 +58,21 @@ class LKPhotoViewCell: UICollectionViewCell {
          */
         let photoWidth = self.imageView.frame.size.width
         var size = PHImageManagerMaximumSize
-        if photoWidth < 400 {
-            size = CGSize(width: photoWidth*2, height: photoWidth*2)
-        } else {
-            let phAsset = mod
-            let aspectRatio =  CGFloat(phAsset.pixelWidth) / CGFloat(phAsset.pixelHeight)
-            var pixelWidth = photoWidth * 2
-            if aspectRatio > 1.8 {
-                pixelWidth = pixelWidth * aspectRatio
-            }
-            if aspectRatio < 0.2 {
-                pixelWidth = pixelWidth * 0.5
-            }
-            let pixelHeight = pixelWidth / aspectRatio
-            size = CGSize(width: pixelWidth, height: pixelHeight)
-        }
         
+        let phAsset = mod
+        let aspectRatio =  CGFloat(phAsset.pixelWidth) / CGFloat(phAsset.pixelHeight)
+        var pixelWidth = photoWidth * 2
+        if aspectRatio > 1.8 {
+            pixelWidth = pixelWidth * aspectRatio
+        }
+        if aspectRatio < 0.2 {
+            pixelWidth = pixelWidth * 0.5
+        }
+        let pixelHeight = pixelWidth / aspectRatio
+        size = CGSize(width: pixelWidth, height: pixelHeight)
+        
+        let t = (self.frame.size.height - pixelHeight) / 2.0
+        self.imageView.frame = CGRect(x: 0, y: t, width: photoWidth, height: pixelHeight)
         
         let opt: PHImageRequestOptions = PHImageRequestOptions()
         opt.resizeMode = .fast
@@ -81,19 +82,4 @@ class LKPhotoViewCell: UICollectionViewCell {
         }
     }
     
-    lazy var selectButton: UIButton = {
-        let selectButton = UIButton()
-        let w = self.contentView.frame.size.width
-        selectButton.frame = CGRect(x: w-30, y: 10, width: 20, height: 20)
-        selectButton.setBackgroundImage(UIImage(named: "photo_picker_nor"), for: .normal)
-        selectButton.setBackgroundImage(UIImage(named: "photo_picker_sel"), for: .selected)
-        selectButton.addTarget(self, action: #selector(selectButtonClick(_:)), for: .touchUpInside)
-        selectButton.titleLabel?.font = UIFont.systemFontMedium(ofSize: 12)
-        return selectButton
-    }()
-    
-    @objc func selectButtonClick(_ btn: UIButton) {
-        btn.isSelected = !btn.isSelected
-        self.delegate?.photoViewCell(cell: self, selectButton: btn)
-    }
 }

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */; };
 		FF101C5A2354044D00B78D41 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C592354044D00B78D41 /* User.swift */; };
 		FF101C5C235408E000B78D41 /* MeTabTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */; };
 		FF101C5E23540C0E00B78D41 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C5D23540C0E00B78D41 /* RegisterViewController.swift */; };
@@ -75,6 +76,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoPreviewViewCell.swift; sourceTree = "<group>"; };
 		FF101C592354044D00B78D41 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTabTableViewCell.swift; sourceTree = "<group>"; };
 		FF101C5D23540C0E00B78D41 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				FF4470A22387C309002ED72D /* LKPhotoPickerViewController.swift */,
 				FF4470A42387CF4B002ED72D /* LKAlbum.swift */,
 				FF4470A62387D403002ED72D /* LKPhotoViewCell.swift */,
+				FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */,
 			);
 			path = PhotoPicker;
 			sourceTree = "<group>";
@@ -558,6 +561,7 @@
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
 				FF11905A2351BB99004E87E8 /* RefreshStateHeader.swift in Sources */,
 				FF101C65235429C200B78D41 /* UserDetailViewController.swift in Sources */,
+				FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */,
 				FF1C1F5523408B3D00D635A6 /* ArticleDetailViewController.swift in Sources */,
 				FF4135DE2350704F00B27792 /* DiscoverTabViewController.swift in Sources */,
 				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,

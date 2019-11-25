@@ -16,8 +16,9 @@ class PostStatusViewController: BaseViewController {
         // Do any additional setup after loading the view.
         self.title = "发布动态"
         self.view.addSubview(self.textView)
-        self.view.addSubview(self.uploadButton)
         self.view.addSubview(self.okButton)
+        self.view.addSubview(self.photosView)
+        self.view.addSubview(self.uploadButton)
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     
@@ -81,6 +82,56 @@ class PostStatusViewController: BaseViewController {
     
     @objc func uploadButtonClick() {
         let vc = LKPhotoPickerViewController(originalPhoto: true)
+        vc.modalPresentationStyle = .fullScreen
+        vc.lk_delegate = self
         self.present(vc, animated: true, completion: nil)
+    }
+    
+    lazy var photosView: UIView = {
+       let photosView = UIView()
+        photosView.frame = CGRect(x: 16, y: TopSafeHeight+136+20, width: ScreenWidth-32, height: 64)
+        return photosView
+    }()
+}
+extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
+    func photoPickerViewController(controller: LKPhotoPickerViewController, selectPhotos: Array<LKAsset>) {
+        
+    }
+    func photoPickerViewController(controller: LKPhotoPickerViewController, selectAssets: Array<LKAsset>, selectPhotos: Array<UIImage>) {
+        print(selectPhotos)
+        self.setupPhotos(photos: selectPhotos)
+    }
+    
+    func setupPhotos(photos: Array<UIImage>) {
+        
+        if self.photosView.subviews.count > 0 {
+            self.photosView.subviews.forEach({$0.removeFromSuperview()})
+        }
+        
+        let w: CGFloat = (ScreenWidth-32-30) / 4.0
+        let m: CGFloat = 10
+        var l: CGFloat = 0
+        var t: CGFloat = 0
+        var i: CGFloat = 0
+        for image in photos {
+            let v = UIImageView()
+            l = i * (w + m)
+            if (l+w) > ScreenWidth-32 {
+                l = 0
+                t += (w+10)
+                i = 0
+            }
+            v.frame = CGRect(x: l, y: t, width: w, height: w)
+            v.image = image
+            self.photosView.addSubview(v)
+            i += 1
+        }
+        l = i * (w + m)
+        if l > ScreenWidth-32 {
+            l = 0
+            t += (w+10)
+        }
+        self.uploadButton.frame = CGRect(x: l+16, y: TopSafeHeight+136+20+t, width: w, height: w)
+        
     }
 }
