@@ -69,6 +69,7 @@
 		FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */; };
 		FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */; };
 		FFD8093B23546A5F00FE0FCB /* PostLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */; };
+		FFE1B5C9238C03CD00120D56 /* QiNiuTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1B5C8238C03CD00120D56 /* QiNiuTool.swift */; };
 		FFFC57FC2355B4F400D79270 /* PostStatusViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC57FB2355B4F400D79270 /* PostStatusViewController.swift */; };
 		FFFC57FE2355B69100D79270 /* StatusApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC57FD2355B69100D79270 /* StatusApiRequest.swift */; };
 		FFFC58002355C1D300D79270 /* StatusViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFFC57FF2355C1D300D79270 /* StatusViewCell.swift */; };
@@ -148,6 +149,7 @@
 		FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSheetView.swift; sourceTree = "<group>"; };
 		FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableHeaderView.swift; sourceTree = "<group>"; };
 		FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLinkView.swift; sourceTree = "<group>"; };
+		FFE1B5C8238C03CD00120D56 /* QiNiuTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiNiuTool.swift; sourceTree = "<group>"; };
 		FFFC57FB2355B4F400D79270 /* PostStatusViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostStatusViewController.swift; sourceTree = "<group>"; };
 		FFFC57FD2355B69100D79270 /* StatusApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusApiRequest.swift; sourceTree = "<group>"; };
 		FFFC57FF2355C1D300D79270 /* StatusViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusViewCell.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 		FF4135E1235070DD00B27792 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				FFE1B5C7238C03B400120D56 /* Qiniu */,
 				FF4470A12387C2DF002ED72D /* PhotoPicker */,
 				FF2CA57E234DB17100D1B433 /* ApiManager */,
 				FF1C1F582340A44000D635A6 /* RefreshControl */,
@@ -420,6 +423,14 @@
 				FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */,
 			);
 			path = PhotoPicker;
+			sourceTree = "<group>";
+		};
+		FFE1B5C7238C03B400120D56 /* Qiniu */ = {
+			isa = PBXGroup;
+			children = (
+				FFE1B5C8238C03CD00120D56 /* QiNiuTool.swift */,
+			);
+			path = Qiniu;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -559,6 +570,7 @@
 				FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */,
 				FF4135DC2350704100B27792 /* HomeTabViewController.swift in Sources */,
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
+				FFE1B5C9238C03CD00120D56 /* QiNiuTool.swift in Sources */,
 				FF11905A2351BB99004E87E8 /* RefreshStateHeader.swift in Sources */,
 				FF101C65235429C200B78D41 /* UserDetailViewController.swift in Sources */,
 				FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */,

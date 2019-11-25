@@ -9,3 +9,5 @@
 @import UIKit;
 #import "WXApiObject.h"
 #import "WXApi.h"
+
+#import <CommonCrypto/CommonHMAC.h>
