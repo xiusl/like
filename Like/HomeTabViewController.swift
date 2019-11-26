@@ -126,8 +126,15 @@ extension HomeTabViewController: UITableViewDataSource, UITableViewDelegate, Art
     
     func articleViewCell(cell: ArticleViewCell, shareIndex: Int) {
         let d = data[shareIndex]
-        let shareView = SocialShareView(url: d["url"].stringValue, title: d["title"].stringValue)
-        shareView.show()
+        let imgs = d["images"].arrayValue
+        if imgs.count > 0 {
+            let shareView = SocialShareView(url: d["url"].stringValue, title: d["title"].stringValue, image: imgs[0].stringValue)
+            shareView.show()
+        } else {
+            let shareView = SocialShareView(url: d["url"].stringValue, title: d["title"].stringValue)
+            shareView.show()
+        }
+        
     }
 }
 
