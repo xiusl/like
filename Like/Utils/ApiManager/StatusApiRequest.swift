@@ -9,7 +9,7 @@
 import UIKit
 
 enum StatusApiRequest {
-    case postStatus(content: String)
+    case postStatus(content: String, images: Array<[String: Any]>)
     case getStatuses(page: Int, count: Int)
     case likeStatus(id: String)
     case unlikeStatus(id: String)
@@ -20,7 +20,7 @@ enum StatusApiRequest {
 extension StatusApiRequest: ApiRequest {
     var type: RequestType {
         switch self {
-        case .postStatus(_):
+        case .postStatus(_, _):
             return .bodyPost
         case .getStatuses(_, _):
             return .get
@@ -57,8 +57,8 @@ extension StatusApiRequest: ApiRequest {
     
     var params: Any {
         switch self {
-        case .postStatus(let content):
-            return ["content": content]
+        case .postStatus(let content, let images):
+            return ["content": content, "images": images]
         case .getStatuses(let page, let count):
             return ["page": page, "count": count]
         case .getUserStatuses(_, let page, let count):

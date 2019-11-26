@@ -206,36 +206,17 @@ class LKPhotoPickerRootViewController: UIViewController {
     
     func fetchImages() -> Array<UIImage> {
         var photos: Array<UIImage> = []
-        for i in 0..<self.selectAssets.count {
-            print("idx: %d", i)
+        for _ in 0..<self.selectAssets.count {
             photos.append(UIImage())
         }
         
         for i in 0..<self.selectAssets.count {
             let asset = self.selectAssets[i]
-            let photoWidth: CGFloat = 400
-            var size = PHImageManagerMaximumSize
-            if photoWidth < 400 {
-                size = CGSize(width: photoWidth*2, height: photoWidth*2)
-            } else {
-                let phAsset = asset.asset!
-                let aspectRatio =  CGFloat(phAsset.pixelWidth) / CGFloat(phAsset.pixelHeight)
-                var pixelWidth = photoWidth * 2
-                if aspectRatio > 1.8 {
-                    pixelWidth = pixelWidth * aspectRatio
-                }
-                if aspectRatio < 0.2 {
-                    pixelWidth = pixelWidth * 0.5
-                }
-                let pixelHeight = pixelWidth / aspectRatio
-                size = CGSize(width: pixelWidth, height: pixelHeight)
-            }
-            
             
             let opt: PHImageRequestOptions = PHImageRequestOptions()
-            opt.resizeMode = .fast
             opt.isNetworkAccessAllowed = true
-            let _ = PHImageManager.default().requestImage(for: asset.asset!, targetSize: size, contentMode: .default, options: opt) { (image, _) in
+            opt.isSynchronous = true
+            let _ = PHImageManager.default().requestImage(for: asset.asset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: opt) { (image, _) in
                 photos[i] = image ?? UIImage()
             }
         }
@@ -258,11 +239,13 @@ extension LKPhotoPickerRootViewController: UICollectionViewDataSource, UICollect
         if self.containAsset(asset: mdo) {
             let reIdx = self.indexAsset(asset: mdo)
             let t = String(format: "%d", reIdx+1)
-            cell.selectButton.setTitle(t, for: .normal)
+            cell.indexLabel.text = t
             cell.selectButton.isSelected = true
+            cell.setupSelected(selected: true)
         } else {
-            cell.selectButton.setTitle("", for: .normal)
+            cell.indexLabel.text = ""
             cell.selectButton.isSelected = false
+            cell.setupSelected(selected: false)
         }
         
         return cell
@@ -363,6 +346,7 @@ extension LKPhotoPickerRootViewController: UITableViewDataSource,UITableViewDele
         //        self.title = self.currentAlbum.name
         self.titleButton.setTitle(self.currentAlbum.name, for: .normal)
         self.titleButton.isSelected = false
+        self.titleButton.sizeToFit()
         
         UIView.animate(withDuration: 0.2) {
             self.tableView.transform = CGAffineTransform.identity

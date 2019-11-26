@@ -14,6 +14,8 @@ typealias RequestSuccessBlock = (_ result: Any) -> Void
 typealias RequestFailedBlock = (_ error: String) -> Void
 typealias RequestProgressBlock = (Double) -> Void
 
+typealias UploadSuccessBlock = (_ result: Any) -> Void
+
 public enum Method: String {
     case GET, POST, PUT, DELETE, PATCH
 }
@@ -54,12 +56,14 @@ class ApiManager: NSObject {
 
     }
     
-    public func uploadImage(image: UIImage, token: String, success: @escaping RequestSuccessBlock, failed: @escaping RequestFailedBlock) {
+    public func uploadImage(image: UIImage, token: String, success: @escaping UploadSuccessBlock, failed: @escaping RequestFailedBlock) {
         let url = "http://upload-z2.qiniup.com"
         self.manager.upload(multipartFormData: { (formData) in
-            
+            let data = image.jpegData(compressionQuality: 1)!
+            let k = String(format: "/like/%@", qn_eTag(data: data))
+            formData.append(k.data(using: .utf8)!, withName: "key")
             formData.append(token.data(using: .utf8)!, withName: "token")
-            formData.append(image.jpegData(compressionQuality: 1)!, withName: "file")
+            formData.append(data, withName: "file")
             },
             usingThreshold: MultipartUpload.encodingMemoryThreshold, fileManager: .default, to: url, method: .post, headers: nil).validate().responseJSON { (response) in
                 if let _ = response.result.error {
@@ -75,8 +79,7 @@ class ApiManager: NSObject {
                     if (data as? NSDictionary) == nil {
                         failed("data error")
                     } else {
-                        let d = data as! [String: Any]
-                        print(d)
+                        success(data as Any)
                     }
                 }
             }
