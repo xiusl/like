@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftyJSON
+import Kingfisher
 
 protocol StatusViewCellDelegate {
     func statusViewCellLikeButtonClick(_ button: UIButton)
@@ -49,9 +51,56 @@ class StatusViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
+    func setupImages(_ images: Array<JSON>) {
+        if images.count > 0 {
+            let img = images[0]
+            
+            
+            let scale = UIScreen.main.scale
+            var w = CGFloat(img["width"].intValue)
+            var h = CGFloat(img["height"].intValue)
+            let photo_scale = h / w
+            let maxW: CGFloat = (ScreenWidth-32)*0.68 * scale
+            if w > maxW {
+                w = maxW
+                h = maxW * photo_scale
+            }
+            var url = img["url"].stringValue
+            url = url + "?imageView2/1/w/\(Int(w))/h/\(Int(h))"
+            
+            self.photoView.kf.setImage(with: URL(string: url))
+            self.photoView.snp.updateConstraints { (make) in
+                make.width.equalTo(w/scale)
+                make.height.equalTo(h/scale)
+            }
+        } else {
+            self.photoView.snp.updateConstraints { (make) in
+                make.height.equalTo(0)
+                make.width.equalTo(0)
+            }
+        }
+    }
+    
+    func setupTime(_ time: String) {
+        let format = DateFormatter()
+        format.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
+        let date = format.date(from: time)
+
+        guard let d = date else {
+            self.timeLabel.text = ""
+            return
+        }
+        let format2 = DateFormatter()
+        format2.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        self.timeLabel.text = format2.string(from: d)
+        
+    }
+    
     func setupViews() {
         self.contentView.addSubview(self.contentLabel)
+        self.contentView.addSubview(self.photoView)
         self.contentView.addSubview(self.likeButton)
+        self.contentView.addSubview(self.timeLabel)
         
         self.contentLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView).offset(12)
@@ -59,10 +108,22 @@ class StatusViewCell: UITableViewCell {
             make.right.equalTo(self.contentView).offset(-16)
         }
         
+        self.photoView.snp.makeConstraints { (make) in
+            make.top.equalTo(self.contentLabel.snp.bottom).offset(10)
+            make.left.equalTo(self.contentView).offset(16)
+            make.height.equalTo(0)
+            make.width.equalTo(0)
+        }
+        
         self.likeButton.snp.makeConstraints { (make) in
-            make.top.equalTo(self.contentLabel.snp.bottom).offset(8)
+            make.top.equalTo(self.photoView.snp.bottom).offset(8)
             make.bottom.equalTo(self.contentView).offset(-12)
             make.right.equalTo(self.contentLabel)
+        }
+        
+        self.timeLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(self.contentView).offset(16)
+            make.centerY.equalTo(self.likeButton.snp.centerY)
         }
     }
     
@@ -73,6 +134,18 @@ class StatusViewCell: UITableViewCell {
         contentLabel.textColor = .blackText
         contentLabel.numberOfLines = 0
         return contentLabel
+    }()
+    
+    lazy var photoView: UIImageView = {
+        let photoView = UIImageView()
+        return photoView
+    }()
+    
+    lazy var timeLabel: UILabel = {
+        let timeLabel = UILabel()
+        timeLabel.font = UIFont.systemFont(ofSize: 12)
+        timeLabel.textColor = UIColor(hex: 0x9B9C9C)
+        return timeLabel
     }()
     
     lazy var likeButton: UIButton = {

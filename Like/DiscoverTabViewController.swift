@@ -61,6 +61,10 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
         cell.likeButton.isSelected = j["is_liked"].boolValue
         cell.delegate = self
         cell.likeButton.setTitle(j["id"].stringValue, for: .disabled)
+        
+        cell.setupImages(j["images"].arrayValue)
+        cell.setupTime(j["created_at"].stringValue)
+        
         return cell
     }
     @objc func okButtonClick(_ button: UIButton) {
