@@ -23,10 +23,10 @@ class DiscoverTabViewController: BaseViewController {
     }
 
     @objc func loadData() {
-        let request = StatusApiRequest.getStatuses(page: 0, count: 10)
+        let request = StatusApiRequest.getStatuses(page: 1, count: 10)
         ApiManager.shared.request(request: request, success: { (result) in
-            
-            self.data = JSON(result).arrayValue
+            let data = JSON(result)
+            self.data = data["statuses"].arrayValue
             self.tableView.reloadData()
             self.tableView.mjHeader?.endRefreshing()
         }) { (error) in

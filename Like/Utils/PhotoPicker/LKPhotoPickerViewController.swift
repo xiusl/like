@@ -30,6 +30,9 @@ class LKPhotoPickerViewController: UINavigationController {
     private override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
     }
+    private override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
     
     init(withOldImage: Array<PHAsset>) {
         let vc = LKPhotoPickerRootViewController()
@@ -60,17 +63,21 @@ class LKPhotoPickerRootViewController: UIViewController {
             PHPhotoLibrary.requestAuthorization { (status) in
                 if status == .authorized {
                     debugPrint("access")
+                    DispatchQueue.main.async {
+                        self.gerateData()
+                    }
                 } else {
                     debugPrint("not access")
                 }
             }
+        } else {
+            self.gerateData()
         }
         self.view.addSubview(self.collectionView)
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.barView)
         self.barView.addSubview(self.finishButton)
 //        self.barView.addSubview(self.previewButton)
-        self.a()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: .plain, target: self, action: #selector(dismissClick))
         self.navigationItem.titleView = self.titleButton
@@ -78,7 +85,7 @@ class LKPhotoPickerRootViewController: UIViewController {
     @objc func dismissClick() {
         self.dismiss(animated: true, completion: nil)
     }
-    func a() {
+    func gerateData() {
         let opt = PHFetchOptions()
         opt.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
         opt.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
@@ -104,6 +111,7 @@ class LKPhotoPickerRootViewController: UIViewController {
         self.collectionView.reloadData()
 //        self.title = self.currentAlbum.name
         self.titleButton.setTitle(self.currentAlbum.name, for: .normal)
+        self.titleButton.sizeToFit()
         self.tableView.reloadData()
     }
     

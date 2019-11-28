@@ -22,8 +22,8 @@ public enum Method: String {
 
 class ApiManager: NSObject {
     static let shared = ApiManager()
-    static let baseUrl = "https://ins-api.sleen.top/"
-//  static let baseUrl = "http://127.0.0.1:5000/"
+//    static let baseUrl = "https://ins-api.sleen.top/"
+    static let baseUrl = "http://127.0.0.1:5000/"
 //    #if DEBUG
 //        static let baseUrl = "http://127.0.0.1:5000/"
 //    #else
@@ -64,31 +64,26 @@ class ApiManager: NSObject {
     
     public func uploadImage(image: UIImage, token: String, success: @escaping UploadSuccessBlock, failed: @escaping RequestFailedBlock) {
         let url = "http://upload-z2.qiniup.com"
-        self.manager.upload(multipartFormData: { (formData) in
+        let req = self.manager.upload(multipartFormData: { (formData) in
             let data = image.jpegData(compressionQuality: 1)!
-            let k = String(format: "/like/%@", qn_eTag(data: data))
+            let k = String(format: "like/%@", qn_eTag(data: data))
             formData.append(k.data(using: .utf8)!, withName: "key")
             formData.append(token.data(using: .utf8)!, withName: "token")
             formData.append(data, withName: "file")
-            },
-            usingThreshold: MultipartUpload.encodingMemoryThreshold, fileManager: .default, to: url, method: .post, headers: nil).validate().responseJSON { (response) in
-                if let _ = response.result.error {
-                    do {
-                        let json = try JSONSerialization.jsonObject(with: response.data ?? Data(), options: .mutableLeaves)
-                        let j = JSON(json)
-                        failed(j["error"].stringValue)
-                    } catch {
-                        failed("未知错误")
-                    }
-                    
-                } else if let data = response.result.value {
-                    if (data as? NSDictionary) == nil {
-                        failed("data error")
-                    } else {
-                        success(data as Any)
-                    }
-                }
+        }, usingThreshold: MultipartUpload.encodingMemoryThreshold, fileManager: .default, to: url, method: .post, headers: nil)
+        req.uploadProgress { (progress) in
+            
+            debugPrint(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))
+        }
+        req.validate().responseJSON { (response) in
+            if let error = response.result.error {
+                debugPrint(error.localizedDescription)
+                failed(error.localizedDescription)
+                
+            } else if let data = response.result.value {
+                success(data as Any)
             }
+        }
     }
 }
 
