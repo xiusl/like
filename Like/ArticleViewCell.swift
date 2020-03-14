@@ -169,6 +169,7 @@ class ArticleImagesView: UIView {
             subv.isHidden = false
             let v: UIImageView = subv as! UIImageView
             let url = images[i].stringValue
+            print(url)
             v.kf.setImage(with: URL(string: url))
             i += 1
         }
