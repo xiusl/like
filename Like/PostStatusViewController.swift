@@ -12,13 +12,14 @@ import SwiftyJSON
 class PostStatusViewController: BaseViewController {
 
     var token: String = ""
+    var imagesParam: Array<[String: Any]> = []
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         self.title = "发布动态"
         self.view.addSubview(self.textView)
-        self.view.addSubview(self.okButton)
+//        self.view.addSubview(self.okButton)
         self.view.addSubview(self.photosView)
         self.view.addSubview(self.uploadButton)
         
@@ -33,6 +34,8 @@ class PostStatusViewController: BaseViewController {
         }) { (error) in
             
         }
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: .plain, target: self, action: #selector(okButtonClick))
     }
     
     @objc func keyboardFrameChange(_ noti: Notification) {
@@ -72,7 +75,7 @@ class PostStatusViewController: BaseViewController {
     }()
     
     @objc func okButtonClick() {
-        let request = StatusApiRequest.postStatus(content: self.textView.text)
+        let request = StatusApiRequest.postStatus(content: self.textView.text, images: self.imagesParam)
         ApiManager.shared.request(request: request, success: { (result) in
             debugPrint(result)
             SLUtil.showMessage("发布成功")
@@ -111,11 +114,27 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
         print(selectPhotos)
         self.setupPhotos(photos: selectPhotos)
         
-        ApiManager.shared.uploadImage(image: selectPhotos[0], token: self.token, success: { (resp) in
-            
-        }) { (error) in
-            
+        var imgs: Array<[String: Any]> = []
+        for _ in 0..<selectPhotos.count {
+            imgs.append(["a":0])
         }
+        
+        for i in 0..<selectPhotos.count {
+            let image = selectPhotos[i]
+            ApiManager.shared.uploadImage(image: image, token: self.token, success: { (resp) in
+                let j = JSON(resp)
+                let d = [
+                    "width": j["w"].intValue,
+                    "height": j["h"].intValue,
+                    "url": j["key"].stringValue] as [String : Any]
+                debugPrint(d)
+                imgs[i] = d
+                self.imagesParam = imgs
+            }) { (error) in
+                
+            }
+        }
+        
     }
     
     func setupPhotos(photos: Array<UIImage>) {

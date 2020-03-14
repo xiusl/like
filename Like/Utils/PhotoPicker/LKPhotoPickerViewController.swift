@@ -30,6 +30,9 @@ class LKPhotoPickerViewController: UINavigationController {
     private override init(rootViewController: UIViewController) {
         super.init(rootViewController: rootViewController)
     }
+    private override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
     
     init(withOldImage: Array<PHAsset>) {
         let vc = LKPhotoPickerRootViewController()
@@ -60,17 +63,21 @@ class LKPhotoPickerRootViewController: UIViewController {
             PHPhotoLibrary.requestAuthorization { (status) in
                 if status == .authorized {
                     debugPrint("access")
+                    DispatchQueue.main.async {
+                        self.gerateData()
+                    }
                 } else {
                     debugPrint("not access")
                 }
             }
+        } else {
+            self.gerateData()
         }
         self.view.addSubview(self.collectionView)
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.barView)
         self.barView.addSubview(self.finishButton)
 //        self.barView.addSubview(self.previewButton)
-        self.a()
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "取消", style: .plain, target: self, action: #selector(dismissClick))
         self.navigationItem.titleView = self.titleButton
@@ -78,7 +85,7 @@ class LKPhotoPickerRootViewController: UIViewController {
     @objc func dismissClick() {
         self.dismiss(animated: true, completion: nil)
     }
-    func a() {
+    func gerateData() {
         let opt = PHFetchOptions()
         opt.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
         opt.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
@@ -104,6 +111,7 @@ class LKPhotoPickerRootViewController: UIViewController {
         self.collectionView.reloadData()
 //        self.title = self.currentAlbum.name
         self.titleButton.setTitle(self.currentAlbum.name, for: .normal)
+        self.titleButton.sizeToFit()
         self.tableView.reloadData()
     }
     
@@ -206,36 +214,17 @@ class LKPhotoPickerRootViewController: UIViewController {
     
     func fetchImages() -> Array<UIImage> {
         var photos: Array<UIImage> = []
-        for i in 0..<self.selectAssets.count {
-            print("idx: %d", i)
+        for _ in 0..<self.selectAssets.count {
             photos.append(UIImage())
         }
         
         for i in 0..<self.selectAssets.count {
             let asset = self.selectAssets[i]
-            let photoWidth: CGFloat = 400
-            var size = PHImageManagerMaximumSize
-            if photoWidth < 400 {
-                size = CGSize(width: photoWidth*2, height: photoWidth*2)
-            } else {
-                let phAsset = asset.asset!
-                let aspectRatio =  CGFloat(phAsset.pixelWidth) / CGFloat(phAsset.pixelHeight)
-                var pixelWidth = photoWidth * 2
-                if aspectRatio > 1.8 {
-                    pixelWidth = pixelWidth * aspectRatio
-                }
-                if aspectRatio < 0.2 {
-                    pixelWidth = pixelWidth * 0.5
-                }
-                let pixelHeight = pixelWidth / aspectRatio
-                size = CGSize(width: pixelWidth, height: pixelHeight)
-            }
-            
             
             let opt: PHImageRequestOptions = PHImageRequestOptions()
-            opt.resizeMode = .fast
             opt.isNetworkAccessAllowed = true
-            let _ = PHImageManager.default().requestImage(for: asset.asset!, targetSize: size, contentMode: .default, options: opt) { (image, _) in
+            opt.isSynchronous = true
+            let _ = PHImageManager.default().requestImage(for: asset.asset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: opt) { (image, _) in
                 photos[i] = image ?? UIImage()
             }
         }
@@ -258,11 +247,13 @@ extension LKPhotoPickerRootViewController: UICollectionViewDataSource, UICollect
         if self.containAsset(asset: mdo) {
             let reIdx = self.indexAsset(asset: mdo)
             let t = String(format: "%d", reIdx+1)
-            cell.selectButton.setTitle(t, for: .normal)
+            cell.indexLabel.text = t
             cell.selectButton.isSelected = true
+            cell.setupSelected(selected: true)
         } else {
-            cell.selectButton.setTitle("", for: .normal)
+            cell.indexLabel.text = ""
             cell.selectButton.isSelected = false
+            cell.setupSelected(selected: false)
         }
         
         return cell
@@ -363,6 +354,7 @@ extension LKPhotoPickerRootViewController: UITableViewDataSource,UITableViewDele
         //        self.title = self.currentAlbum.name
         self.titleButton.setTitle(self.currentAlbum.name, for: .normal)
         self.titleButton.isSelected = false
+        self.titleButton.sizeToFit()
         
         UIView.animate(withDuration: 0.2) {
             self.tableView.transform = CGAffineTransform.identity

@@ -31,12 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         self.window?.makeKeyAndVisible()
         WXApi.registerApp("wxd07ead9c827a04f5", universalLink: "https://ins.sleen.top/")
         
-        do {
-            let d = try Data(contentsOf: URL(fileURLWithPath: "/Users/xiusl/Desktop/456.jpg"))
-            let _ = qu_eTag(data: d)
-        } catch let error as Error? {
-            print(error ?? "")
-        }
+//        do {
+//            let d = try Data(contentsOf: URL(fileURLWithPath: "/Users/xiusl/Desktop/456.jpg"))
+//            let _ = qn_eTag(data: d)
+//        } catch let error as Error? {
+//            print(error ?? "")
+//        }
         
         
         return true

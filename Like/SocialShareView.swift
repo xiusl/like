@@ -113,15 +113,52 @@ class SocialShareView: UIView {
         webpageObject.webpageUrl = self.url!
         let message = WXMediaMessage()
         message.title = self.title!
-        message.description = "哩嗑-发现更大世界"
+        message.description = "哩嗑 - 收集&思考"
         message.mediaObject = webpageObject
         
+        if self.image != nil {
+            let img = self.image!
+            let result = ImageCache.default.isCached(forKey: img)
+            if result {
+                ImageCache.default.retrieveImage(forKey: img, options: nil, callbackQueue: .mainAsync) { (result) in
+                    switch result {
+                    case .success(let value):
+                        message.setThumbImage(value.image ?? UIImage())
+                        self.shareMessage2(message: message)
+                        break
+                    case .failure(let error):
+                        debugPrint(error)
+                        break
+                    }
+                }
+            } else {
+                KingfisherManager.shared.retrieveImage(with: ImageResource(downloadURL: URL(string: img)!)) { (result) in
+                    switch result {
+                    case .success(let value):
+                        message.setThumbImage(value.image)
+                        self.shareMessage2(message: message)
+                        break
+                    case .failure(_):
+                        break
+                    }
+                }
+            }
+        } else {
+            
+            message.setThumbImage(UIImage(named: "logo")!)
+            self.shareMessage2(message: message)
+        }
+        
+        
+        self.dismiss()
+    }
+    
+    private func shareMessage2(message: WXMediaMessage) {
         let req = SendMessageToWXReq()
         req.bText = false
         req.message = message
         req.scene = Int32(WXSceneTimeline.rawValue)
         WXApi.send(req, completion: nil)
-        self.dismiss()
     }
     
     
@@ -130,7 +167,7 @@ class SocialShareView: UIView {
         webpageObject.webpageUrl = self.url!
         let message = WXMediaMessage()
         message.title = self.title!
-        message.description = "哩嗑-发现更大世界"
+        message.description = "哩嗑 - 收集&思考"
         message.mediaObject = webpageObject
         
         if self.image != nil {
@@ -160,6 +197,10 @@ class SocialShareView: UIView {
                     }
                 }
             }
+        } else {
+            
+            message.setThumbImage(UIImage(named: "logo")!)
+            self.shareMessage(message: message)
         }
         self.dismiss()
     }

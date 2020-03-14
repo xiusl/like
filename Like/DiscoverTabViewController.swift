@@ -23,10 +23,10 @@ class DiscoverTabViewController: BaseViewController {
     }
 
     @objc func loadData() {
-        let request = StatusApiRequest.getStatuses(page: 0, count: 10)
+        let request = StatusApiRequest.getStatuses(page: 1, count: 10)
         ApiManager.shared.request(request: request, success: { (result) in
-            let res = JSON(result).dictionaryValue
-            self.data = res["statuses"]?.arrayValue ?? Array()
+            let data = JSON(result)
+            self.data = data["statuses"].arrayValue
             self.tableView.reloadData()
             self.tableView.mjHeader?.endRefreshing()
         }) { (error) in
@@ -61,6 +61,10 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
         cell.likeButton.isSelected = j["is_liked"].boolValue
         cell.delegate = self
         cell.likeButton.setTitle(j["id"].stringValue, for: .disabled)
+        
+        cell.setupImages(j["images"].arrayValue)
+        cell.setupTime(j["created_at"].stringValue)
+        
         return cell
     }
     @objc func okButtonClick(_ button: UIButton) {

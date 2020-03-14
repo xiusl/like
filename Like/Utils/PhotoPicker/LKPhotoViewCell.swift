@@ -20,6 +20,8 @@ class LKPhotoViewCell: UICollectionViewCell {
         super.init(frame: frame)
         self.contentView.addSubview(self.imageView)
         self.contentView.addSubview(self.selectButton)
+        self.contentView.addSubview(self.selectView)
+        self.contentView.addSubview(self.indexLabel)
     }
     
     required init?(coder: NSCoder) {
@@ -34,26 +36,7 @@ class LKPhotoViewCell: UICollectionViewCell {
     
     func setup(asset: LKAsset) {
         guard let mod = asset.asset else { return }
-        /*
-         CGSize imageSize;
-         if (photoWidth < TZScreenWidth && photoWidth < _photoPreviewMaxWidth) {
-             imageSize = AssetGridThumbnailSize;
-         } else {
-             PHAsset *phAsset = (PHAsset *)asset;
-             CGFloat aspectRatio = phAsset.pixelWidth / (CGFloat)phAsset.pixelHeight;
-             CGFloat pixelWidth = photoWidth * TZScreenScale;
-             // 超宽图片
-             if (aspectRatio > 1.8) {
-                 pixelWidth = pixelWidth * aspectRatio;
-             }
-             // 超高图片
-             if (aspectRatio < 0.2) {
-                 pixelWidth = pixelWidth * 0.5;
-             }
-             CGFloat pixelHeight = pixelWidth / aspectRatio;
-             imageSize = CGSizeMake(pixelWidth, pixelHeight);
-         }
-         */
+        
         let photoWidth = self.imageView.frame.size.width
         var size = PHImageManagerMaximumSize
         if photoWidth < 400 {
@@ -84,12 +67,34 @@ class LKPhotoViewCell: UICollectionViewCell {
     lazy var selectButton: UIButton = {
         let selectButton = UIButton()
         let w = self.contentView.frame.size.width
-        selectButton.frame = CGRect(x: w-30, y: 10, width: 20, height: 20)
-        selectButton.setBackgroundImage(UIImage(named: "photo_picker_nor"), for: .normal)
-        selectButton.setBackgroundImage(UIImage(named: "photo_picker_sel"), for: .selected)
+        selectButton.frame = CGRect(x: w-40, y: 0, width: 40, height: 40)
+//        selectButton.setBackgroundImage(UIImage(named: "photo_picker_nor"), for: .normal)
+//        selectButton.setBackgroundImage(UIImage(named: "photo_picker_sel"), for: .selected)
         selectButton.addTarget(self, action: #selector(selectButtonClick(_:)), for: .touchUpInside)
-        selectButton.titleLabel?.font = UIFont.systemFontMedium(ofSize: 12)
+//        selectButton.titleLabel?.font = UIFont.systemFontMedium(ofSize: 12)
         return selectButton
+    }()
+    
+    lazy var selectView: UIImageView = {
+        let selectView = UIImageView()
+        let w = self.contentView.frame.size.width
+        selectView.frame = CGRect(x: w-30, y: 10, width: 20, height: 20)
+        selectView.image = UIImage(named: "photo_picker_nor")
+        return selectView
+    }()
+    
+    func setupSelected(selected: Bool) {
+        self.selectView.image = UIImage(named: selected ? "photo_picker_sel" : "photo_picker_nor")
+    }
+    
+    lazy var indexLabel: UILabel = {
+        let indexLabel = UILabel()
+        let w = self.contentView.frame.size.width
+        indexLabel.frame = CGRect(x: w-30, y: 10, width: 20, height: 20)
+        indexLabel.font = UIFont.systemFontMedium(ofSize: 12)
+        indexLabel.textColor = .white
+        indexLabel.textAlignment = .center
+        return indexLabel
     }()
     
     @objc func selectButtonClick(_ btn: UIButton) {
