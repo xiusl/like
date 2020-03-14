@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import SwiftyJSON
+
 protocol ArticleViewCellDelegate {
     func articleViewCellLikeButtonClick(_ button: UIButton)
     func articleViewCell(cell: ArticleViewCell, shareIndex: Int)
@@ -53,6 +55,7 @@ class ArticleViewCell: UITableViewCell {
     
     func setupViews() {
         self.contentView.addSubview(self.contentLabel)
+        self.contentView.addSubview(self.imagesView)
         self.contentView.addSubview(self.likeButton)
         
         self.contentLabel.snp.makeConstraints { (make) in
@@ -61,11 +64,33 @@ class ArticleViewCell: UITableViewCell {
             make.right.equalTo(self.contentView).offset(-16)
         }
         
-        self.likeButton.snp.makeConstraints { (make) in
+        let h = (ScreenWidth - 32.0 - 8) * 0.5 * 3 / 5.0
+        self.imagesView.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentLabel.snp.bottom).offset(8)
+            make.left.right.equalTo(self.contentLabel)
+            make.height.equalTo(h)
+        }
+        
+        self.likeButton.snp.makeConstraints { (make) in
+            make.top.equalTo(self.contentLabel.snp.bottom).offset(h+16)
             make.bottom.equalTo(self.contentView).offset(-12)
             make.right.equalTo(self.contentLabel)
         }
+    }
+    
+    public func setImages(_ images: Array<JSON>) {
+        var h = (ScreenWidth - 32.0 - 8) * 0.5 * 3 / 5.0
+        if images.count > 1 {
+            self.imagesView.isHidden = false
+            h += 16
+        } else {
+            self.imagesView.isHidden = true
+            h = 8
+        }
+        self.likeButton.snp.updateConstraints { (make) in
+            make.top.equalTo(self.contentLabel.snp.bottom).offset(h)
+        }
+        self.imagesView.setImages(images)
     }
     
     
@@ -90,7 +115,64 @@ class ArticleViewCell: UITableViewCell {
         return btn
     }()
     
+    lazy var imagesView: ArticleImagesView = {
+        let imagesView: ArticleImagesView = ArticleImagesView()
+        return imagesView
+    }()
+    
     @objc func okButtonClick(_ button: UIButton) {
         self.delegate?.articleViewCell(cell: self, shareIndex: self.index)
     }
+}
+
+
+class ArticleImagesView: UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        var consLeft = self.snp.left
+        var firstV: UIImageView!
+        for i in 0..<2 {
+            let imv = UIImageView()
+            imv.contentMode = .scaleAspectFill
+            imv.clipsToBounds = true
+            self.addSubview(imv)
+            
+            if i == 0 {
+                imv.snp.makeConstraints { (make) in
+                    make.left.equalTo(consLeft)
+                    make.top.bottom.equalTo(self)
+                }
+                consLeft = imv.snp.right
+                firstV = imv
+            } else {
+                imv.snp.makeConstraints { (make) in
+                    make.left.equalTo(consLeft).offset(10)
+                    make.right.equalTo(self)
+                    make.width.equalTo(firstV)
+                    make.top.bottom.equalTo(self)
+                }
+            }
+        }
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    public func setImages(_ images: Array<JSON>) {
+        var i = 0
+        for subv in self.subviews {
+            if i >= images.count {
+                subv.isHidden = true
+                continue
+            }
+            subv.isHidden = false
+            let v: UIImageView = subv as! UIImageView
+            let url = images[i].stringValue
+            v.kf.setImage(with: URL(string: url))
+            i += 1
+        }
+    }
+    
+    
 }

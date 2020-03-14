@@ -21,7 +21,7 @@ class HomeTabViewController: BaseViewController {
         super.viewDidLoad()
         
         self.view.addSubview(self.tableView)
-        self.tableView.estimatedRowHeight = 0
+        self.tableView.estimatedRowHeight = 110
         self.tableView.estimatedSectionHeaderHeight = 0
         self.tableView.estimatedSectionFooterHeight = 0
         
@@ -106,6 +106,7 @@ extension HomeTabViewController: UITableViewDataSource, UITableViewDelegate, Art
         cell.contentLabel.text = j["title"].stringValue
         cell.delegate = self
         cell.index = indexPath.row
+        cell.setImages(j["images"].arrayValue)
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -117,7 +118,7 @@ extension HomeTabViewController: UITableViewDataSource, UITableViewDelegate, Art
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+        return UITableView.automaticDimension
     }
     
     func articleViewCellLikeButtonClick(_ button: UIButton) {
