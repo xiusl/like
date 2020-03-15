@@ -96,14 +96,23 @@ class StatusViewCell: UITableViewCell {
         
     }
     
+    func setupUser(_ user: JSON) {
+        self.userView.setupUser(user)
+    }
+    
     func setupViews() {
+        self.contentView.addSubview(self.userView)
         self.contentView.addSubview(self.contentLabel)
         self.contentView.addSubview(self.photoView)
         self.contentView.addSubview(self.likeButton)
         self.contentView.addSubview(self.timeLabel)
         
+        self.userView.snp.makeConstraints { (make) in
+            make.left.right.top.equalToSuperview()
+            make.height.equalTo(58)
+        }
         self.contentLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(self.contentView).offset(12)
+            make.top.equalTo(self.userView.snp.bottom).offset(2)
             make.left.equalTo(self.contentView).offset(16)
             make.right.equalTo(self.contentView).offset(-16)
         }
@@ -127,6 +136,11 @@ class StatusViewCell: UITableViewCell {
         }
     }
     
+    lazy var userView: StatusUserView = {
+       let userView = StatusUserView()
+        
+        return userView
+    }()
     
     lazy var contentLabel: UILabel = {
         let contentLabel = UILabel()
@@ -164,4 +178,62 @@ class StatusViewCell: UITableViewCell {
     @objc func okButtonClick(_ button: UIButton) {
         self.delegate?.statusViewCellLikeButtonClick(button)
     }
+}
+
+
+
+class StatusUserView : UIView {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.addSubview(self.avatarView)
+        self.addSubview(self.nameLabel)
+        self.addSubview(self.descLabel)
+        
+        
+        self.avatarView.snp.makeConstraints { (make) in
+            make.left.equalTo(self).offset(16)
+            make.size.equalTo(CGSize(width: 48, height: 48))
+            make.top.equalTo(self).offset(6)
+        }
+        
+        self.nameLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(self.avatarView.snp.right).offset(8)
+            make.top.equalTo(self.avatarView)
+        }
+        
+        self.descLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(self.nameLabel)
+            make.bottom.equalTo(self.avatarView)
+        }
+    }
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    func setupUser(_ user: JSON) {
+        let url = user["avatar"].stringValue
+        self.avatarView.kf.setImage(with: URL(string: url))
+    }
+    
+    lazy var avatarView: UIImageView = {
+        let avatarView = UIImageView()
+        avatarView.layer.cornerRadius = 24
+        avatarView.clipsToBounds = true
+        return avatarView
+    }()
+    
+    lazy var nameLabel: UILabel = {
+        let nameLabel = UILabel()
+        nameLabel.font = UIFont.systemFont(ofSize: 16)
+        nameLabel.textColor = .blackText
+        return nameLabel
+    }()
+    
+    lazy var descLabel: UILabel = {
+        let descLabel = UILabel()
+        descLabel.font = UIFont.systemFont(ofSize: 14)
+        descLabel.textColor = .cF2F4F8
+        return descLabel
+    }()
 }

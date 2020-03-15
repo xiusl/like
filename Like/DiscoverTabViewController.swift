@@ -64,7 +64,7 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
         
         cell.setupImages(j["images"].arrayValue)
         cell.setupTime(j["created_at"].stringValue)
-        
+        cell.setupUser(j["user"])
         return cell
     }
     @objc func okButtonClick(_ button: UIButton) {

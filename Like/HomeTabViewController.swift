@@ -39,7 +39,7 @@ class HomeTabViewController: BaseViewController {
     }
     @objc func loadData() {
         self.page = 1
-        let url = URL(string: "http://127.0.0.1:5000/articles")!
+        let url = URL(string: "http://ins-api.sleen.top/articles")!
         AF.request(url).validate().responseJSON { [weak self] response in
             //            debugPrint("Response: \(response)")
             guard let `self` = self else { return }
