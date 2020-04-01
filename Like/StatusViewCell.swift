@@ -214,6 +214,10 @@ class StatusUserView : UIView {
     func setupUser(_ user: JSON) {
         let url = user["avatar"].stringValue
         self.avatarView.kf.setImage(with: URL(string: url))
+        let name = user["name"].stringValue
+        self.nameLabel.text = name
+        
+        self.descLabel.text = "写了"
     }
     
     lazy var avatarView: UIImageView = {
