@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE306B2B2445C0B600186270 /* ArticleApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */; };
 		FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */; };
 		FF101C5A2354044D00B78D41 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C592354044D00B78D41 /* User.swift */; };
 		FF101C5C235408E000B78D41 /* MeTabTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */; };
@@ -77,6 +78,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleApiRequest.swift; sourceTree = "<group>"; };
 		FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoPreviewViewCell.swift; sourceTree = "<group>"; };
 		FF101C592354044D00B78D41 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTabTableViewCell.swift; sourceTree = "<group>"; };
@@ -337,6 +339,7 @@
 				FF4136082351753C00B27792 /* UserApiRequest.swift */,
 				FFFC57FD2355B69100D79270 /* StatusApiRequest.swift */,
 				FFFC58012356B66000D79270 /* SettingApiRequest.swift */,
+				DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */,
 			);
 			path = ApiManager;
 			sourceTree = "<group>";
@@ -572,6 +575,7 @@
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
 				FFE1B5C9238C03CD00120D56 /* QiNiuTool.swift in Sources */,
 				FF11905A2351BB99004E87E8 /* RefreshStateHeader.swift in Sources */,
+				DE306B2B2445C0B600186270 /* ArticleApiRequest.swift in Sources */,
 				FF101C65235429C200B78D41 /* UserDetailViewController.swift in Sources */,
 				FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */,
 				FF1C1F5523408B3D00D635A6 /* ArticleDetailViewController.swift in Sources */,

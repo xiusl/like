@@ -57,6 +57,7 @@ class ArticleViewCell: UITableViewCell {
         self.contentView.addSubview(self.contentLabel)
         self.contentView.addSubview(self.imagesView)
         self.contentView.addSubview(self.likeButton)
+        self.contentView.addSubview(self.lineView)
         
         self.contentLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView).offset(12)
@@ -75,6 +76,12 @@ class ArticleViewCell: UITableViewCell {
             make.top.equalTo(self.contentLabel.snp.bottom).offset(h+16)
             make.bottom.equalTo(self.contentView).offset(-12)
             make.right.equalTo(self.contentLabel)
+        }
+        
+        self.lineView.snp.makeConstraints { (make) in
+            make.left.right.equalTo(self.contentView)
+            make.bottom.equalTo(self.contentView)
+            make.height.equalTo(1)
         }
     }
     
@@ -120,6 +127,12 @@ class ArticleViewCell: UITableViewCell {
         return imagesView
     }()
     
+    lazy var lineView: UIImageView = {
+        let lineView = UIImageView()
+        lineView.backgroundColor = UIColor(hex: 0xF8F8F8)
+        return lineView
+    }()
+    
     @objc func okButtonClick(_ button: UIButton) {
         self.delegate?.articleViewCell(cell: self, shareIndex: self.index)
     }
@@ -135,6 +148,9 @@ class ArticleImagesView: UIView {
         for i in 0..<2 {
             let imv = UIImageView()
             imv.contentMode = .scaleAspectFill
+            imv.layer.cornerRadius = 4
+            imv.layer.borderColor = UIColor(hex: 0xF0F0F0).cgColor
+            imv.layer.borderWidth = 1
             imv.clipsToBounds = true
             self.addSubview(imv)
             

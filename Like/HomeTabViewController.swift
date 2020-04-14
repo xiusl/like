@@ -98,7 +98,7 @@ class HomeTabViewController: BaseViewController {
         let tableView = UITableView(frame: frame, style: .plain)
         tableView.delegate = self
         tableView.dataSource = self
-//        tableView.separatorStyle = .none
+        tableView.separatorStyle = .none
         return tableView
     }()
 }
@@ -122,7 +122,9 @@ extension HomeTabViewController: UITableViewDataSource, UITableViewDelegate, Art
         let d = data[indexPath.row]
         let vc = ArticleDetailViewController()
         vc.urlStr = d["url"].stringValue
-        self.present(vc, animated: true, completion: nil)
+        vc.articleTitle = d["title"].stringValue
+        self.navigationController?.pushViewController(vc, animated: true)
+//        self.present(vc, animated: true, completion: nil)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
