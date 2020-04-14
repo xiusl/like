@@ -1,5 +1,5 @@
-github "Alamofire/Alamofire" "5.0.0.beta.1"
+github "Alamofire/Alamofire" "5.1.0"
 github "MoZhouqi/KMNavigationBarTransition" "1.1.5"
 github "SnapKit/SnapKit" "5.0.1"
 github "SwiftyJSON/SwiftyJSON" "5.0.0"
-github "onevcat/Kingfisher" "5.8.1"
+github "onevcat/Kingfisher" "5.13.4"

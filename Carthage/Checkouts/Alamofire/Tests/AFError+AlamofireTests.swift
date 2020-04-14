@@ -23,9 +23,9 @@
 //
 
 import Alamofire
+import Foundation
 
 extension AFError {
-
     // ParameterEncodingFailureReason
 
     var isMissingURLFailed: Bool {
@@ -137,6 +137,11 @@ extension AFError {
         return false
     }
 
+    var isInvalidEmptyResponse: Bool {
+        if case let .responseSerializationFailed(reason) = self, reason.isInvalidEmptyResponse { return true }
+        return false
+    }
+
     // ResponseValidationFailureReason
 
     var isDataFileNil: Bool {
@@ -162,6 +167,18 @@ extension AFError {
     var isUnacceptableStatusCode: Bool {
         if case let .responseValidationFailed(reason) = self, reason.isUnacceptableStatusCode { return true }
         return false
+    }
+
+    // URLRequestValidationFailure
+
+    var isBodyDataInGETRequest: Bool {
+        if case let .urlRequestValidationFailed(reason) = self, reason.isBodyDataInGETRequest { return true }
+        return false
+    }
+
+    var isHostURLError: Bool {
+        guard let errorCode = (underlyingError as? URLError)?.code else { return false }
+        return [.cannotConnectToHost, .cannotFindHost].contains(errorCode)
     }
 }
 
@@ -280,6 +297,11 @@ extension AFError.ResponseSerializationFailureReason {
         if case .decodingFailed = self { return true }
         return false
     }
+
+    var isInvalidEmptyResponse: Bool {
+        if case .invalidEmptyResponse = self { return true }
+        return false
+    }
 }
 
 // MARK: -
@@ -339,6 +361,11 @@ extension AFError.ServerTrustFailureReason {
         return false
     }
 
+    var isTrustEvaluationFailed: Bool {
+        if case .trustEvaluationFailed = self { return true }
+        return false
+    }
+
     var isDefaultEvaluationFailed: Bool {
         if case .defaultEvaluationFailed = self { return true }
         return false
@@ -361,6 +388,13 @@ extension AFError.ServerTrustFailureReason {
 
     var isPublicKeyPinningFailed: Bool {
         if case .publicKeyPinningFailed = self { return true }
+        return false
+    }
+}
+
+extension AFError.URLRequestValidationFailureReason {
+    var isBodyDataInGETRequest: Bool {
+        if case .bodyDataInGETRequest = self { return true }
         return false
     }
 }

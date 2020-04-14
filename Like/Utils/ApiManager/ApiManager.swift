@@ -42,8 +42,8 @@ class ApiManager: NSObject {
             "up-z2.qiniu.com": DisabledEvaluator(),
             "ins-api.sleen.top": DefaultTrustEvaluator()
         ])
-        
-        return Session(startRequestsImmediately: true, configuration: config, delegate: delegate, rootQueue: DispatchQueue.main, requestQueue: nil, serializationQueue: nil, adapter: nil, serverTrustManager: tr, retrier: nil, eventMonitors: [])
+        return Session(configuration: config, delegate: delegate, rootQueue: DispatchQueue.main, startRequestsImmediately: true, requestQueue: nil, serializationQueue: nil, interceptor: nil, serverTrustManager: tr, redirectHandler: nil, cachedResponseHandler: nil, eventMonitors: [])
+//        return Session(startRequestsImmediately: true, configuration: config, delegate: delegate, rootQueue: DispatchQueue.main, requestQueue: nil, serializationQueue: nil, adapter: nil, serverTrustManager: tr, retrier: nil, eventMonitors: [])
     }()
     
     public func request(request: ApiRequest, success: @escaping RequestSuccessBlock, failed: @escaping RequestFailedBlock) {
@@ -63,27 +63,27 @@ class ApiManager: NSObject {
     }
     
     public func uploadImage(image: UIImage, token: String, success: @escaping UploadSuccessBlock, failed: @escaping RequestFailedBlock) {
-        let url = "http://upload-z2.qiniup.com"
-        let req = self.manager.upload(multipartFormData: { (formData) in
-            let data = image.jpegData(compressionQuality: 1)!
-            let k = String(format: "like/%@", qn_eTag(data: data))
-            formData.append(k.data(using: .utf8)!, withName: "key")
-            formData.append(token.data(using: .utf8)!, withName: "token")
-            formData.append(data, withName: "file")
-        }, usingThreshold: MultipartUpload.encodingMemoryThreshold, fileManager: .default, to: url, method: .post, headers: nil)
-        req.uploadProgress { (progress) in
-            
-            debugPrint(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))
-        }
-        req.validate().responseJSON { (response) in
-            if let error = response.result.error {
-                debugPrint(error.localizedDescription)
-                failed(error.localizedDescription)
-                
-            } else if let data = response.result.value {
-                success(data as Any)
-            }
-        }
+//        let url = "http://upload-z2.qiniup.com"
+//        let req = self.manager.upload(multipartFormData: { (formData) in
+//            let data = image.jpegData(compressionQuality: 1)!
+//            let k = String(format: "like/%@", qn_eTag(data: data))
+//            formData.append(k.data(using: .utf8)!, withName: "key")
+//            formData.append(token.data(using: .utf8)!, withName: "token")
+//            formData.append(data, withName: "file")
+//        }, usingThreshold: MultipartUpload.encodingMemoryThreshold, fileManager: .default, to: url, method: .post, headers: nil)
+//        req.uploadProgress { (progress) in
+//
+//            debugPrint(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))
+//        }
+//        req.validate().responseJSON { (response) in
+//            if let error = response.result.error {
+//                debugPrint(error.localizedDescription)
+//                failed(error.localizedDescription)
+//
+//            } else if let data = response.result.value {
+//                success(data as Any)
+//            }
+//        }
     }
 }
 
@@ -99,7 +99,7 @@ extension ApiManager {
         var h = headers ?? [:]
         h["X-Token"] = (User.current?.token ?? "")
         self.manager.request(url, method: .get, parameters: params, encoding: encoding, headers: HTTPHeaders(h)).validate().responseJSON { (response) in
-            self.handleResponse(response: response, success: success, failed: failed)
+//            self.handleResponse(response: response, success: success, failed: failed)
         }
         
     }
@@ -125,7 +125,7 @@ extension ApiManager {
         var request = self.bodyRequest(url: url, data: data, headers: headers)
         request.httpMethod = HTTPMethod.delete.rawValue
         self.manager.request(request).validate().responseJSON { (response) in
-            self.handleResponse(response: response, success: success, failed: failed)
+//            self.handleResponse(response: response, success: success, failed: failed)
         }
     }
     
@@ -154,28 +154,45 @@ extension ApiManager {
 
 
 extension ApiManager {
-    fileprivate func handleResponse(response: DataResponse<Any>,
+    
+    fileprivate func handleResponse(response: AFDataResponse<Any>,
                                     success: RequestSuccessBlock,
                                     failed: RequestFailedBlock) {
         debugPrint(response)
-        if let _ = response.result.error {
+        switch response.result {
+        case .success(let data):
+            let d = data as! [String: Any]
+            success(d["data"] as Any)
+            print(data)
+        case .failure(let error):
             do {
                 let json = try JSONSerialization.jsonObject(with: response.data ?? Data(), options: .mutableLeaves)
-                let j = JSON(json)
-                failed(j["error"].stringValue)
+                let data = JSON(json)
+                failed(data["error"].stringValue)
             } catch {
                 failed("未知错误")
             }
             
-        } else if let data = response.result.value {
-            if (data as? NSDictionary) == nil {
-                failed("data error")
-            } else {
-                let d = data as! [String: Any]
-                
-                success(d["data"] as Any)
-            }
+            print(error)
         }
+//        if let _ = response.result.error {
+//            do {
+//                let json = try JSONSerialization.jsonObject(with: response.data ?? Data(), options: .mutableLeaves)
+//                let j = JSON(json)
+//                failed(j["error"].stringValue)
+//            } catch {
+//                failed("未知错误")
+//            }
+//
+//        } else if let data = response.result.value {
+//            if (data as? NSDictionary) == nil {
+//                failed("data error")
+//            } else {
+//                let d = data as! [String: Any]
+//
+//                success(d["data"] as Any)
+//            }
+//        }
     }
 }
 

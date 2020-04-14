@@ -16,7 +16,6 @@ class HomeTabViewController: BaseViewController {
     var page: Int = 1
     let count: Int = 10
     
-    weak var refresh: UIRefreshControl?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,11 +23,6 @@ class HomeTabViewController: BaseViewController {
         self.tableView.estimatedRowHeight = 110
         self.tableView.estimatedSectionHeaderHeight = 0
         self.tableView.estimatedSectionFooterHeight = 0
-        
-//        let refresh = UIRefreshControl()
-//        refresh.addTarget(self, action: #selector(addcount(_ :)), for: .valueChanged)
-//        self.tableView.refreshControl = refresh
-//        self.refresh = refresh
         
         let refFooter = RefreshBackNormalFooter.footer(withRefreshingTarget: self, refreshingAction: #selector(loadMoreData))
         self.tableView.mjFooter = refFooter
@@ -44,15 +38,29 @@ class HomeTabViewController: BaseViewController {
             //            debugPrint("Response: \(response)")
             guard let `self` = self else { return }
              self.tableView.mjHeader?.endRefreshing()
-            if response.result.isSuccess {
-                let v = response.result.value
-                let j = JSON(v as Any)
+            switch response.result {
+            case .success(let data):
+                print(data)
+                let j = JSON(data)
                 self.data = j["data"]["articles"].array!
                 self.tableView.reloadData()
-                self.refresh?.endRefreshing()
-            } else {
-                
+                fallthrough
+            case .failure(_):
+                fallthrough
+            default:
+                print(123)
             }
+//            if response.result
+//            if response.result.isSuccess {
+//                let v = response.result.value
+//                let j = JSON(v as Any)
+//                self.data = j["data"]["articles"].array!
+//                self.tableView.reloadData()
+//                self.refresh?.endRefreshing()
+//            } else {
+//
+//            }
+            
         }
         
     }
@@ -63,16 +71,16 @@ class HomeTabViewController: BaseViewController {
             
 //            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+3) {
 
-                let v = response.result.value
-                let j = JSON(v as Any)
-                let adata = j["data"]["articles"].array!
-                self.data.append(contentsOf: adata)
-                self.tableView.reloadData()
-                self.tableView.mjFooter?.endRefreshing()
-                
-                if adata.count < self.count {
-                    self.tableView.mjFooter?.setState(.noMoreData)
-                }
+//                let v = response.result.value
+//                let j = JSON(v as Any)
+//                let adata = j["data"]["articles"].array!
+//                self.data.append(contentsOf: adata)
+//                self.tableView.reloadData()
+//                self.tableView.mjFooter?.endRefreshing()
+//
+//                if adata.count < self.count {
+//                    self.tableView.mjFooter?.setState(.noMoreData)
+//                }
 //            }
         }
     }

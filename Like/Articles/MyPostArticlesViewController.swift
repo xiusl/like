@@ -44,15 +44,15 @@ class MyPostArticlesViewController: BaseViewController {
                 //            debugPrint("Response: \(response)")
                 guard let `self` = self else { return }
                  self.tableView.mjHeader?.endRefreshing()
-                if response.result.isSuccess {
-                    let v = response.result.value
-                    let j = JSON(v as Any)
-                    self.data = j["data"]["articles"].array!
-                    self.tableView.reloadData()
-                    self.refresh?.endRefreshing()
-                } else {
-                    
-                }
+//                if response.result.isSuccess {
+//                    let v = response.result.value
+//                    let j = JSON(v as Any)
+//                    self.data = j["data"]["articles"].array!
+//                    self.tableView.reloadData()
+//                    self.refresh?.endRefreshing()
+//                } else {
+//                    
+//                }
             }
             
         }
@@ -63,16 +63,16 @@ class MyPostArticlesViewController: BaseViewController {
                 
     //            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+3) {
 
-                    let v = response.result.value
-                    let j = JSON(v as Any)
-                    let adata = j["data"]["articles"].array!
-                    self.data.append(contentsOf: adata)
-                    self.tableView.reloadData()
-                    self.tableView.mjFooter?.endRefreshing()
-                    
-                    if adata.count < self.count {
-                        self.tableView.mjFooter?.setState(.noMoreData)
-                    }
+//                    let v = response.result.value
+//                    let j = JSON(v as Any)
+//                    let adata = j["data"]["articles"].array!
+//                    self.data.append(contentsOf: adata)
+//                    self.tableView.reloadData()
+//                    self.tableView.mjFooter?.endRefreshing()
+//                    
+//                    if adata.count < self.count {
+//                        self.tableView.mjFooter?.setState(.noMoreData)
+//                    }
     //            }
             }
         }
