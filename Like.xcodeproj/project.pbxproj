@@ -65,6 +65,7 @@
 		FF4470A32387C309002ED72D /* LKPhotoPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4470A22387C309002ED72D /* LKPhotoPickerViewController.swift */; };
 		FF4470A52387CF4B002ED72D /* LKAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4470A42387CF4B002ED72D /* LKAlbum.swift */; };
 		FF4470A72387D403002ED72D /* LKPhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4470A62387D403002ED72D /* LKPhotoViewCell.swift */; };
+		FF4D27AF2445EB88000CE644 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4D27AE2445EB88000CE644 /* WebViewController.swift */; };
 		FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF7478102341B7350017DC74 /* InfoPlist.strings */; };
 		FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0A236C02300083BE5F /* ConfirmActionView.swift */; };
 		FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */; };
@@ -144,6 +145,7 @@
 		FF4470A22387C309002ED72D /* LKPhotoPickerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoPickerViewController.swift; sourceTree = "<group>"; };
 		FF4470A42387CF4B002ED72D /* LKAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKAlbum.swift; sourceTree = "<group>"; };
 		FF4470A62387D403002ED72D /* LKPhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoViewCell.swift; sourceTree = "<group>"; };
+		FF4D27AE2445EB88000CE644 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
 		FF74780B2341B5350017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		FF74780F2341B7350017DC74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF7478112341B7380017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -413,6 +415,7 @@
 				FF4135FA2351608200B27792 /* AuthInputView.swift */,
 				FF4135F82351604700B27792 /* PasswordLoginViewController.swift */,
 				FF101C5D23540C0E00B78D41 /* RegisterViewController.swift */,
+				FF4D27AE2445EB88000CE644 /* WebViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -554,6 +557,7 @@
 				FF4135EE2350733A00B27792 /* BaseTableView.swift in Sources */,
 				FF2CA585234DB46C00D1B433 /* ApiManager.swift in Sources */,
 				FF1C1F57234090A000D635A6 /* UIScrollViewMjRefresh.swift in Sources */,
+				FF4D27AF2445EB88000CE644 /* WebViewController.swift in Sources */,
 				FF293D93237E85EB00C244F4 /* MyPostArticlesViewController.swift in Sources */,
 				FF1190552351A4EE004E87E8 /* RefreshBackStateFooter.swift in Sources */,
 				FFFC57FC2355B4F400D79270 /* PostStatusViewController.swift in Sources */,

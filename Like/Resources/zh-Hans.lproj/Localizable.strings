@@ -19,3 +19,4 @@
 "RegisterPhonePlaceholder" = "手机号";
 "VerifyCode" = "验证码";
 "VerifyCodeLogin" = "验证码登录";
+"Confirmation Code" = "验证码";

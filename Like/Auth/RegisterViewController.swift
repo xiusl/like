@@ -27,6 +27,10 @@ class RegisterViewController: BaseViewController {
         self.codeView.addSubview(self.sendCodeBtn)
         self.view.addSubview(self.confirmButton)
         
+        if !self.isLogin {
+            self.view.addSubview(self.agreeView)
+        }
+        
         self.phoneView.textField.becomeFirstResponder()
     }
     lazy var phoneView: AuthInputView = {
@@ -43,7 +47,7 @@ class RegisterViewController: BaseViewController {
         let codeView: AuthInputView = AuthInputView()
         codeView.frame = CGRect(x: 0, y: 180, width: ScreenWidth, height: 60)
         codeView.type = .verifyCode
-        codeView.setupPlaceHolder(text: "Confirmation Code")
+        codeView.setupPlaceHolder(text: "Confirmation Code".localized)
         codeView.delegate = self
         codeView.errorMessage = ""
         return codeView
@@ -84,6 +88,42 @@ class RegisterViewController: BaseViewController {
         confirmButton.addTarget(self, action: #selector(confirmButtonClick), for: .touchUpInside)
         return confirmButton
     }()
+    
+    lazy var agreeView: UIView = {
+        let agreeView = UIView()
+        agreeView.frame = CGRect(x: 0, y: 326, width: ScreenWidth, height: 36);
+        
+        var str = NSMutableAttributedString(string: "Agree to Privacy policy")
+
+        str.addAttribute(.font, value: UIFont.systemFont(ofSize: 12), range: NSMakeRange(0, str.length))
+        str.addAttribute(.foregroundColor, value: UIColor.theme, range: NSMakeRange(9, str.length-9))
+        var l = NSLocale.preferredLanguages.first ?? "zh"
+        if l.starts(with: "zh") {
+            str = NSMutableAttributedString(string: "注册即表示同意隐私协议")
+            str.addAttribute(.font, value: UIFont.systemFont(ofSize: 12), range: NSMakeRange(0, str.length))
+            str.addAttribute(.foregroundColor, value: UIColor.theme, range: NSMakeRange(7, str.length-7))
+        }
+        
+        let label = UILabel()
+        label.attributedText = str
+        label.textAlignment = .center
+        label.sizeToFit()
+        let w = label.bounds.size.width
+        label.frame = CGRect(x: (ScreenWidth-w)*0.5, y: 0, width: w, height: 36);
+        agreeView.addSubview(label)
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(agreeViewTapAction))
+        agreeView.addGestureRecognizer(tap)
+        
+        return agreeView
+    }()
+    
+    @objc func agreeViewTapAction() {
+        let vc = WebViewController()
+        vc.url = "https://ins.sleen.top/privacy"
+        vc.title = "隐私政策"
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     
     @objc func confirmButtonClick() {
         var phone = self.phoneView.textField.text ?? ""
