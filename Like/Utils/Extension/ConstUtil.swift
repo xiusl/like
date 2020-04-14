@@ -112,7 +112,7 @@ extension UIButton {
     }
     func endLoading() {
         self.isUserInteractionEnabled = true
-        self.indicatorView?.startAnimating()
+        self.indicatorView?.stopAnimating()
         self.indicatorView?.isHidden = true
     }
 }

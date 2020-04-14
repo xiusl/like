@@ -156,7 +156,7 @@ extension PasswordLoginViewController: AuthInputViewDelegate {
             keyWidow?.rootViewController = vc
             
         }) { (error) in
-        debugPrint(error)
+            debugPrint(error)
             SLUtil.showMessage(error)
             self.confirmButton.endLoading()
         }

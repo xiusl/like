@@ -55,7 +55,7 @@ class RegisterViewController: BaseViewController {
         titleLabel.font = UIFont.systemFontMedium(ofSize: 28)
         titleLabel.textColor = .blackText
         titleLabel.textAlignment = .center
-        titleLabel.text = self.isLogin ? "验证码登录" : "RegisterVcTitle".localized
+        titleLabel.text = self.isLogin ? "VerifyCodeLogin".localized : "RegisterVcTitle".localized
         return titleLabel
     }()
 
@@ -106,7 +106,8 @@ class RegisterViewController: BaseViewController {
             let keyWidow = UIApplication.shared.keyWindow
             keyWidow?.rootViewController = vc
         }) { (error) in
-
+            self.confirmButton.endLoading()
+            SLUtil.showMessage(error)
         }
     }
     
@@ -127,7 +128,7 @@ class RegisterViewController: BaseViewController {
                 self.startTimer()
             }
         }) { (error) in
-
+            SLUtil.showMessage(error)
         }
         
     }

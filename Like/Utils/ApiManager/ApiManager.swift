@@ -95,11 +95,10 @@ extension ApiManager {
                          encoding: URLEncoding,
                          success: @escaping RequestSuccessBlock,
                          failed: @escaping RequestFailedBlock) {
-//        self.manager.request(url, method: .get, parameters: params, encoder: encoding, headers: nil)
         var h = headers ?? [:]
         h["X-Token"] = (User.current?.token ?? "")
         self.manager.request(url, method: .get, parameters: params, encoding: encoding, headers: HTTPHeaders(h)).validate().responseJSON { (response) in
-//            self.handleResponse(response: response, success: success, failed: failed)
+            self.handleResponse(response: response, success: success, failed: failed)
         }
         
     }
@@ -125,7 +124,7 @@ extension ApiManager {
         var request = self.bodyRequest(url: url, data: data, headers: headers)
         request.httpMethod = HTTPMethod.delete.rawValue
         self.manager.request(request).validate().responseJSON { (response) in
-//            self.handleResponse(response: response, success: success, failed: failed)
+            self.handleResponse(response: response, success: success, failed: failed)
         }
     }
     
