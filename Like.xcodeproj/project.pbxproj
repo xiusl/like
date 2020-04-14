@@ -258,28 +258,11 @@
 			children = (
 				FF1F1948235F1EDD00C77C64 /* ll.entitlements */,
 				FF1C1F312340827C00D635A6 /* AppDelegate.swift */,
-				FF4135EC2350732200B27792 /* Base */,
-				FF4135EB2350731000B27792 /* Main */,
-				FF4135DB2350704100B27792 /* HomeTabViewController.swift */,
-				FF4135DD2350704F00B27792 /* DiscoverTabViewController.swift */,
-				FF1C1F5423408B3D00D635A6 /* ArticleDetailViewController.swift */,
-				FF101C64235429C200B78D41 /* UserDetailViewController.swift */,
-				FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */,
-				FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */,
-				FFFC57FB2355B4F400D79270 /* PostStatusViewController.swift */,
-				FFFC57FF2355C1D300D79270 /* StatusViewCell.swift */,
-				FF34B9B32366B6C800A702AB /* ArticleViewCell.swift */,
-				FF34B9B52366B7B200A702AB /* SocialShareView.swift */,
-				FF861D0A236C02300083BE5F /* ConfirmActionView.swift */,
-				FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */,
-				FF4D27B22445F901000CE644 /* StatusUserView.swift */,
-				FF293D91237E85C800C244F4 /* Articles */,
-				FF1F1934235F1CC600C77C64 /* Vendors */,
-				FF101C5F23541CAA00B78D41 /* Me */,
 				FF101C582354044000B78D41 /* Models */,
-				FF4135F72351602400B27792 /* Auth */,
+				FF4D27B42445FF8F000CE644 /* Moudels */,
 				FF4135F02350758D00B27792 /* Resources */,
 				FF4135E1235070DD00B27792 /* Utils */,
+				FF1F1934235F1CC600C77C64 /* Vendors */,
 			);
 			path = Like;
 			sourceTree = "<group>";
@@ -435,6 +418,79 @@
 				FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */,
 			);
 			path = PhotoPicker;
+			sourceTree = "<group>";
+		};
+		FF4D27B42445FF8F000CE644 /* Moudels */ = {
+			isa = PBXGroup;
+			children = (
+				FF4D27B52445FFEE000CE644 /* Views */,
+				FF4135EC2350732200B27792 /* Base */,
+				FF4135EB2350731000B27792 /* Main */,
+				FF4135F72351602400B27792 /* Auth */,
+				FF293D91237E85C800C244F4 /* Articles */,
+				FF4D27B624460006000CE644 /* Home */,
+				FF4D27B724460013000CE644 /* Discover */,
+				FF101C5F23541CAA00B78D41 /* Me */,
+				FF4D27B82446001E000CE644 /* ArticleDetail */,
+				FF4D27B924460031000CE644 /* UserDetail */,
+				FF4D27BA2446004C000CE644 /* Post */,
+			);
+			path = Moudels;
+			sourceTree = "<group>";
+		};
+		FF4D27B52445FFEE000CE644 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				FF34B9B32366B6C800A702AB /* ArticleViewCell.swift */,
+				FF861D0A236C02300083BE5F /* ConfirmActionView.swift */,
+				FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */,
+				FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */,
+				FF34B9B52366B7B200A702AB /* SocialShareView.swift */,
+				FF4D27B22445F901000CE644 /* StatusUserView.swift */,
+				FFFC57FF2355C1D300D79270 /* StatusViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		FF4D27B624460006000CE644 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				FF4135DB2350704100B27792 /* HomeTabViewController.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		FF4D27B724460013000CE644 /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				FF4135DD2350704F00B27792 /* DiscoverTabViewController.swift */,
+			);
+			path = Discover;
+			sourceTree = "<group>";
+		};
+		FF4D27B82446001E000CE644 /* ArticleDetail */ = {
+			isa = PBXGroup;
+			children = (
+				FF1C1F5423408B3D00D635A6 /* ArticleDetailViewController.swift */,
+			);
+			path = ArticleDetail;
+			sourceTree = "<group>";
+		};
+		FF4D27B924460031000CE644 /* UserDetail */ = {
+			isa = PBXGroup;
+			children = (
+				FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */,
+				FF101C64235429C200B78D41 /* UserDetailViewController.swift */,
+			);
+			path = UserDetail;
+			sourceTree = "<group>";
+		};
+		FF4D27BA2446004C000CE644 /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				FFFC57FB2355B4F400D79270 /* PostStatusViewController.swift */,
+			);
+			path = Post;
 			sourceTree = "<group>";
 		};
 		FFE1B5C7238C03B400120D56 /* Qiniu */ = {
