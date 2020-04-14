@@ -188,11 +188,16 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate, 
         return UITableView.automaticDimension
     }
     
-    func statusViewCellLikeButtonClick(_ button: UIButton) {
-        let id = button.title(for: .disabled) ?? ""
-        let request = button.isSelected ? StatusApiRequest.unlikeStatus(id: id) : StatusApiRequest.likeStatus(id: id)
+    
+    func statusViewCellLikeButtonClick(_ cell: StatusViewCell) {
+        let index = self.tableView.indexPath(for: cell)
+        var data = self.data[index!.row]
+        let liked = data["is_liked"].boolValue
+        let id = data["id"].stringValue
+        let request = liked ? StatusApiRequest.unlikeStatus(id: id) : StatusApiRequest.likeStatus(id: id)
         ApiManager.shared.request(request: request, success: { (result) in
-            button.isSelected = !button.isSelected
+            cell.likeButton.isSelected = !liked
+            data["is_liked"] = true
         }) { (error) in
             debugPrint(error)
         }

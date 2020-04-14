@@ -11,23 +11,75 @@ import SwiftyJSON
 import Kingfisher
 
 protocol StatusViewCellDelegate {
-    func statusViewCellLikeButtonClick(_ button: UIButton)
+    //    func statusViewCellLikeButtonClick(_ button: UIButton)
+    func statusViewCellLikeButtonClick(_ cell: StatusViewCell)
+}
+
+protocol StatusViewCellData {
+    func setupUserAvatar(_ avatar: String)
+    func setupUserName(_ name: String)
+    func setupContent(_ content: String)
+    func setupImages(_ images: Array<Image>)
+    func setupLike(_ liked: Bool)
+}
+
+extension StatusViewCell: StatusViewCellData {
+    func setupUserAvatar(_ avatar: String) {
+        self.userView.setupAvatar(avatar)
+    }
+    func setupUserName(_ name: String) {
+        self.userView.setupName(name)
+    }
+    func setupContent(_ content: String) {
+        self.contentLabel.text = content
+    }
+    func setupLike(_ liked: Bool) {
+        self.likeButton.isSelected = liked
+    }
+    func setupImages(_ images: Array<Image>) {
+        if images.count == 0 {
+            self.photoView.snp.updateConstraints { (make) in
+                make.height.equalTo(0)
+                make.width.equalTo(0)
+            }
+            return
+        }
+        let image = images[0]
+        
+        
+        let scale = UIScreen.main.scale
+        var w = CGFloat(image.width)
+        var h = CGFloat(image.height)
+        let photo_scale = h / w
+        let maxW: CGFloat = (ScreenWidth-32)*0.68 * scale
+        if w > maxW {
+            w = maxW
+            h = maxW * photo_scale
+        }
+        let url = image.url + "?imageView2/1/w/\(Int(w))/h/\(Int(h))"
+        
+        self.photoView.kf.setImage(with: URL(string: url))
+        self.photoView.snp.updateConstraints { (make) in
+            make.width.equalTo(w/scale)
+            make.height.equalTo(h/scale)
+        }
+    }
 }
 
 class StatusViewCell: UITableViewCell {
-
+    
     var delegate: StatusViewCellDelegate?
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
     class func create(tableView: UITableView) -> StatusViewCell {
         let idf = NSStringFromClass(self)
         var cell: StatusViewCell? = tableView.dequeueReusableCell(withIdentifier: idf) as? StatusViewCell
@@ -51,61 +103,13 @@ class StatusViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
-    func setupImages(_ images: Array<JSON>) {
-        if images.count > 0 {
-            let img = images[0]
-            
-            
-            let scale = UIScreen.main.scale
-            var w = CGFloat(img["width"].intValue)
-            var h = CGFloat(img["height"].intValue)
-            let photo_scale = h / w
-            let maxW: CGFloat = (ScreenWidth-32)*0.68 * scale
-            if w > maxW {
-                w = maxW
-                h = maxW * photo_scale
-            }
-            var url = img["url"].stringValue
-            url = url + "?imageView2/1/w/\(Int(w))/h/\(Int(h))"
-            
-            self.photoView.kf.setImage(with: URL(string: url))
-            self.photoView.snp.updateConstraints { (make) in
-                make.width.equalTo(w/scale)
-                make.height.equalTo(h/scale)
-            }
-        } else {
-            self.photoView.snp.updateConstraints { (make) in
-                make.height.equalTo(0)
-                make.width.equalTo(0)
-            }
-        }
-    }
-    
-    func setupTime(_ time: String) {
-        let format = DateFormatter()
-        format.dateFormat = "EEE, dd MMM yyyy HH:mm:ss zzz"
-        let date = format.date(from: time)
-
-        guard let d = date else {
-            self.timeLabel.text = ""
-            return
-        }
-        let format2 = DateFormatter()
-        format2.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        self.timeLabel.text = format2.string(from: d)
-        
-    }
-    
-    func setupUser(_ user: JSON) {
-        self.userView.setupUser(user)
-    }
-    
     func setupViews() {
         self.contentView.addSubview(self.userView)
         self.contentView.addSubview(self.contentLabel)
         self.contentView.addSubview(self.photoView)
         self.contentView.addSubview(self.likeButton)
         self.contentView.addSubview(self.timeLabel)
+        self.contentView.addSubview(self.lineView)
         
         self.userView.snp.makeConstraints { (make) in
             make.left.right.top.equalToSuperview()
@@ -134,10 +138,16 @@ class StatusViewCell: UITableViewCell {
             make.left.equalTo(self.contentView).offset(16)
             make.centerY.equalTo(self.likeButton.snp.centerY)
         }
+        
+        self.lineView.snp.makeConstraints { (make) in
+            make.left.right.equalTo(self.contentView)
+            make.bottom.equalTo(self.contentView)
+            make.height.equalTo(1)
+        }
     }
     
     lazy var userView: StatusUserView = {
-       let userView = StatusUserView()
+        let userView = StatusUserView()
         
         return userView
     }()
@@ -175,69 +185,13 @@ class StatusViewCell: UITableViewCell {
         return btn
     }()
     
+    lazy var lineView: UIImageView = {
+        let lineView = UIImageView()
+        lineView.backgroundColor = UIColor(hex: 0xF8F8F8)
+        return lineView
+    }()
+    
     @objc func okButtonClick(_ button: UIButton) {
-        self.delegate?.statusViewCellLikeButtonClick(button)
+        self.delegate?.statusViewCellLikeButtonClick(self)
     }
-}
-
-
-
-class StatusUserView : UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        
-        self.addSubview(self.avatarView)
-        self.addSubview(self.nameLabel)
-        self.addSubview(self.descLabel)
-        
-        
-        self.avatarView.snp.makeConstraints { (make) in
-            make.left.equalTo(self).offset(16)
-            make.size.equalTo(CGSize(width: 48, height: 48))
-            make.top.equalTo(self).offset(6)
-        }
-        
-        self.nameLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.avatarView.snp.right).offset(8)
-            make.top.equalTo(self.avatarView)
-        }
-        
-        self.descLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.nameLabel)
-            make.bottom.equalTo(self.avatarView)
-        }
-    }
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-    
-    func setupUser(_ user: JSON) {
-        let url = user["avatar"].stringValue
-        self.avatarView.kf.setImage(with: URL(string: url))
-        let name = user["name"].stringValue
-        self.nameLabel.text = name
-        
-        self.descLabel.text = "写了"
-    }
-    
-    lazy var avatarView: UIImageView = {
-        let avatarView = UIImageView()
-        avatarView.layer.cornerRadius = 24
-        avatarView.clipsToBounds = true
-        return avatarView
-    }()
-    
-    lazy var nameLabel: UILabel = {
-        let nameLabel = UILabel()
-        nameLabel.font = UIFont.systemFont(ofSize: 16)
-        nameLabel.textColor = .blackText
-        return nameLabel
-    }()
-    
-    lazy var descLabel: UILabel = {
-        let descLabel = UILabel()
-        descLabel.font = UIFont.systemFont(ofSize: 14)
-        descLabel.textColor = .cF2F4F8
-        return descLabel
-    }()
 }

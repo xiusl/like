@@ -66,6 +66,8 @@
 		FF4470A52387CF4B002ED72D /* LKAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4470A42387CF4B002ED72D /* LKAlbum.swift */; };
 		FF4470A72387D403002ED72D /* LKPhotoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4470A62387D403002ED72D /* LKPhotoViewCell.swift */; };
 		FF4D27AF2445EB88000CE644 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4D27AE2445EB88000CE644 /* WebViewController.swift */; };
+		FF4D27B12445F443000CE644 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4D27B02445F443000CE644 /* Status.swift */; };
+		FF4D27B32445F901000CE644 /* StatusUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4D27B22445F901000CE644 /* StatusUserView.swift */; };
 		FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF7478102341B7350017DC74 /* InfoPlist.strings */; };
 		FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0A236C02300083BE5F /* ConfirmActionView.swift */; };
 		FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */; };
@@ -146,6 +148,8 @@
 		FF4470A42387CF4B002ED72D /* LKAlbum.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKAlbum.swift; sourceTree = "<group>"; };
 		FF4470A62387D403002ED72D /* LKPhotoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoViewCell.swift; sourceTree = "<group>"; };
 		FF4D27AE2445EB88000CE644 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		FF4D27B02445F443000CE644 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
+		FF4D27B22445F901000CE644 /* StatusUserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusUserView.swift; sourceTree = "<group>"; };
 		FF74780B2341B5350017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		FF74780F2341B7350017DC74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF7478112341B7380017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				FF101C592354044D00B78D41 /* User.swift */,
+				FF4D27B02445F443000CE644 /* Status.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -267,6 +272,7 @@
 				FF34B9B52366B7B200A702AB /* SocialShareView.swift */,
 				FF861D0A236C02300083BE5F /* ConfirmActionView.swift */,
 				FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */,
+				FF4D27B22445F901000CE644 /* StatusUserView.swift */,
 				FF293D91237E85C800C244F4 /* Articles */,
 				FF1F1934235F1CC600C77C64 /* Vendors */,
 				FF101C5F23541CAA00B78D41 /* Me */,
@@ -545,6 +551,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF4D27B32445F901000CE644 /* StatusUserView.swift in Sources */,
 				FF1C1F5A2340A44B00D635A6 /* RefreshComponent.swift in Sources */,
 				FF34B9B42366B6C800A702AB /* ArticleViewCell.swift in Sources */,
 				FF2CA588234DC68D00D1B433 /* MainNavigationController.swift in Sources */,
@@ -586,6 +593,7 @@
 				FF4135DE2350704F00B27792 /* DiscoverTabViewController.swift in Sources */,
 				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,
 				FF4470A32387C309002ED72D /* LKPhotoPickerViewController.swift in Sources */,
+				FF4D27B12445F443000CE644 /* Status.swift in Sources */,
 				FF1C1F5E2341978800D635A6 /* UIViewFrameEx.swift in Sources */,
 				FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */,
 				FF11905C2351C354004E87E8 /* RefreshNormalHeader.swift in Sources */,
