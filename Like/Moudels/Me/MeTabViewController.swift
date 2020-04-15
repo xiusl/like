@@ -45,8 +45,12 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         let gest = UITapGestureRecognizer(target: self, action: #selector(bac))
         self.headerView.addGestureRecognizer(gest)
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "投稿", style: .plain, target: self, action: #selector(post))
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "发动态", style: .plain, target: self, action: #selector(postStatus))
+        
+        if self.user?.phone == "17600101706" {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "投稿", style: .plain, target: self, action: #selector(post))
+        }
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发嗑", style: .plain, target: self, action: #selector(postStatus))
     }
     
     @objc func postStatus() {
@@ -93,10 +97,7 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         let cell = MeTabTableViewCell.create(tableView: tableView)
         
-        let icon = dic["icon"]
-        
-        cell.titleLabel.text = dic["title"]
-        cell.iconView.image = UIImage(named: icon ?? "")
+        cell.setup(title: dic["title"]!, icon: dic["icon"]!)
         
         cell.lineView.isHidden = (indexPath.section == 0 && indexPath.row+1==arr.count)
         
@@ -187,12 +188,12 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
     lazy var tableConfig: Array = { () -> [[[String : String]]] in
         let arr: Array = [
             [
-                ["title": "我的发布", "icon": "me_wallet", "action": ""],
-                ["title": "我的点赞", "icon": "me_arcode", "action": ""],
+                ["title": "我的发布", "icon": "me_post", "action": ""],
+                ["title": "我的点赞", "icon": "me_like", "action": ""],
             ],
             [
                 ["title": "设置", "icon": "me_setting", "action": ""],
-                ["title": "退出", "icon": "me_service", "action": ""],
+//                ["title": "退出", "icon": "me_service", "action": ""],
             ]
         ]
         return arr

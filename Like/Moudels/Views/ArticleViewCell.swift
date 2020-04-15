@@ -14,6 +14,19 @@ protocol ArticleViewCellDelegate {
     func articleViewCell(cell: ArticleViewCell, shareIndex: Int)
 }
 
+protocol ArticleViewCellData {
+    func setupTitle(_ title: String)
+    func setupImages(_ images: Array<String>)
+}
+extension ArticleViewCell : ArticleViewCellData {
+    func setupTitle(_ title: String) {
+        self.contentLabel.text = title
+    }
+    func setupImages(_ images: Array<String>) {
+        self.imagesView.setImages(images)
+    }
+}
+
 class ArticleViewCell: UITableViewCell {
 
     
@@ -85,7 +98,7 @@ class ArticleViewCell: UITableViewCell {
         }
     }
     
-    public func setImages(_ images: Array<JSON>) {
+    public func setImages(_ images: Array<String>) {
         var h = (ScreenWidth - 32.0 - 8) * 0.5 * 3 / 5.0
         if images.count > 1 {
             self.imagesView.isHidden = false
@@ -101,7 +114,7 @@ class ArticleViewCell: UITableViewCell {
     }
     
     
-    lazy var contentLabel: UILabel = {
+    private lazy var contentLabel: UILabel = {
         let contentLabel = UILabel()
         contentLabel.font = UIFont.systemFont(ofSize: 16)
         contentLabel.textColor = .blackText
@@ -109,7 +122,7 @@ class ArticleViewCell: UITableViewCell {
         return contentLabel
     }()
     
-    lazy var likeButton: UIButton = {
+    private lazy var likeButton: UIButton = {
         let btn = UIButton()
         btn.frame = CGRect(x: ScreenWidth-60-20, y: 60, width: 60, height: 32)
         btn.setTitle("分享", for: .normal)
@@ -122,12 +135,12 @@ class ArticleViewCell: UITableViewCell {
         return btn
     }()
     
-    lazy var imagesView: ArticleImagesView = {
+    private lazy var imagesView: ArticleImagesView = {
         let imagesView: ArticleImagesView = ArticleImagesView()
         return imagesView
     }()
     
-    lazy var lineView: UIImageView = {
+    private lazy var lineView: UIImageView = {
         let lineView = UIImageView()
         lineView.backgroundColor = UIColor(hex: 0xF8F8F8)
         return lineView
@@ -175,7 +188,7 @@ class ArticleImagesView: UIView {
         super.init(coder: coder)
     }
     
-    public func setImages(_ images: Array<JSON>) {
+    public func setImages(_ images: Array<String>) {
         var i = 0
         for subv in self.subviews {
             if i >= images.count {
@@ -184,7 +197,7 @@ class ArticleImagesView: UIView {
             }
             subv.isHidden = false
             let v: UIImageView = subv as! UIImageView
-            let url = images[i].stringValue
+            let url = images[i]
             print(url)
             v.kf.setImage(with: URL(string: url))
             i += 1

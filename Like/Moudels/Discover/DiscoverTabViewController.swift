@@ -118,4 +118,15 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
             debugPrint(error)
         }
     }
+    func statusCell(_ cell: StatusViewCell, likeClick: Any?) {
+        
+    }
+    func statusCell(_ cell: StatusViewCell, userClick: Any?) {
+        guard let index = self.tableView.indexPath(for: cell) else {return}
+        let s = self.data[index.row]
+        guard let u = s.user else { return }
+        let vc = UserDetailViewController()
+        vc.userId = u.id
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }

@@ -13,6 +13,8 @@ import Kingfisher
 protocol StatusViewCellDelegate {
     //    func statusViewCellLikeButtonClick(_ button: UIButton)
     func statusViewCellLikeButtonClick(_ cell: StatusViewCell)
+    func statusCell(_ cell: StatusViewCell, likeClick: Any?)
+    func statusCell(_ cell: StatusViewCell, userClick: Any?)
 }
 
 protocol StatusViewCellData {
@@ -143,6 +145,11 @@ class StatusViewCell: UITableViewCell {
             make.left.right.equalTo(self.contentView)
             make.bottom.equalTo(self.contentView)
             make.height.equalTo(1)
+        }
+        
+        self.userView.userActionHandle = { [weak self] in
+            guard let `self` = self else { return }
+            self.delegate?.statusCell(self, userClick: nil)
         }
     }
     

@@ -11,17 +11,11 @@ import SnapKit
 
 class MeTabTableViewCell: UITableViewCell {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
+    func setup(title: String, icon: String) {
+        self.titleLabel.text = title
+        self.iconView.image = UIImage(named: icon)
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
-
+    
     class func create(tableView: UITableView) -> MeTabTableViewCell {
         let idf = NSStringFromClass(self)
         var cell: MeTabTableViewCell? = tableView.dequeueReusableCell(withIdentifier: idf) as? MeTabTableViewCell
@@ -90,7 +84,7 @@ class MeTabTableViewCell: UITableViewCell {
     
     lazy var arrowView: UIImageView = {
         let arrowView: UIImageView = UIImageView()
-        arrowView.image = UIImage(named: "me_arrow")
+        arrowView.image = UIImage(named: "arrow")
         return arrowView
     }()
     

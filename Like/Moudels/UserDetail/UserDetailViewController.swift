@@ -137,7 +137,7 @@ class UserDetailViewController: BaseViewController {
     }
 }
 
-extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate, StatusViewCellDelegate {
+extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.data.count
     }
@@ -147,7 +147,7 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate, 
         let cell = StatusViewCell.create(tableView: tableView)
         cell.contentLabel.text = j["content"].stringValue
         cell.likeButton.isSelected = j["is_liked"].boolValue
-        cell.delegate = self
+//        cell.delegate = self
         cell.likeButton.setTitle(j["id"].stringValue, for: .disabled)
         return cell
     }

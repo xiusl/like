@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		DE306B2B2445C0B600186270 /* ArticleApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */; };
+		DE306B2D244696E000186270 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2C244696E000186270 /* Article.swift */; };
 		FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */; };
 		FF101C5A2354044D00B78D41 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C592354044D00B78D41 /* User.swift */; };
 		FF101C5C235408E000B78D41 /* MeTabTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */; };
@@ -82,6 +83,7 @@
 
 /* Begin PBXFileReference section */
 		DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleApiRequest.swift; sourceTree = "<group>"; };
+		DE306B2C244696E000186270 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoPreviewViewCell.swift; sourceTree = "<group>"; };
 		FF101C592354044D00B78D41 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTabTableViewCell.swift; sourceTree = "<group>"; };
@@ -190,6 +192,7 @@
 			children = (
 				FF101C592354044D00B78D41 /* User.swift */,
 				FF4D27B02445F443000CE644 /* Status.swift */,
+				DE306B2C244696E000186270 /* Article.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -338,9 +341,9 @@
 		FF4135E1235070DD00B27792 /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				FF2CA57E234DB17100D1B433 /* ApiManager */,
 				FFE1B5C7238C03B400120D56 /* Qiniu */,
 				FF4470A12387C2DF002ED72D /* PhotoPicker */,
-				FF2CA57E234DB17100D1B433 /* ApiManager */,
 				FF1C1F582340A44000D635A6 /* RefreshControl */,
 				FF4135EF2350755500B27792 /* ProgressHUD */,
 				FF4135E2235070DD00B27792 /* Extension */,
@@ -529,7 +532,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1100;
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1130;
 				ORGANIZATIONNAME = likeeee;
 				TargetAttributes = {
 					FF1C1F2D2340827C00D635A6 = {
@@ -635,6 +638,7 @@
 				FF4135E7235070DD00B27792 /* UIFontExten.swift in Sources */,
 				FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */,
 				FF4135DA2350702900B27792 /* BaseViewController.swift in Sources */,
+				DE306B2D244696E000186270 /* Article.swift in Sources */,
 				FF1C1F322340827C00D635A6 /* AppDelegate.swift in Sources */,
 				FF4135E8235070DD00B27792 /* ConstUtil.swift in Sources */,
 				FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */,

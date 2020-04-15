@@ -7,14 +7,19 @@
 //
 
 import UIKit
+
 protocol StatusUserViewData {
     func setupAvatar(_ avatar: String)
     func setupName(_ name: String)
 }
 class StatusUserView : UIView {
+    
+    public var userActionHandle: (() -> ())?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupViews()
+        self.setupAction()
     }
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -71,6 +76,20 @@ extension StatusUserView {
             make.left.equalTo(self.nameLabel)
             make.bottom.equalTo(self.avatarView)
         }
+    }
+    
+    func setupAction() {
+        let tapG = UITapGestureRecognizer(target: self, action: #selector(userTapAction))
+        self.avatarView.isUserInteractionEnabled = true
+        self.avatarView.addGestureRecognizer(tapG)
+        
+        let tapG2 = UITapGestureRecognizer(target: self, action: #selector(userTapAction))
+        self.nameLabel.isUserInteractionEnabled = true
+        self.nameLabel.addGestureRecognizer(tapG2)
+    }
+    
+    @objc func userTapAction() {
+        self.userActionHandle?()
     }
 }
 

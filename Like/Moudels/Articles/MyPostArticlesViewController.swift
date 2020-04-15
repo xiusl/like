@@ -100,7 +100,7 @@ class MyPostArticlesViewController: BaseViewController {
 
             let j = data[indexPath.row]
             let cell = ArticleViewCell.create(tableView: tableView)
-            cell.contentLabel.text = j["title"].stringValue
+//            cell.contentLabel.text = j["title"].stringValue
             cell.delegate = self
             cell.index = indexPath.row
             return cell

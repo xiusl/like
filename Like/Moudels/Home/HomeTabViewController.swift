@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class HomeTabViewController: BaseViewController {
     
-    var data: Array<JSON> = Array()
+    var data: Array<Article> = Array()
     var page: Int = 1
     let count: Int = 10
     
@@ -33,55 +33,33 @@ class HomeTabViewController: BaseViewController {
     }
     @objc func loadData() {
         self.page = 1
-        let url = URL(string: "http://ins-api.sleen.top/articles")!
-        AF.request(url).validate().responseJSON { [weak self] response in
-            //            debugPrint("Response: \(response)")
-            guard let `self` = self else { return }
-             self.tableView.mjHeader?.endRefreshing()
-            switch response.result {
-            case .success(let data):
-                print(data)
-                let j = JSON(data)
-                self.data = j["data"]["articles"].array!
-                self.tableView.reloadData()
-                fallthrough
-            case .failure(_):
-                fallthrough
-            default:
-                print(123)
+        let req = ArticleApiRequest.getArticles(page: self.page, count: 10)
+        ApiManager.shared.request(request: req, success: { (result) in
+            let data = JSON(result)
+            self.data = Array()
+            for json in data["articles"].arrayValue {
+                self.data.append(Article(fromJson: json))
             }
-//            if response.result
-//            if response.result.isSuccess {
-//                let v = response.result.value
-//                let j = JSON(v as Any)
-//                self.data = j["data"]["articles"].array!
-//                self.tableView.reloadData()
-//                self.refresh?.endRefreshing()
-//            } else {
-//
-//            }
-            
+            self.tableView.reloadData()
+            self.tableView.mjHeader?.endRefreshing()
+        }) { (error) in
+            debugPrint(error)
+            self.tableView.mjHeader?.endRefreshing()
         }
-        
     }
     @objc func loadMoreData() {
         self.page += 1
-        let url = URL(string: "https://ins-api.sleen.top/articles?count="+String(self.count)+"&page="+String(self.page))!
-        AF.request(url).validate().responseJSON { response in
-            
-//            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+3) {
-
-//                let v = response.result.value
-//                let j = JSON(v as Any)
-//                let adata = j["data"]["articles"].array!
-//                self.data.append(contentsOf: adata)
-//                self.tableView.reloadData()
-//                self.tableView.mjFooter?.endRefreshing()
-//
-//                if adata.count < self.count {
-//                    self.tableView.mjFooter?.setState(.noMoreData)
-//                }
-//            }
+        let req = ArticleApiRequest.getArticles(page: self.page, count: 10)
+        ApiManager.shared.request(request: req, success: { (result) in
+            let data = JSON(result)
+            for json in data["articles"].arrayValue {
+                self.data.append(Article(fromJson: json))
+            }
+            self.tableView.reloadData()
+            self.tableView.mjFooter?.endRefreshing()
+        }) { (error) in
+            debugPrint(error)
+            self.tableView.mjFooter?.endRefreshing()
         }
     }
     @objc func addcount(_ refresh: UIRefreshControl) {
@@ -109,20 +87,20 @@ extension HomeTabViewController: UITableViewDataSource, UITableViewDelegate, Art
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 
-        let j = data[indexPath.row]
+        let art = data[indexPath.row]
         let cell = ArticleViewCell.create(tableView: tableView)
-        cell.contentLabel.text = j["title"].stringValue
-        cell.delegate = self
+        cell.setupTitle(art.title)
+        cell.setImages(art.images)
         cell.index = indexPath.row
-        cell.setImages(j["images"].arrayValue)
+        cell.delegate = self
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let d = data[indexPath.row]
         let vc = ArticleDetailViewController()
-        vc.urlStr = d["url"].stringValue
-        vc.articleTitle = d["title"].stringValue
+        vc.urlStr = d.url
+        vc.articleTitle = d.title
         self.navigationController?.pushViewController(vc, animated: true)
 //        self.present(vc, animated: true, completion: nil)
     }
@@ -136,16 +114,16 @@ extension HomeTabViewController: UITableViewDataSource, UITableViewDelegate, Art
     }
     
     func articleViewCell(cell: ArticleViewCell, shareIndex: Int) {
-        let d = data[shareIndex]
-        let imgs = d["images"].arrayValue
-        if imgs.count > 0 {
-            let shareView = SocialShareView(url: d["url"].stringValue, title: d["title"].stringValue, image: imgs[0].stringValue)
-            shareView.show()
-        } else {
-            let shareView = SocialShareView(url: d["url"].stringValue, title: d["title"].stringValue)
-            shareView.show()
-        }
-        
+//        let d = data[shareIndex]
+//        let imgs = d["images"].arrayValue
+//        if imgs.count > 0 {
+//            let shareView = SocialShareView(url: d["url"].stringValue, title: d["title"].stringValue, image: imgs[0].stringValue)
+//            shareView.show()
+//        } else {
+//            let shareView = SocialShareView(url: d["url"].stringValue, title: d["title"].stringValue)
+//            shareView.show()
+//        }
+//
     }
 }
 
