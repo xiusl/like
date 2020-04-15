@@ -14,6 +14,14 @@ class UserTableHeaderView: UIView {
         super.init(frame: frame)
         self.addSubview(avatarView)
         self.addSubview(nameLabel)
+        
+        let v = UIImageView()
+        v.backgroundColor = UIColor(hex: 0xF8F8F8)
+        self.addSubview(v)
+        v.snp.makeConstraints { (make) in
+            make.left.right.bottom.equalTo(self)
+            make.height.equalTo(10)
+        }
     }
     
     required init?(coder: NSCoder) {
