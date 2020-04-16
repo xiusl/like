@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
             self.window?.rootViewController = nav
         }
         self.window?.makeKeyAndVisible()
-        WXApi.registerApp("wxd07ead9c827a04f5", universalLink: "https://ins.sleen.top/")
+        WXApi.registerApp("wxd07ead9c827a04f5", universalLink: "https://ins.sleen.top/weixin/")
         
 //        do {
 //            let d = try Data(contentsOf: URL(fileURLWithPath: "/Users/xiusl/Desktop/456.jpg"))
@@ -78,6 +78,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
                     let vc = ArticleDetailViewController()
                     vc.urlStr = urlStr
                     self.getTopViewController().present(vc, animated: true, completion: nil)
+                } else if urlStr.contains("weixin") {
+                    return WXApi.handleOpenUniversalLink(userActivity, delegate: self)
                 }
             }
         }
