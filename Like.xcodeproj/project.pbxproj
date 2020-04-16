@@ -3,13 +3,14 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		DE306B2B2445C0B600186270 /* ArticleApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */; };
 		DE306B2D244696E000186270 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2C244696E000186270 /* Article.swift */; };
 		DE306B302446A84000186270 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2F2446A84000186270 /* SettingsViewController.swift */; };
+		ECEFF0786D051A6000061807 /* Pods_Like.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */; };
 		FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */; };
 		FF101C5A2354044D00B78D41 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C592354044D00B78D41 /* User.swift */; };
 		FF101C5C235408E000B78D41 /* MeTabTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */; };
@@ -24,10 +25,6 @@
 		FF1C1F322340827C00D635A6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1C1F312340827C00D635A6 /* AppDelegate.swift */; };
 		FF1C1F3B2340827E00D635A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FF1C1F3A2340827E00D635A6 /* Assets.xcassets */; };
 		FF1C1F3E2340827E00D635A6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FF1C1F3C2340827E00D635A6 /* LaunchScreen.storyboard */; };
-		FF1C1F482340865100D635A6 /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1C1F472340865100D635A6 /* Alamofire.framework */; };
-		FF1C1F4C2340866000D635A6 /* Kingfisher.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1C1F4B2340866000D635A6 /* Kingfisher.framework */; };
-		FF1C1F4F2340867600D635A6 /* SnapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1C1F4E2340867600D635A6 /* SnapKit.framework */; };
-		FF1C1F522340868100D635A6 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1C1F512340868100D635A6 /* SwiftyJSON.framework */; };
 		FF1C1F5523408B3D00D635A6 /* ArticleDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1C1F5423408B3D00D635A6 /* ArticleDetailViewController.swift */; };
 		FF1C1F57234090A000D635A6 /* UIScrollViewMjRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1C1F56234090A000D635A6 /* UIScrollViewMjRefresh.swift */; };
 		FF1C1F5A2340A44B00D635A6 /* RefreshComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF1C1F592340A44B00D635A6 /* RefreshComponent.swift */; };
@@ -62,7 +59,6 @@
 		FF4135FB2351608200B27792 /* AuthInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135FA2351608200B27792 /* AuthInputView.swift */; };
 		FF4135FE2351633F00B27792 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF4136002351633F00B27792 /* Localizable.strings */; };
 		FF4136032351645300B27792 /* StringLocalizable.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4136022351645300B27792 /* StringLocalizable.swift */; };
-		FF41360523516CD900B27792 /* KMNavigationBarTransition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF41360423516CD900B27792 /* KMNavigationBarTransition.framework */; };
 		FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4136082351753C00B27792 /* UserApiRequest.swift */; };
 		FF4470A32387C309002ED72D /* LKPhotoPickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4470A22387C309002ED72D /* LKPhotoPickerViewController.swift */; };
 		FF4470A52387CF4B002ED72D /* LKAlbum.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4470A42387CF4B002ED72D /* LKAlbum.swift */; };
@@ -83,6 +79,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1B8CDF32D9A6E94518E7866F /* Pods-Like.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Like.debug.xcconfig"; path = "Target Support Files/Pods-Like/Pods-Like.debug.xcconfig"; sourceTree = "<group>"; };
+		7EEFEB724B4E71FA85A57607 /* Pods-Like.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Like.release.xcconfig"; path = "Target Support Files/Pods-Like/Pods-Like.release.xcconfig"; sourceTree = "<group>"; };
+		BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Like.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleApiRequest.swift; sourceTree = "<group>"; };
 		DE306B2C244696E000186270 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
 		DE306B2F2446A84000186270 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -173,22 +172,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF41360523516CD900B27792 /* KMNavigationBarTransition.framework in Frameworks */,
 				FF1F1941235F1E0B00C77C64 /* SystemConfiguration.framework in Frameworks */,
 				FF1F1943235F1E2100C77C64 /* libc++.tbd in Frameworks */,
-				FF1C1F522340868100D635A6 /* SwiftyJSON.framework in Frameworks */,
 				FF1F193C235F1D3800C77C64 /* libWeChatSDK.a in Frameworks */,
 				FF1F1945235F1E3400C77C64 /* libsqlite3.0.tbd in Frameworks */,
-				FF1C1F4F2340867600D635A6 /* SnapKit.framework in Frameworks */,
-				FF1C1F4C2340866000D635A6 /* Kingfisher.framework in Frameworks */,
-				FF1C1F482340865100D635A6 /* Alamofire.framework in Frameworks */,
 				FF1F1947235F1E4800C77C64 /* libz.tbd in Frameworks */,
+				ECEFF0786D051A6000061807 /* Pods_Like.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2268EAB11536D4AE3447FEC3 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				1B8CDF32D9A6E94518E7866F /* Pods-Like.debug.xcconfig */,
+				7EEFEB724B4E71FA85A57607 /* Pods-Like.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		DE306B2E2446A81600186270 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +260,7 @@
 				FF1C1F302340827C00D635A6 /* Like */,
 				FF1C1F2F2340827C00D635A6 /* Products */,
 				FF1C1F462340865000D635A6 /* Frameworks */,
+				2268EAB11536D4AE3447FEC3 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -293,6 +298,7 @@
 				FF1C1F4E2340867600D635A6 /* SnapKit.framework */,
 				FF1C1F4B2340866000D635A6 /* Kingfisher.framework */,
 				FF1C1F472340865100D635A6 /* Alamofire.framework */,
+				BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -522,10 +528,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = FF1C1F422340827E00D635A6 /* Build configuration list for PBXNativeTarget "Like" */;
 			buildPhases = (
+				0852092336C0F55C9A73713C /* [CP] Check Pods Manifest.lock */,
 				FF1C1F2A2340827C00D635A6 /* Sources */,
 				FF1C1F2B2340827C00D635A6 /* Frameworks */,
 				FF1C1F2C2340827C00D635A6 /* Resources */,
 				FF1C1F45234085DE00D635A6 /* ShellScript */,
+				63EF4F525D79E264C3541941 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -587,6 +595,45 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		0852092336C0F55C9A73713C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Like-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		63EF4F525D79E264C3541941 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Like/Pods-Like-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Like/Pods-Like-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Like/Pods-Like-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		FF1C1F45234085DE00D635A6 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -595,24 +642,14 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/SnapKit.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Kingfisher.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/KMNavigationBarTransition.framework",
 			);
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SnapKit.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Alamofire.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/SwiftyJSON.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/Kingfisher.framework",
-				"$(BUILT_PRODUCTS_DIR)/$(FRAMEWORKS_FOLDER_PATH)/KMNavigationBarTransition.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n/usr/local/bin/carthage copy-frameworks\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -772,6 +809,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -826,23 +864,22 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		FF1C1F432340827E00D635A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1B8CDF32D9A6E94518E7866F /* Pods-Like.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Like/ll.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 3S73583C2C;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Like/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -869,17 +906,15 @@
 		};
 		FF1C1F442340827E00D635A6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7EEFEB724B4E71FA85A57607 /* Pods-Like.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Like/ll.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_TEAM = 3S73583C2C;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Carthage/Build/iOS",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Like/Resources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (

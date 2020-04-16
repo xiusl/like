@@ -1,5 +1,0 @@
-github "SnapKit/SnapKit" ~> 5.0
-github "Alamofire/Alamofire" ~>5.0
-github "SwiftyJSON/SwiftyJSON" ~> 5.0
-github "onevcat/Kingfisher" ~>5.0
-github "MoZhouqi/KMNavigationBarTransition"

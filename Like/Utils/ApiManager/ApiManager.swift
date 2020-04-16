@@ -97,6 +97,7 @@ extension ApiManager {
                          failed: @escaping RequestFailedBlock) {
         var h = headers ?? [:]
         h["X-Token"] = (User.current?.token ?? "")
+        h["X-Type"] = "iOS"
         self.manager.request(url, method: .get, parameters: params, encoding: encoding, headers: HTTPHeaders(h)).validate().responseJSON { (response) in
             self.handleResponse(response: response, success: success, failed: failed)
         }
@@ -133,6 +134,7 @@ extension ApiManager {
         var request = URLRequest(url: URL(string: url)!)
         request.httpMethod = HTTPMethod.post.rawValue
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.setValue("iOS", forHTTPHeaderField:"X-Type")
         if let headers = headers {
             for (k, v) in headers {
                 request.setValue(v, forHTTPHeaderField: k)
