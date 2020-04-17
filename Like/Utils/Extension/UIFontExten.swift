@@ -28,7 +28,7 @@ extension UIFont {
 
 extension UIImage {
     class func imageWith(color: UIColor) -> UIImage {
-        let frame = CGRect(x: 0, y: 0, width: 1, height: 1)
+        let frame = CGRect(x: 0, y: 0, width: 10, height: 10)
         UIGraphicsBeginImageContext(frame.size)
         let ctx: CGContext = UIGraphicsGetCurrentContext()!
         ctx.setFillColor(color.cgColor)

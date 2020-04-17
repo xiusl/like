@@ -35,7 +35,7 @@ class MainTabBarController: UITabBarController {
         let color = UIColor.init(hex: 0xB1B1B1)
         let sColor = UIColor.init(hex: 0x44C7FB)
         if #available(iOS 13.0, *) {
-            self.tabBar.tintColor = .red
+            self.tabBar.tintColor = .white
             self.tabBar.unselectedItemTintColor = color
             let item = UITabBarItem.appearance()
             item.setTitleTextAttributes([.font: font], for: .normal)

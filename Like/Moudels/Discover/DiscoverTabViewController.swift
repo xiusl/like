@@ -43,7 +43,7 @@ class DiscoverTabViewController: BaseViewController {
         if StatusBarHeight > 20 {
             height -= BottomSafeHeight
         }
-        let frame = CGRect(x: 0, y: TopSafeHeight, width: ScreenWidth, height: height)
+        let frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: height)
         let tableView = UITableView(frame: frame, style: .plain)
         tableView.delegate = self
         tableView.dataSource = self
@@ -108,12 +108,12 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
         
         //        guard let data = self.data[index.row] else { return }
         let data: Status = self.data[index.row]
-        let liked = data.isLiked ?? false
+        let liked = data.isLiked
         guard let id = data.id else { return }
-        let request = StatusApiRequest.likeAction(id: id, like: liked)
+        let request = StatusApiRequest.likeAction(id: id, like: !liked!)
         ApiManager.shared.request(request: request, success: { (result) in
-            cell.likeButton.isSelected = !liked
-            data.isLiked = !liked
+            cell.likeButton.isSelected = !liked!
+            data.isLiked = !liked!
         }) { (error) in
             debugPrint(error)
         }

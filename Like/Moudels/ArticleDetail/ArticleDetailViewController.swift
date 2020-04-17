@@ -26,7 +26,7 @@ class ArticleDetailViewController: UIViewController {
 
     lazy var webView: WKWebView = {
         let config: WKWebViewConfiguration = WKWebViewConfiguration()
-        let frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height-0)
+        let frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: ScreenHeight-TopSafeHeight)
          let webView: WKWebView = WKWebView.init(frame: frame, configuration: config)
         webView.scrollView.delegate = self;
         return webView

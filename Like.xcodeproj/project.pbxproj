@@ -892,6 +892,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-all_load",
 				);
@@ -927,6 +928,7 @@
 				);
 				MARKETING_VERSION = 1.0.0;
 				OTHER_LDFLAGS = (
+					"$(inherited)",
 					"-ObjC",
 					"-all_load",
 				);

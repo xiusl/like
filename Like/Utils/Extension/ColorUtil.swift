@@ -8,6 +8,27 @@
 
 import UIKit
 
+extension UIImage {
+    public convenience init?(color: UIColor, w: CGFloat = 1, h: CGFloat = 1) {
+            let size = CGSize(width: w, height: h)
+
+            UIGraphicsBeginImageContext(size)
+           defer {
+               UIGraphicsEndImageContext()
+           }
+           let context = UIGraphicsGetCurrentContext()
+           context?.setFillColor(color.cgColor)
+           context?.fill(CGRect(origin: CGPoint.zero, size: size))
+           context?.setShouldAntialias(true)
+           let image = UIGraphicsGetImageFromCurrentImageContext()
+           guard let cgImage = image?.cgImage else {
+               self.init()
+               return nil
+           }
+           self.init(cgImage: cgImage)
+       }
+}
+
 extension UIColor {
     convenience init(hex: UInt64) {
         let r = (hex & 0xff0000) >> 16

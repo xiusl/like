@@ -29,7 +29,7 @@ class WebViewController: BaseViewController {
 
     lazy var webView: WKWebView = {
         let config = WKWebViewConfiguration()
-        let frame = CGRect(x: 0, y: TopSafeHeight, width: ScreenWidth, height: ScreenHeight-TopSafeHeight)
+        let frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: ScreenHeight-TopSafeHeight)
         let webView = WKWebView(frame: frame, configuration: config)
         if #available(iOS 11.0, *) {
             webView.scrollView.contentInsetAdjustmentBehavior = .never

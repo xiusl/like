@@ -14,6 +14,8 @@ class MainNavigationController: UINavigationController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        self.navigationBar.setBackgroundImage(UIImage.imageWith(color: .white), for: .default)
+        self.navigationBar.shadowImage = UIImage(color: .cF2F4F8)
     }
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {

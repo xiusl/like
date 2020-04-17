@@ -17,7 +17,7 @@ class UserDetailViewController: BaseViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
-    var data: Array<JSON> = Array()
+    var data: Array<Status> = Array()
     var userId: String = ""
     var user: User?
     
@@ -25,18 +25,17 @@ class UserDetailViewController: BaseViewController {
     let bgHeight: CGFloat = ScreenWidth
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         
         self.view.addSubview(self.aView)
         self.view.addSubview(self.tableView)
         self.view.addSubview(self.bView)
         self.bView.addSubview(self.cView)
-//        self.view.addSubview(self.bView)
+        //        self.view.addSubview(self.bView)
         self.cView.addSubview(self.nameLabel)
         
         self.tableView.contentInset = UIEdgeInsets(top: insetTop, left: 0, bottom: 0, right: 0)
-
+        
         self.tableView.tableHeaderView = self.headerView
         self.loadData()
         
@@ -49,7 +48,7 @@ class UserDetailViewController: BaseViewController {
     }
     
     @objc func loadData() {
-    
+        
         let request = UserApiRequest.getUser(id: self.userId)
         ApiManager.shared.request(request: request, success: { (result) in
             let u = User(fromJson: JSON(result))
@@ -63,11 +62,15 @@ class UserDetailViewController: BaseViewController {
         
         let request2 = StatusApiRequest.getUserStatuses(userid: self.userId, page: 1, count: 10)
         ApiManager.shared.request(request: request2, success: { (result) in
-            self.data = JSON(result).arrayValue
+            let data = JSON(result)
+            self.data = Array()
+            for json in data.arrayValue {
+                self.data.append(Status(fromJson: json))
+            }
             self.tableView.reloadData()
             self.tableView.mjHeader?.endRefreshing()
         }) { (error) in
-            
+            self.tableView.mjHeader?.endRefreshing()
         }
     }
     
@@ -79,7 +82,7 @@ class UserDetailViewController: BaseViewController {
         tableView.dataSource = self
         return tableView
     }()
-
+    
     lazy var aView: UIImageView = {
         let aView = UIImageView()
         aView.frame = CGRect(x: 0, y: -(self.bgHeight-self.insetTop)/2.0, width: ScreenWidth, height: self.bgHeight)
@@ -131,7 +134,7 @@ class UserDetailViewController: BaseViewController {
     }()
     
     
-//    override var preferredStatusBarStyle: UIStatusBarStyle
+    //    override var preferredStatusBarStyle: UIStatusBarStyle
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -143,12 +146,18 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let j = data[indexPath.row]
+        let status = self.data[indexPath.row]
+        let user = status.user!
+        
         let cell = StatusViewCell.create(tableView: tableView)
-        cell.contentLabel.text = j["content"].stringValue
-        cell.likeButton.isSelected = j["is_liked"].boolValue
-//        cell.delegate = self
-        cell.likeButton.setTitle(j["id"].stringValue, for: .disabled)
+        
+        cell.setupUserName(user.name)
+        cell.setupUserAvatar(user.avatar)
+        cell.setupContent(status.content)
+        cell.setupLike(status.isLiked)
+        cell.setupImages(status.images)
+        
+        cell.delegate = self
         return cell
     }
     
@@ -188,28 +197,42 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
         return UITableView.automaticDimension
     }
     
-    
+        
+    //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+    //        let view = UIView()
+    //        view.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 10)
+    //        view.backgroundColor = .cF2F4F8
+    //        return view
+    //    }
+    //    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    //        return 10
+    //    }
+}
+extension UserDetailViewController: StatusViewCellDelegate {
     func statusViewCellLikeButtonClick(_ cell: StatusViewCell) {
-        let index = self.tableView.indexPath(for: cell)
-        var data = self.data[index!.row]
-        let liked = data["is_liked"].boolValue
-        let id = data["id"].stringValue
-        let request = liked ? StatusApiRequest.unlikeStatus(id: id) : StatusApiRequest.likeStatus(id: id)
+        guard let index = self.tableView.indexPath(for: cell) else {return}
+        
+        //        guard let data = self.data[index.row] else { return }
+        let data: Status = self.data[index.row]
+        let liked = data.isLiked ?? false
+        guard let id = data.id else { return }
+        let request = StatusApiRequest.likeAction(id: id, like: liked)
         ApiManager.shared.request(request: request, success: { (result) in
             cell.likeButton.isSelected = !liked
-            data["is_liked"] = true
+            data.isLiked = !liked
         }) { (error) in
             debugPrint(error)
         }
     }
-    
-//    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = UIView()
-//        view.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 10)
-//        view.backgroundColor = .cF2F4F8
-//        return view
-//    }
-//    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return 10
-//    }
+    func statusCell(_ cell: StatusViewCell, likeClick: Any?) {
+        
+    }
+    func statusCell(_ cell: StatusViewCell, userClick: Any?) {
+        guard let index = self.tableView.indexPath(for: cell) else {return}
+        let s = self.data[index.row]
+        guard let u = s.user else { return }
+        let vc = UserDetailViewController()
+        vc.userId = u.id
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
 }

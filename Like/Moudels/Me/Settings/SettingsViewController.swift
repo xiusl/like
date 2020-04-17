@@ -123,7 +123,7 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
     
     lazy var tableView: BaseTableView = {
         let height = ScreenHeight - TopSafeHeight;
-        let frame = CGRect(x: 0, y: TopSafeHeight, width: ScreenWidth, height: height)
+        let frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: height)
         let tableView: BaseTableView = BaseTableView.init(frame: frame, style: .grouped)
         tableView.delegate = self
         tableView.dataSource = self

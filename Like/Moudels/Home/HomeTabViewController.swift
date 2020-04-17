@@ -72,7 +72,7 @@ class HomeTabViewController: BaseViewController {
         if StatusBarHeight > 20 {
             height -= BottomSafeHeight
         }
-        let frame = CGRect(x: 0, y: TopSafeHeight, width: ScreenWidth, height: height)
+        let frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: height)
         let tableView = UITableView(frame: frame, style: .plain)
         tableView.delegate = self
         tableView.dataSource = self

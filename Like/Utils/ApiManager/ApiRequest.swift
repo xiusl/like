@@ -52,8 +52,6 @@ extension ArtApiRequest: ApiRequest {
     }
     
     var baseUrl: String {
-//        return "http://api.ins.com/"
-//        return "https://ins-api.sleen.top/"
         return ApiManager.baseUrl
     }
     
