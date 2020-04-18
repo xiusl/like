@@ -113,7 +113,7 @@ class SocialShareView: UIView {
         webpageObject.webpageUrl = self.url!
         let message = WXMediaMessage()
         message.title = self.title!
-        message.description = "哩嗑 - 收集&思考"
+        message.description = "哩嗑 - 总有点儿话想说"
         message.mediaObject = webpageObject
         
         if self.image != nil {
@@ -167,7 +167,7 @@ class SocialShareView: UIView {
         webpageObject.webpageUrl = self.url!
         let message = WXMediaMessage()
         message.title = self.title!
-        message.description = "哩嗑 - 收集&思考"
+        message.description = "哩嗑 - 总有点儿话想说"
         message.mediaObject = webpageObject
         
         if self.image != nil {

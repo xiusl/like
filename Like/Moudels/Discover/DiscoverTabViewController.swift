@@ -108,12 +108,12 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
         
         //        guard let data = self.data[index.row] else { return }
         let data: Status = self.data[index.row]
-        let liked = data.isLiked
+        let liked = data.isLiked!
         guard let id = data.id else { return }
-        let request = StatusApiRequest.likeAction(id: id, like: !liked!)
+        let request = StatusApiRequest.likeAction(id: id, like: !liked)
         ApiManager.shared.request(request: request, success: { (result) in
-            cell.likeButton.isSelected = !liked!
-            data.isLiked = !liked!
+            cell.likeButton.isSelected = !liked
+            data.isLiked = !liked
         }) { (error) in
             debugPrint(error)
         }

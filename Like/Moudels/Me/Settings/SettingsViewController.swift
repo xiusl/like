@@ -68,6 +68,8 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
         let dic = arr[indexPath.row]
         let title = dic["title"]
         if title == "关于" {
+            let vc = AppAboutViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
         } else if title == "隐私政策" {
             let vc = WebViewController()
             vc.url = "https://ins.sleen.top/privacy"

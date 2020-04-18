@@ -6,7 +6,7 @@
   Copyright © 2019 likeeee. All rights reserved.
 */
 
-
+"CFBundleDisplayName" = "Like";
 "LoginPhonePlaceholder" = "Email or phone";
 "LoginPwdPlaceholder" = "Password";
 "LoginPhoneInputError" = "Check Email or phone";
@@ -20,3 +20,4 @@
 "VerifyCode" = "Code";
 "VerifyCodeLogin" = "Confirmation Code Login";
 "Confirmation Code" = "Confirmation Code";
+"User Privacy Policy" = "User Privacy Policy";

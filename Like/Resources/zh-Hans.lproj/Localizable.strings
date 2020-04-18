@@ -6,7 +6,7 @@
   Copyright © 2019 likeeee. All rights reserved.
 */
 
-
+"CFBundleDisplayName" = "哩嗑";
 "LoginPhonePlaceholder" = "邮箱或手机号";
 "LoginPhoneInputError" = "请输入正确的邮箱或手机号";
 "LoginPwdInputError" = "6-12位密码";
@@ -20,3 +20,4 @@
 "VerifyCode" = "验证码";
 "VerifyCodeLogin" = "验证码登录";
 "Confirmation Code" = "验证码";
+"User Privacy Policy" = "用户隐私协议";
