@@ -18,44 +18,67 @@ class PostStatusViewController: BaseViewController {
 
         // Do any additional setup after loading the view.
         self.title = "发布动态"
-        self.view.addSubview(self.textView)
-//        self.view.addSubview(self.okButton)
-        self.view.addSubview(self.photosView)
-        self.view.addSubview(self.uploadButton)
+        self.setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     
         self.textView.becomeFirstResponder()
         
-        ApiManager.shared.request(request: SettingApiRequest.qiniuToken(()), success: { (response) in
-            let token = JSON(response).stringValue
-            self.token = token
-            debugPrint(token)
-        }) { (error) in
-            
-        }
-        
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: .plain, target: self, action: #selector(okButtonClick))
+        
+        self.loadUploadToken()
     }
     
+    
+    private func setupViews() {
+        self.view.addSubview(self.textView)
+        self.view.addSubview(self.photosView)
+        self.view.addSubview(self.uploadButton)
+        //textView.frame = CGRect(x: 16, y: TopSafeHeight+16, width: ScreenWidth-32, height: 120)
+        self.textView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view).offset(16)
+            make.right.equalTo(self.view).offset(-16)
+            make.height.equalTo(120)
+            make.top.equalTo(self.view).offset(16)
+        }
+        
+        // uploadButton.frame = CGRect(x: 16, y: TopSafeHeight+136+20, width: 64, height: 64)
+        self.uploadButton.snp.makeConstraints { (make) in
+            make.left.equalTo(self.textView)
+            make.top.equalTo(self.textView.snp.bottom).offset(20)
+            make.size.equalTo((ScreenWidth-32-30) / 4.0)
+        }
+        // photosView.frame = CGRect(x: 16, y: TopSafeHeight+136+20, width: ScreenWidth-32, height: 64)
+        self.photosView.snp.makeConstraints { (make) in
+            make.left.equalTo(self.view).offset(16)
+            make.top.equalTo(self.textView.snp.bottom).offset(20)
+            make.right.equalTo(self.view).offset(-16)
+            make.height.equalTo((ScreenWidth-32-30) / 4.0)
+        }
+    }
+    
+    private func loadUploadToken() {
+        DispatchQueue.global().async {
+            ApiManager.shared.request(request: SettingApiRequest.qiniuToken(()), success: { (response) in
+                let token = JSON(response).stringValue
+                self.token = token
+                debugPrint(token)
+            }) { (error) in
+                
+            }
+        }
+    }
     @objc func keyboardFrameChange(_ noti: Notification) {
         let userInfo = noti.userInfo as! Dictionary<String, Any>
         let keybordRect = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
         let endY = keybordRect.cgRectValue.origin.y
         if endY == ScreenHeight {
-//            self.okButton.transform = CGAffineTransform.identity
         } else {
-//            self.okButton.transform = CGAffineTransform.init(translationX: 0, y: -40)
         }
     }
     
     lazy var textView: UITextView = {
         let textView = UITextView()
-        textView.frame = CGRect(x: 16, y: TopSafeHeight+16, width: ScreenWidth-32, height: 120)
-//        textView.layer.cornerRadius = 2
-//        textView.layer.borderColor = UIColor.cF2F4F8.cgColor
-//        textView.layer.borderWidth = 1
-//        textView.clipsToBounds = true
         textView.font = UIFont.systemFont(ofSize: 14)
         textView.textColor = .blackText
         return textView
@@ -87,7 +110,6 @@ class PostStatusViewController: BaseViewController {
     
     lazy var uploadButton: UIButton = {
         let uploadButton = UIButton()
-        uploadButton.frame = CGRect(x: 16, y: TopSafeHeight+136+20, width: 64, height: 64)
         uploadButton.setBackgroundImage(UIImage(named: "photo_upload"), for: .normal)
         uploadButton.addTarget(self, action: #selector(uploadButtonClick), for: .touchUpInside)
         return uploadButton
@@ -102,7 +124,7 @@ class PostStatusViewController: BaseViewController {
     
     lazy var photosView: UIView = {
        let photosView = UIView()
-        photosView.frame = CGRect(x: 16, y: TopSafeHeight+136+20, width: ScreenWidth-32, height: 64)
+        
         return photosView
     }()
 }
@@ -166,7 +188,8 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
             l = 0
             t += (w+10)
         }
-        self.uploadButton.frame = CGRect(x: l+16, y: TopSafeHeight+136+20+t, width: w, height: w)
+        self.uploadButton.isHidden = true
+//        self.uploadButton.frame = CGRect(x: l+16, y: TopSafeHeight+136+20+t, width: w, height: w)
         
     }
 }

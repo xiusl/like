@@ -42,7 +42,7 @@ extension StatusApiRequest: ApiRequest {
     
     var path: String {
         switch self {
-        case .postStatus(_):
+        case .postStatus(_, _):
             return "statuses"
         case .getStatuses(_, _):
             return "statuses"
@@ -53,7 +53,7 @@ extension StatusApiRequest: ApiRequest {
         case .likeAction(let id, _):
             return "statuses/"+id+"/likes"
         case .getUserStatuses(let userid, _, _):
-            return "users/"+userid+"/statuses"
+            return "users/\(userid)/statuses"
         default:
             return ""
         }

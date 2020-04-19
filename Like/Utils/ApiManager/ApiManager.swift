@@ -24,9 +24,9 @@ class ApiManager: NSObject {
     static let shared = ApiManager()
 
 //    #if DEBUG
-//        static let baseUrl = "http://127.0.0.1:5000/"
+        static let baseUrl = "http://127.0.0.1:5000/"
 //    #else
-        static let baseUrl = "https://ins-api.sleen.top/"
+//        static let baseUrl = "https://ins-api.sleen.top/"
 //    #endif
     private override init() {
         
@@ -62,27 +62,24 @@ class ApiManager: NSObject {
     }
     
     public func uploadImage(image: UIImage, token: String, success: @escaping UploadSuccessBlock, failed: @escaping RequestFailedBlock) {
-//        let url = "http://upload-z2.qiniup.com"
-//        let req = self.manager.upload(multipartFormData: { (formData) in
-//            let data = image.jpegData(compressionQuality: 1)!
-//            let k = String(format: "like/%@", qn_eTag(data: data))
-//            formData.append(k.data(using: .utf8)!, withName: "key")
-//            formData.append(token.data(using: .utf8)!, withName: "token")
-//            formData.append(data, withName: "file")
-//        }, usingThreshold: MultipartUpload.encodingMemoryThreshold, fileManager: .default, to: url, method: .post, headers: nil)
-//        req.uploadProgress { (progress) in
-//
-//            debugPrint(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))
-//        }
-//        req.validate().responseJSON { (response) in
-//            if let error = response.result.error {
-//                debugPrint(error.localizedDescription)
-//                failed(error.localizedDescription)
-//
-//            } else if let data = response.result.value {
-//                success(data as Any)
-//            }
-//        }
+        let url = "http://upload-z2.qiniup.com"
+        let _ = self.manager.upload(multipartFormData: { (formData) in
+            let data = image.pngData()!
+            let k = String(format: "like/%@", qn_eTag(data: data))
+            formData.append(k.data(using: .utf8)!, withName: "key")
+            formData.append(token.data(using: .utf8)!, withName: "token")
+            formData.append(data, withName: "file")
+        }, to: url).uploadProgress{ (progress) in
+            debugPrint(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))
+        }.validate().responseJSON { (response) in
+            
+            switch response.result {
+            case .success(let data):
+                success(data)
+            case .failure(let error):
+                failed(error.localizedDescription)
+            }
+        }
     }
 }
 

@@ -119,7 +119,8 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
             let vc = SettingsViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         } else if title == "我的发布" {
-            let vc = MyPostArticlesViewController()
+            let vc = UserStatusesViewController()
+            vc.userId = self.user?.id
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

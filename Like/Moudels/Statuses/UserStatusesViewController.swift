@@ -1,48 +1,65 @@
 //
-//  DiscoverTabViewController.swift
+//  MyPostArticlesViewController.swift
 //  Like
 //
-//  Created by xiusl on 2019/10/11.
+//  Created by xiusl on 2019/11/15.
 //  Copyright © 2019 likeeee. All rights reserved.
 //
 
 import UIKit
+import Alamofire
 import SwiftyJSON
 
-class DiscoverTabViewController: BaseViewController {
-    
+class UserStatusesViewController: BaseViewController {
+    open var userId: String?
     var data: Array<Status> = Array()
+    var page: Int = 1
+    let count: Int = 10
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // Do any additional setup after loading the view.
+        self.title = "我的发布"
         self.view.addSubview(self.tableView)
+        
+       let refFooter = RefreshBackNormalFooter.footer(withRefreshingTarget: self, refreshingAction: #selector(loadMoreData))
+        self.tableView.mjFooter = refFooter
         self.loadData()
+        
         let refHeader = RefreshNormalHeader.header(withRefreshingTarget: self, refreshingAction: #selector(loadData))
         self.tableView.mjHeader = refHeader
     }
-    
     @objc func loadData() {
-        let request = StatusApiRequest.getStatuses(page: 1, count: 10)
-        ApiManager.shared.request(request: request, success: { (result) in
-            let data = JSON(result)
+        guard let id = self.userId else {
+            return
+        }
+        self.page = 1
+        
+        let req = ArticleApiRequest.getUserArticles(id: id, page: self.page, count: self.count)
+        ApiManager.shared.request(request: req, success: { (data) in
+            self.tableView.mjHeader?.endRefreshing()
+            let data = JSON(data)
             self.data = Array()
-            for json in data["statuses"].arrayValue {
+            for json in data.arrayValue {
                 self.data.append(Status(fromJson: json))
             }
             self.tableView.reloadData()
-            self.tableView.mjHeader?.endRefreshing()
         }) { (error) in
-            debugPrint(error)
             self.tableView.mjHeader?.endRefreshing()
+        }
+        
+        
+    }
+    @objc func loadMoreData() {
+        self.page += 1
+        let url = URL(string: "https://ins-api.sleen.top/articles?spider=0&count="+String(self.count)+"&page="+String(self.page))!
+        AF.request(url).validate().responseJSON { response in
+            
         }
     }
     
+    
+    
     lazy var tableView: UITableView = {
-        var height = ScreenHeight-TopSafeHeight-TabbarHeight
-        if StatusBarHeight > 20 {
-            height -= BottomSafeHeight
-        }
+        var height = ScreenHeight-TopSafeHeight
         let frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: height)
         let tableView = UITableView(frame: frame, style: .plain)
         tableView.delegate = self
@@ -50,10 +67,9 @@ class DiscoverTabViewController: BaseViewController {
         tableView.separatorStyle = .none
         return tableView
     }()
-    
 }
+extension UserStatusesViewController: UITableViewDataSource, UITableViewDelegate, StatusViewCellDelegate {
 
-extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate, StatusViewCellDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.data.count
     }
@@ -72,6 +88,10 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
         cell.delegate = self
         return cell
     }
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     @objc func okButtonClick(_ button: UIButton) {
         let id = button.title(for: .disabled) ?? ""
         let request = button.isSelected ? StatusApiRequest.unlikeStatus(id: id) : StatusApiRequest.likeStatus(id: id)
@@ -81,16 +101,6 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
             debugPrint(error)
         }
     }
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-
-    
     func statusViewCellLikeButtonClick(_ cell: StatusViewCell) {
         guard let index = self.tableView.indexPath(for: cell) else {return}
         
@@ -118,3 +128,4 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
+

@@ -13,6 +13,7 @@ enum UserApiRequest {
     case getVerifyCode(key: String)
     case resgiterOrLogin(phone: String, code: String)
     case getUser(id: String)
+    case followUser(id: String, followed: Bool)
     case deafultApi(Void)
 }
 
@@ -23,6 +24,8 @@ extension UserApiRequest: ApiRequest {
             return .bodyPost
         case .resgiterOrLogin(_, _):
             return .bodyPost
+        case .followUser(_, let followed):
+            return followed ? .bodyPost : .delete
         default:
             return .get
         }
@@ -43,6 +46,8 @@ extension UserApiRequest: ApiRequest {
             return "authorizations"
         case .getUser(let id):
             return "users/"+id
+        case .followUser(let id, _):
+            return "users/\(id)/followers"
         default:
             return ""
         }

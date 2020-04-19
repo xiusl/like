@@ -10,6 +10,7 @@ import UIKit
 
 enum ArticleApiRequest {
     case getArticles(page: Int, count: Int)
+    case getUserArticles(id: String, page: Int, count: Int)
     case deafultApi(Void)
 }
 
@@ -31,7 +32,8 @@ extension ArticleApiRequest: ApiRequest {
         switch self {
         case .getArticles(_, _):
             return "articles"
-        
+        case .getUserArticles(let id, _, _):
+            return "users/\(id)/statuses"
         default:
             return ""
         }
@@ -40,6 +42,8 @@ extension ArticleApiRequest: ApiRequest {
     var params: Any {
         switch self {
         case .getArticles(let page, let count):
+            return ["page": page, "count": count]
+        case .getUserArticles(_, let page, let count):
             return ["page": page, "count": count]
         default:
             return [:]

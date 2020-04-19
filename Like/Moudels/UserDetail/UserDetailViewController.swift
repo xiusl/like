@@ -22,16 +22,15 @@ class UserDetailViewController: BaseViewController {
     var user: User?
     
     let insetTop: CGFloat = 160
-    let bgHeight: CGFloat = ScreenWidth
+    let bgHeight: CGFloat = ScreenWidth ///  整体高度
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.view.addSubview(self.aView)
+        self.view.addSubview(self.bgImageView)
         self.view.addSubview(self.tableView)
-        self.view.addSubview(self.bView)
-        self.bView.addSubview(self.cView)
-        //        self.view.addSubview(self.bView)
+        self.view.addSubview(self.fackNavView)
+        self.fackNavView.addSubview(self.cView)
         self.cView.addSubview(self.nameLabel)
         
         self.tableView.contentInset = UIEdgeInsets(top: insetTop, left: 0, bottom: 0, right: 0)
@@ -39,6 +38,15 @@ class UserDetailViewController: BaseViewController {
         self.tableView.tableHeaderView = self.headerView
         self.loadData()
         
+        self.setupRefreshControl()
+        
+        self.headerView.followActionHandle = {[weak self] in
+            guard let `self` = self else { return }
+            self.followCurrentUser()
+        }
+        
+    }
+    func setupRefreshControl() {
         let refHeader: RefreshNormalHeader = RefreshNormalHeader.header(withRefreshingTarget: self, refreshingAction: #selector(loadData)) as! RefreshNormalHeader
         refHeader.ignoredScrollViewContentInsetTop = self.insetTop-TopSafeHeight+54
         refHeader.lastUpdatedTimeLabel.isHidden = true
@@ -46,7 +54,19 @@ class UserDetailViewController: BaseViewController {
         refHeader.activityIndicatorViewStyle = .white
         self.tableView.mjHeader = refHeader
     }
-    
+    func followCurrentUser() {
+        guard let user = self.user else {return}
+        let follow = user.isFollowing!
+        let id = user.id!
+        let req = UserApiRequest.followUser(id: id, followed: !follow)
+        ApiManager.shared.request(request: req, success: { (data) in
+            SLUtil.showMessage(follow ? "取消关注" : "关注成功")
+            user.isFollowing = !follow
+            self.headerView.setupFollowed(!follow)
+        }) { (error) in
+            SLUtil.showMessage(error)
+        }
+    }
     @objc func loadData() {
         
         let request = UserApiRequest.getUser(id: self.userId)
@@ -55,6 +75,7 @@ class UserDetailViewController: BaseViewController {
             self.user = u
             self.headerView.setupAvatar(u.avatar)
             self.headerView.setupName(u.name)
+            self.headerView.setupFollowed(u.isFollowing)
             self.nameLabel.text = u.name
         }) { (error) in
             
@@ -80,24 +101,25 @@ class UserDetailViewController: BaseViewController {
         tableView.backgroundColor = .clear
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
         return tableView
     }()
     
-    lazy var aView: UIImageView = {
-        let aView = UIImageView()
-        aView.frame = CGRect(x: 0, y: -(self.bgHeight-self.insetTop)/2.0, width: ScreenWidth, height: self.bgHeight)
-        aView.image = UIImage(named: "abc")
-        return aView
+    lazy var bgImageView: UIImageView = {
+        let view = UIImageView()
+        view.frame = CGRect(x: 0, y: -(self.bgHeight-self.insetTop)/2.0, width: ScreenWidth, height: self.bgHeight)
+        view.image = UIImage(named: "abc")
+        return view
     }()
     
-    lazy var bView: UIImageView = {
-        let bView = UIImageView()
-        bView.frame = CGRect(x: 0, y: self.insetTop-TopSafeHeight, width: ScreenWidth, height: TopSafeHeight)
-        bView.backgroundColor = .cF2F4F8
-        bView.image = self.fixImage()
-        bView.alpha = 1
-        bView.clipsToBounds = true
-        return bView
+    lazy var fackNavView: UIImageView = {
+        let view = UIImageView()
+        view.frame = CGRect(x: 0, y: self.insetTop-TopSafeHeight, width: ScreenWidth, height: TopSafeHeight)
+        view.backgroundColor = .cF2F4F8
+        view.image = self.fixImage()
+        view.alpha = 1
+        view.clipsToBounds = true
+        return view
     }()
     
     lazy var cView: UIView = {
@@ -115,14 +137,15 @@ class UserDetailViewController: BaseViewController {
     }()
     
     func fixImage() -> UIImage {
-        let im = UIImage(named: "abc")!
-        let imSize = im.size
-        let scale = imSize.height / self.bgHeight
+        let image = self.bgImageView.image!
+        let imageSize = image.size
+        let scale = imageSize.height / self.bgHeight
         let h = TopSafeHeight*scale
         let t = (self.bgHeight-self.insetTop)*0.5*scale
         
-        let imageRef = im.cgImage
-        let subImageRef = imageRef?.cropping(to: CGRect(x: 0, y: imSize.height-h-t, width: imSize.width, height: h))
+        let imageRef = image.cgImage
+        let subImageRef = imageRef?.cropping(to: CGRect(x: 0, y: imageSize.height-h-t, width: imageSize.width, height: h))
+        
         return UIImage(cgImage: subImageRef!)
     }
     
@@ -142,10 +165,14 @@ class UserDetailViewController: BaseViewController {
 
 extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.data.count
+        return max(1, self.data.count)
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if self.data.count == 0 {
+            let cell = NoDataViewCell.create(tableView: tableView)
+            return cell
+        }
         let status = self.data[indexPath.row]
         let user = status.user!
         
@@ -163,24 +190,24 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let y = scrollView.contentOffset.y
-        print(y)
+        
         if y < -self.insetTop {
             let t = -self.insetTop-y
-            self.aView.transform = CGAffineTransform(translationX: 0, y: t*0.5)
+            self.bgImageView.transform = CGAffineTransform(translationX: 0, y: t*0.5)
             
-            self.bView.alpha = 0
-            self.bView.transform = CGAffineTransform.identity
+            self.fackNavView.alpha = 0
+            self.fackNavView.transform = CGAffineTransform.identity
         } else if y < -TopSafeHeight {
             let t = -self.insetTop-y
-            self.aView.transform = CGAffineTransform(translationX: 0, y: t)
-            self.bView.transform = CGAffineTransform(translationX: 0, y: t)
+            self.bgImageView.transform = CGAffineTransform(translationX: 0, y: t)
+            self.fackNavView.transform = CGAffineTransform(translationX: 0, y: t)
             
             let alpha = min(1, (self.insetTop+y) / (self.insetTop-TopSafeHeight))
-            self.bView.alpha = alpha
+            self.fackNavView.alpha = alpha
             self.headerView.setupAvatarAlpha(1-alpha)
         } else {
-            self.bView.alpha = 1
-            self.bView.transform = CGAffineTransform(translationX: 0, y: -(self.insetTop-TopSafeHeight))
+            self.fackNavView.alpha = 1
+            self.fackNavView.transform = CGAffineTransform(translationX: 0, y: -(self.insetTop-TopSafeHeight))
         }
         
         if y > 0 {
@@ -194,19 +221,11 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if self.data.count == 0 {
+            return ScreenHeight-self.bgHeight
+        }
         return UITableView.automaticDimension
     }
-    
-        
-    //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    //        let view = UIView()
-    //        view.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 10)
-    //        view.backgroundColor = .cF2F4F8
-    //        return view
-    //    }
-    //    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    //        return 10
-    //    }
 }
 extension UserDetailViewController: StatusViewCellDelegate {
     func statusViewCellLikeButtonClick(_ cell: StatusViewCell) {

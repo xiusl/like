@@ -10,10 +10,13 @@ import UIKit
 import Kingfisher
 class UserTableHeaderView: UIView {
     
+    var followActionHandle: (() -> ())?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(avatarView)
         self.addSubview(nameLabel)
+        self.addSubview(self.followButton)
         
         let v = UIImageView()
         v.backgroundColor = UIColor(hex: 0xF8F8F8)
@@ -21,6 +24,11 @@ class UserTableHeaderView: UIView {
         v.snp.makeConstraints { (make) in
             make.left.right.bottom.equalTo(self)
             make.height.equalTo(10)
+        }
+        
+        self.followButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self).offset(-16)
+            make.top.equalTo(self).offset(10)
         }
     }
     
@@ -36,6 +44,9 @@ class UserTableHeaderView: UIView {
     }
     open func setupAvatarAlpha(_ alpha: CGFloat) {
         self.avatarView.alpha = alpha
+    }
+    open func setupFollowed(_ followed: Bool) {
+        self.followButton.isSelected = followed
     }
     
     private lazy var avatarView: UIImageView = {
@@ -53,4 +64,17 @@ class UserTableHeaderView: UIView {
         nameLabel.textColor = .blackText
         return nameLabel
     }()
+    
+    private lazy var followButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("关注", for: .normal)
+        button.setTitle("已关注", for: .selected)
+        button.setTitleColor(.theme, for: .normal)
+        button.addTarget(self, action: #selector(followButtonAction), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc private func followButtonAction() {
+        self.followActionHandle?()
+    }
 }
