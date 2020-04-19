@@ -17,6 +17,8 @@ class UserDetailViewController: BaseViewController {
         self.navigationController?.navigationBar.shadowImage = UIImage()
     }
     
+    var page: Int = 1
+    var count: Int = 3
     var data: Array<Status> = Array()
     var userId: String = ""
     var user: User?
@@ -32,6 +34,10 @@ class UserDetailViewController: BaseViewController {
         self.view.addSubview(self.fackNavView)
         self.fackNavView.addSubview(self.cView)
         self.cView.addSubview(self.nameLabel)
+        
+        self.tableView.estimatedRowHeight = 110
+        self.tableView.estimatedSectionHeaderHeight = 0
+        self.tableView.estimatedSectionFooterHeight = 0
         
         self.tableView.contentInset = UIEdgeInsets(top: insetTop, left: 0, bottom: 0, right: 0)
         
@@ -53,6 +59,9 @@ class UserDetailViewController: BaseViewController {
         refHeader.stateLabel.textColor = .white
         refHeader.activityIndicatorViewStyle = .white
         self.tableView.mjHeader = refHeader
+        
+        let footer: RefreshBackNormalFooter = RefreshBackNormalFooter.footer(withRefreshingTarget: self, refreshingAction: #selector(loadMoreData)) as! RefreshBackNormalFooter
+        self.tableView.mjFooter = footer
     }
     func followCurrentUser() {
         guard let user = self.user else {return}
@@ -81,7 +90,8 @@ class UserDetailViewController: BaseViewController {
             
         }
         
-        let request2 = StatusApiRequest.getUserStatuses(userid: self.userId, page: 1, count: 10)
+        self.page = 1
+        let request2 = StatusApiRequest.getUserStatuses(userid: self.userId, page: self.page, count: self.count)
         ApiManager.shared.request(request: request2, success: { (result) in
             let data = JSON(result)
             self.data = Array()
@@ -92,6 +102,29 @@ class UserDetailViewController: BaseViewController {
             self.tableView.mjHeader?.endRefreshing()
         }) { (error) in
             self.tableView.mjHeader?.endRefreshing()
+        }
+    }
+    
+    @objc func loadMoreData() {
+        self.page += 1
+        let request = StatusApiRequest.getUserStatuses(userid: self.userId, page: self.page, count: self.count)
+        ApiManager.shared.request(request: request, success: { (result) in
+            
+            var i = self.data.count
+            var indexs = Array<IndexPath>()
+            for json in JSON(result).arrayValue {
+                self.data.append(Status(fromJson: json))
+                let indexP = IndexPath(row: i, section: 0)
+                i += 1
+                indexs.append(indexP)
+            }
+//            self.tableView.reloadData()
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: indexs, with: .none)
+            self.tableView.endUpdates()
+            self.tableView.mjFooter?.endRefreshing()
+        }) { (error) in
+            self.tableView.mjFooter?.endRefreshing()
         }
     }
     
