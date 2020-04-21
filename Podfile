@@ -11,5 +11,7 @@ target 'Like' do
   pod 'SwiftyJSON'
   pod 'Kingfisher'
   pod 'KMNavigationBarTransition'
+  pod 'MJRefresh'
+  pod 'MBProgressHUD'
 
 end
