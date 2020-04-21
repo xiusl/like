@@ -14,6 +14,7 @@ enum UserApiRequest {
     case resgiterOrLogin(phone: String, code: String)
     case getUser(id: String)
     case followUser(id: String, followed: Bool)
+    case editUser(id: String, avatar: String, name: String)
     case deafultApi(Void)
 }
 
@@ -26,6 +27,8 @@ extension UserApiRequest: ApiRequest {
             return .bodyPost
         case .followUser(_, let followed):
             return followed ? .bodyPost : .delete
+        case .editUser(_, _, _):
+            return .bodyPost
         default:
             return .get
         }
@@ -48,6 +51,8 @@ extension UserApiRequest: ApiRequest {
             return "users/"+id
         case .followUser(let id, _):
             return "users/\(id)/followers"
+        case .editUser(let id, _, _):
+            return "users/"+id
         default:
             return ""
         }
@@ -61,6 +66,8 @@ extension UserApiRequest: ApiRequest {
             return ["key": key, "invitecode": ""]
         case .resgiterOrLogin(let phone, let code):
             return ["phone": phone, "code": code]
+        case .editUser(_, let avatar, let name):
+            return ["avatar": avatar, "name": name]
         default:
             return [:]
         }

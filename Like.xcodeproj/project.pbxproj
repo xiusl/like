@@ -71,6 +71,8 @@
 		FF4D27B12445F443000CE644 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4D27B02445F443000CE644 /* Status.swift */; };
 		FF4D27B32445F901000CE644 /* StatusUserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4D27B22445F901000CE644 /* StatusUserView.swift */; };
 		FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FF7478102341B7350017DC74 /* InfoPlist.strings */; };
+		FF8043D9244F33B2006CB015 /* UserAvatarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8043D8244F33B2006CB015 /* UserAvatarViewController.swift */; };
+		FF8043DB244F3756006CB015 /* UserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8043DA244F3756006CB015 /* UserNameViewController.swift */; };
 		FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0A236C02300083BE5F /* ConfirmActionView.swift */; };
 		FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */; };
 		FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */; };
@@ -164,6 +166,8 @@
 		FF74780B2341B5350017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		FF74780F2341B7350017DC74 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FF7478112341B7380017DC74 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		FF8043D8244F33B2006CB015 /* UserAvatarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAvatarViewController.swift; sourceTree = "<group>"; };
+		FF8043DA244F3756006CB015 /* UserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameViewController.swift; sourceTree = "<group>"; };
 		FF861D0A236C02300083BE5F /* ConfirmActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmActionView.swift; sourceTree = "<group>"; };
 		FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSheetView.swift; sourceTree = "<group>"; };
 		FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableHeaderView.swift; sourceTree = "<group>"; };
@@ -505,6 +509,8 @@
 				FF101C64235429C200B78D41 /* UserDetailViewController.swift */,
 				FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */,
 				DE424775244EF612009A0FA6 /* UserInfoViewController.swift */,
+				FF8043D8244F33B2006CB015 /* UserAvatarViewController.swift */,
+				FF8043DA244F3756006CB015 /* UserNameViewController.swift */,
 			);
 			path = UserDetail;
 			sourceTree = "<group>";
@@ -662,6 +668,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF8043D9244F33B2006CB015 /* UserAvatarViewController.swift in Sources */,
 				FF4D27B32445F901000CE644 /* StatusUserView.swift in Sources */,
 				FF1C1F5A2340A44B00D635A6 /* RefreshComponent.swift in Sources */,
 				DE424772244EDE22009A0FA6 /* ProgressHUD.swift in Sources */,
@@ -701,6 +708,7 @@
 				FF4135DC2350704100B27792 /* HomeTabViewController.swift in Sources */,
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
 				DE424776244EF612009A0FA6 /* UserInfoViewController.swift in Sources */,
+				FF8043DB244F3756006CB015 /* UserNameViewController.swift in Sources */,
 				FFE1B5C9238C03CD00120D56 /* QiNiuTool.swift in Sources */,
 				FF11905A2351BB99004E87E8 /* RefreshStateHeader.swift in Sources */,
 				DE306B2B2445C0B600186270 /* ArticleApiRequest.swift in Sources */,
