@@ -45,8 +45,15 @@ class UserTableHeaderView: UIView {
     open func setupAvatarAlpha(_ alpha: CGFloat) {
         self.avatarView.alpha = alpha
     }
-    open func setupFollowed(_ followed: Bool) {
-        self.followButton.isSelected = followed
+//    open func setupFollowed(_ followed: Bool) {
+//        self.followButton.isSelected = followed
+//    }
+    open func setupFollowed(_ followed: Bool, isCurrUser: Bool = false) {
+        if isCurrUser {
+            self.followButton.setTitle("编辑", for: .normal)
+        } else {
+            self.followButton.isSelected = followed
+        }
     }
     
     private lazy var avatarView: UIImageView = {

@@ -25,6 +25,11 @@ class User : NSObject, NSCoding{
     var type : Int!
     var token : String!
 
+    var isCurrnet: Bool {
+        get {
+            return User.current?.id == self.id
+        }
+    }
     /**
      * Instantiate the instance using the passed json values to set the properties values
      */

@@ -49,7 +49,11 @@ class UserDetailViewController: BaseViewController {
         
         self.headerView.followActionHandle = {[weak self] in
             guard let `self` = self else { return }
-            self.followCurrentUser()
+            if self.user!.isCurrnet {
+                self.editUserInfo()
+            } else {
+                self.followCurrentUser()
+            }
         }
         
     }
@@ -77,6 +81,10 @@ class UserDetailViewController: BaseViewController {
             SLUtil.showMessage(error)
         }
     }
+    func editUserInfo() {
+        let vc = UserInfoViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
     @objc func loadData() {
         
         let request = UserApiRequest.getUser(id: self.userId)
@@ -85,7 +93,7 @@ class UserDetailViewController: BaseViewController {
             self.user = u
             self.headerView.setupAvatar(u.avatar)
             self.headerView.setupName(u.name)
-            self.headerView.setupFollowed(u.isFollowing)
+            self.headerView.setupFollowed(u.isFollowing, isCurrUser: u.isCurrnet)
             self.nameLabel.text = u.name
         }) { (error) in
             
