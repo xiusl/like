@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import MJRefresh
 
 class HomeTabViewController: BaseViewController {
     
@@ -24,12 +25,15 @@ class HomeTabViewController: BaseViewController {
         self.tableView.estimatedSectionHeaderHeight = 0
         self.tableView.estimatedSectionFooterHeight = 0
         
-        let refFooter = RefreshBackNormalFooter.footer(withRefreshingTarget: self, refreshingAction: #selector(loadMoreData))
-        self.tableView.mjFooter = refFooter
         self.loadData()
+        self.setupRefreshContorl()
+    }
+    private func setupRefreshContorl() {
+        let header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(loadData))
+        self.tableView.mj_header = header
         
-        let refHeader = RefreshNormalHeader.header(withRefreshingTarget: self, refreshingAction: #selector(loadData))
-        self.tableView.mjHeader = refHeader
+        let footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreData))
+        self.tableView.mj_footer = footer
     }
     @objc func loadData() {
         self.page = 1
@@ -41,10 +45,10 @@ class HomeTabViewController: BaseViewController {
                 self.data.append(Article(fromJson: json))
             }
             self.tableView.reloadData()
-            self.tableView.mjHeader?.endRefreshing()
+            self.tableView.mj_header?.endRefreshing()
         }) { (error) in
             debugPrint(error)
-            self.tableView.mjHeader?.endRefreshing()
+            self.tableView.mj_header?.endRefreshing()
         }
     }
     @objc func loadMoreData() {
@@ -56,10 +60,10 @@ class HomeTabViewController: BaseViewController {
                 self.data.append(Article(fromJson: json))
             }
             self.tableView.reloadData()
-            self.tableView.mjFooter?.endRefreshing()
+            self.tableView.mj_footer?.endRefreshing()
         }) { (error) in
             debugPrint(error)
-            self.tableView.mjFooter?.endRefreshing()
+            self.tableView.mj_footer?.endRefreshing()
         }
     }
     @objc func addcount(_ refresh: UIRefreshControl) {

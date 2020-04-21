@@ -112,14 +112,15 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         let arr = self.tableConfig[indexPath.section]
         let dic = arr[indexPath.row]
         let title = dic["title"]
-        if title == "退出" {
-
-            
-        } else if title == "设置" {
+        if title == "设置" {
             let vc = SettingsViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         } else if title == "我的发布" {
             let vc = UserStatusesViewController()
+            vc.userId = self.user?.id
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if title == "我的点赞" {
+            let vc = StatusListViewController()
             vc.userId = self.user?.id
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -189,7 +190,6 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
             ],
             [
                 ["title": "设置", "icon": "me_setting", "action": ""],
-//                ["title": "退出", "icon": "me_service", "action": ""],
             ]
         ]
         return arr

@@ -1,9 +1,9 @@
 //
-//  MyPostArticlesViewController.swift
+//  StatusListViewController.swift
 //  Like
 //
-//  Created by xiusl on 2019/11/15.
-//  Copyright © 2019 likeeee. All rights reserved.
+//  Created by tmt on 2020/4/21.
+//  Copyright © 2020 likeeee. All rights reserved.
 //
 
 import UIKit
@@ -11,14 +11,14 @@ import Alamofire
 import MJRefresh
 import SwiftyJSON
 
-class UserStatusesViewController: BaseViewController {
+class StatusListViewController: BaseViewController {
     open var userId: String?
     var data: Array<Status> = Array()
     var page: Int = 1
     let count: Int = 10
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "我的发布"
+        self.title = "我的点赞"
         self.view.addSubview(self.tableView)
         self.loadData()
         self.setupRefreshContorl()
@@ -37,7 +37,7 @@ class UserStatusesViewController: BaseViewController {
         }
         self.page = 1
         
-        let req = StatusApiRequest.getUserStatuses(id: id, page: self.page, count: self.count)
+        let req = StatusApiRequest.getUserLikes(id: id, page: self.page, count: self.count)
         ApiManager.shared.request(request: req, success: { (data) in
             let data = JSON(data)
             self.data = Array()
@@ -59,7 +59,7 @@ class UserStatusesViewController: BaseViewController {
             return
         }
         self.page += 1
-        let req = StatusApiRequest.getUserStatuses(id: id, page: self.page, count: self.count)
+        let req = StatusApiRequest.getUserLikes(id: id, page: self.page, count: self.count)
         ApiManager.shared.request(request: req, success: { (result) in
             let data = JSON(result)
             let count = self.data.count
@@ -94,7 +94,7 @@ class UserStatusesViewController: BaseViewController {
         return tableView
     }()
 }
-extension UserStatusesViewController: UITableViewDataSource, UITableViewDelegate, StatusViewCellDelegate {
+extension StatusListViewController: UITableViewDataSource, UITableViewDelegate, StatusViewCellDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.data.count
@@ -154,4 +154,3 @@ extension UserStatusesViewController: UITableViewDataSource, UITableViewDelegate
         self.navigationController?.pushViewController(vc, animated: true)
     }
 }
-

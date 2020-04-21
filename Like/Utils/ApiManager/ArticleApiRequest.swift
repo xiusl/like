@@ -33,7 +33,7 @@ extension ArticleApiRequest: ApiRequest {
         case .getArticles(_, _):
             return "articles"
         case .getUserArticles(let id, _, _):
-            return "users/\(id)/statuses"
+            return "users/\(id)/articles"
         default:
             return ""
         }

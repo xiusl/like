@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import MJRefresh
 
 class UserDetailViewController: BaseViewController {
     
@@ -18,7 +19,7 @@ class UserDetailViewController: BaseViewController {
     }
     
     var page: Int = 1
-    var count: Int = 3
+    var count: Int = 5
     var data: Array<Status> = Array()
     var userId: String = ""
     var user: User?
@@ -60,8 +61,8 @@ class UserDetailViewController: BaseViewController {
         refHeader.activityIndicatorViewStyle = .white
         self.tableView.mjHeader = refHeader
         
-        let footer: RefreshBackNormalFooter = RefreshBackNormalFooter.footer(withRefreshingTarget: self, refreshingAction: #selector(loadMoreData)) as! RefreshBackNormalFooter
-        self.tableView.mjFooter = footer
+        let footer = MJRefreshBackNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreData))
+        self.tableView.mj_footer = footer
     }
     func followCurrentUser() {
         guard let user = self.user else {return}
@@ -91,7 +92,7 @@ class UserDetailViewController: BaseViewController {
         }
         
         self.page = 1
-        let request2 = StatusApiRequest.getUserStatuses(userid: self.userId, page: self.page, count: self.count)
+        let request2 = StatusApiRequest.getUserStatuses(id: self.userId, page: self.page, count: self.count)
         ApiManager.shared.request(request: request2, success: { (result) in
             let data = JSON(result)
             self.data = Array()
@@ -100,6 +101,7 @@ class UserDetailViewController: BaseViewController {
             }
             self.tableView.reloadData()
             self.tableView.mjHeader?.endRefreshing()
+            self.tableView.mj_footer?.state = .idle
         }) { (error) in
             self.tableView.mjHeader?.endRefreshing()
         }
@@ -107,7 +109,7 @@ class UserDetailViewController: BaseViewController {
     
     @objc func loadMoreData() {
         self.page += 1
-        let request = StatusApiRequest.getUserStatuses(userid: self.userId, page: self.page, count: self.count)
+        let request = StatusApiRequest.getUserStatuses(id: self.userId, page: self.page, count: self.count)
         ApiManager.shared.request(request: request, success: { (result) in
             
             var i = self.data.count
@@ -118,13 +120,17 @@ class UserDetailViewController: BaseViewController {
                 i += 1
                 indexs.append(indexP)
             }
-//            self.tableView.reloadData()
             self.tableView.beginUpdates()
             self.tableView.insertRows(at: indexs, with: .none)
             self.tableView.endUpdates()
-            self.tableView.mjFooter?.endRefreshing()
+            
+            if indexs.count == 0 {
+                self.tableView.mj_footer?.endRefreshingWithNoMoreData()
+            } else {
+                self.tableView.mj_footer?.endRefreshing()
+            }
         }) { (error) in
-            self.tableView.mjFooter?.endRefreshing()
+            self.tableView.mj_footer?.endRefreshing()
         }
     }
     

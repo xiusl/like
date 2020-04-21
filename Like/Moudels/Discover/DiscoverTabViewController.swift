@@ -8,9 +8,12 @@
 
 import UIKit
 import SwiftyJSON
+import MJRefresh
 
 class DiscoverTabViewController: BaseViewController {
     
+    var page = 1
+    var count = 10
     var data: Array<Status> = Array()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,12 +21,21 @@ class DiscoverTabViewController: BaseViewController {
         // Do any additional setup after loading the view.
         self.view.addSubview(self.tableView)
         self.loadData()
+        self.setupRefreshControl()
+    }
+    
+    private func setupRefreshControl() {
         let refHeader = RefreshNormalHeader.header(withRefreshingTarget: self, refreshingAction: #selector(loadData))
         self.tableView.mjHeader = refHeader
+        
+        let footer = MJRefreshAutoNormalFooter(refreshingTarget: self, refreshingAction: #selector(loadMoreData))
+        self.tableView.mj_footer = footer
     }
     
     @objc func loadData() {
-        let request = StatusApiRequest.getStatuses(page: 1, count: 10)
+        self.page = 1
+        let request = StatusApiRequest.getStatuses(page: self.page,
+                                                   count: self.count)
         ApiManager.shared.request(request: request, success: { (result) in
             let data = JSON(result)
             self.data = Array()
@@ -32,9 +44,35 @@ class DiscoverTabViewController: BaseViewController {
             }
             self.tableView.reloadData()
             self.tableView.mjHeader?.endRefreshing()
+            self.tableView.mj_footer?.state = .idle
         }) { (error) in
             debugPrint(error)
             self.tableView.mjHeader?.endRefreshing()
+        }
+    }
+    @objc func loadMoreData() {
+        self.page += 1
+        let request = StatusApiRequest.getStatuses(page: self.page,
+                                                   count: self.count)
+        ApiManager.shared.request(request: request, success: { (result) in
+            let data = JSON(result)
+            let count = self.data.count
+            var indexPaths = Array<IndexPath>()
+            for (i, json) in data["statuses"].arrayValue.enumerated() {
+                self.data.append(Status(fromJson: json))
+                let indexPath = IndexPath(row: i+count, section: 0)
+                indexPaths.append(indexPath)
+            }
+            
+            self.tableView.insertRows(at: indexPaths, with: .none)
+            if indexPaths.count == 0 {
+                self.tableView.mj_footer?.endRefreshingWithNoMoreData()
+            } else {
+                self.tableView.mj_footer?.endRefreshing()
+            }
+        }) { (error) in
+            debugPrint(error)
+            self.tableView.mj_footer?.endRefreshing()
         }
     }
     
