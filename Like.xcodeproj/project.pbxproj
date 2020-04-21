@@ -51,7 +51,6 @@
 		FF4135E02350705800B27792 /* MeTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135DF2350705800B27792 /* MeTabViewController.swift */; };
 		FF4135E7235070DD00B27792 /* UIFontExten.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135E3235070DD00B27792 /* UIFontExten.swift */; };
 		FF4135E8235070DD00B27792 /* ConstUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135E4235070DD00B27792 /* ConstUtil.swift */; };
-		FF4135E9235070DD00B27792 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135E5235070DD00B27792 /* ProgressHUD.swift */; };
 		FF4135EA235070DD00B27792 /* ColorUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135E6235070DD00B27792 /* ColorUtil.swift */; };
 		FF4135EE2350733A00B27792 /* BaseTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135ED2350733A00B27792 /* BaseTableView.swift */; };
 		FF4135F22350780200B27792 /* RefreshHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF4135F12350780200B27792 /* RefreshHeader.swift */; };
@@ -138,7 +137,6 @@
 		FF4135DF2350705800B27792 /* MeTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTabViewController.swift; sourceTree = "<group>"; };
 		FF4135E3235070DD00B27792 /* UIFontExten.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIFontExten.swift; sourceTree = "<group>"; };
 		FF4135E4235070DD00B27792 /* ConstUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConstUtil.swift; sourceTree = "<group>"; };
-		FF4135E5235070DD00B27792 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ProgressHUD.swift; path = ../Extension/ProgressHUD.swift; sourceTree = "<group>"; };
 		FF4135E6235070DD00B27792 /* ColorUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorUtil.swift; sourceTree = "<group>"; };
 		FF4135ED2350733A00B27792 /* BaseTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableView.swift; sourceTree = "<group>"; };
 		FF4135F12350780200B27792 /* RefreshHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshHeader.swift; sourceTree = "<group>"; };
@@ -367,7 +365,6 @@
 				FFE1B5C7238C03B400120D56 /* Qiniu */,
 				FF4470A12387C2DF002ED72D /* PhotoPicker */,
 				FF1C1F582340A44000D635A6 /* RefreshControl */,
-				FF4135EF2350755500B27792 /* ProgressHUD */,
 				FF4135E2235070DD00B27792 /* Extension */,
 			);
 			path = Utils;
@@ -401,14 +398,6 @@
 				FF4135ED2350733A00B27792 /* BaseTableView.swift */,
 			);
 			path = Base;
-			sourceTree = "<group>";
-		};
-		FF4135EF2350755500B27792 /* ProgressHUD */ = {
-			isa = PBXGroup;
-			children = (
-				FF4135E5235070DD00B27792 /* ProgressHUD.swift */,
-			);
-			path = ProgressHUD;
 			sourceTree = "<group>";
 		};
 		FF4135F02350758D00B27792 /* Resources */ = {
@@ -669,7 +658,6 @@
 				FF34B9B42366B6C800A702AB /* ArticleViewCell.swift in Sources */,
 				FF331B42244C0582005FACFF /* NoDataViewCell.swift in Sources */,
 				FF2CA588234DC68D00D1B433 /* MainNavigationController.swift in Sources */,
-				FF4135E9235070DD00B27792 /* ProgressHUD.swift in Sources */,
 				DE306B302446A84000186270 /* SettingsViewController.swift in Sources */,
 				FF4470A72387D403002ED72D /* LKPhotoViewCell.swift in Sources */,
 				FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */,
