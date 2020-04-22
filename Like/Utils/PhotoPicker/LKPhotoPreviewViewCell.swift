@@ -31,48 +31,42 @@ class LKPhotoPreviewViewCell: UICollectionViewCell {
         let scrollView = UIScrollView()
         scrollView.frame = self.bounds
         scrollView.contentSize = self.bounds.size
+        if #available(iOS 11.0, *) {
+            scrollView.contentInsetAdjustmentBehavior = .never
+        } else {
+            // Fallback on earlier versions
+        }
         return scrollView
     }()
     
     func setup(asset: LKAsset) {
         guard let mod = asset.asset else { return }
-        /*
-         CGSize imageSize;
-         if (photoWidth < TZScreenWidth && photoWidth < _photoPreviewMaxWidth) {
-             imageSize = AssetGridThumbnailSize;
-         } else {
-             PHAsset *phAsset = (PHAsset *)asset;
-             CGFloat aspectRatio = phAsset.pixelWidth / (CGFloat)phAsset.pixelHeight;
-             CGFloat pixelWidth = photoWidth * TZScreenScale;
-             // 超宽图片
-             if (aspectRatio > 1.8) {
-                 pixelWidth = pixelWidth * aspectRatio;
-             }
-             // 超高图片
-             if (aspectRatio < 0.2) {
-                 pixelWidth = pixelWidth * 0.5;
-             }
-             CGFloat pixelHeight = pixelWidth / aspectRatio;
-             imageSize = CGSizeMake(pixelWidth, pixelHeight);
-         }
-         */
+        
+        let top = UIApplication.shared.statusBarFrame.size.height + 44
+        var bottom: CGFloat = 48
+        if UIApplication.shared.statusBarFrame.size.height > 20 {
+            bottom += 10
+        }
+        let w = self.bounds.size.width
+        let h = self.bounds.size.height
+        
         let photoWidth = self.imageView.frame.size.width
         var size = PHImageManagerMaximumSize
         
         let phAsset = mod
         let aspectRatio =  CGFloat(phAsset.pixelWidth) / CGFloat(phAsset.pixelHeight)
-        var pixelWidth = photoWidth * 2
-        if aspectRatio > 1.8 {
-            pixelWidth = pixelWidth * aspectRatio
-        }
-        if aspectRatio < 0.2 {
-            pixelWidth = pixelWidth * 0.5
-        }
+        let pixelWidth = photoWidth
+
         let pixelHeight = pixelWidth / aspectRatio
         size = CGSize(width: pixelWidth, height: pixelHeight)
         
-        let t = (self.frame.size.height - pixelHeight) / 2.0
-        self.imageView.frame = CGRect(x: 0, y: t, width: photoWidth, height: pixelHeight)
+        var t = (h - pixelHeight) / 2.0
+        if pixelHeight > h {
+            t = 0
+        }
+        
+        self.imageView.frame = CGRect(x: 0, y: t, width: w, height: pixelHeight)
+        self.scrollView.contentSize = self.imageView.bounds.size;
         
         let opt: PHImageRequestOptions = PHImageRequestOptions()
         opt.resizeMode = .fast

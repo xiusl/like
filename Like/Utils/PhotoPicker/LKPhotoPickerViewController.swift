@@ -273,17 +273,20 @@ extension LKPhotoPickerRootViewController: UICollectionViewDataSource, UICollect
 //            let t = String(format: "%d", self.selectAssets.count)
 //            selectButton.setTitle(t, for: .normal)
             
-            self.collectionView.reloadData()
+            let reIdx = self.indexAsset(asset: mdo)
+            let t = String(format: "%d", reIdx+1)
+            cell.indexLabel.text = t
+            
         } else {
             
             if self.containAsset(asset: mdo) {
                 let reIdx = self.indexAsset(asset: mdo)
                 self.selectAssets.remove(at: reIdx)
+                
             }
-            
-            self.collectionView.reloadData()
+            cell.indexLabel.text = ""
         }
-        
+        NotificationCenter.default.post(name: NSNotification.Name("LKPhotoCellReload_noti"), object: self.selectAssets)
         var title = "完成"
         if self.selectAssets.count > 0 {
             title = String(format: "完成(%d)", self.selectAssets.count)
@@ -460,7 +463,7 @@ class LKPhotoPickerPreviewViewController: UIViewController {
         let top = UIApplication.shared.statusBarFrame.size.height + 44
         var bottom: CGFloat = 48
         if UIApplication.shared.statusBarFrame.size.height > 20 {
-            bottom += 10
+            bottom += 20
         }
         let w = self.view.frame.size.width
         let h = self.view.frame.size.height
@@ -479,7 +482,8 @@ class LKPhotoPickerPreviewViewController: UIViewController {
         collectionView.isPagingEnabled = true
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(LKPhotoPreviewViewCell.self, forCellWithReuseIdentifier: "abc123")
+        collectionView.register(LKPhotoPreviewViewCell.self, forCellWithReuseIdentifier: "LKPhotoPreviewViewCellID")
+        collectionView.showsHorizontalScrollIndicator = false
         return collectionView
     }()
     
@@ -487,7 +491,7 @@ class LKPhotoPickerPreviewViewController: UIViewController {
         let barView = UIView()
         var h: CGFloat = 48
         if UIApplication.shared.statusBarFrame.size.height > 20 {
-            h += 30
+            h += 20
         }
         let w = self.view.bounds.size.width
         let top = self.view.bounds.size.height - h
@@ -533,7 +537,7 @@ extension LKPhotoPickerPreviewViewController: UICollectionViewDataSource, UIColl
         return self.assets.count
     }
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "abc123", for: indexPath) as! LKPhotoPreviewViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "LKPhotoPreviewViewCellID", for: indexPath) as! LKPhotoPreviewViewCell
         
         let mod = self.assets[indexPath.row]
         cell.setup(asset: mod)

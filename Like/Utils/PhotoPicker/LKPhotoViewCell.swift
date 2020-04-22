@@ -15,6 +15,7 @@ protocol LKPhotoViewCellDelegate {
 
 class LKPhotoViewCell: UICollectionViewCell {
     var delegate: LKPhotoViewCellDelegate?
+    var asset: LKAsset?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -22,6 +23,32 @@ class LKPhotoViewCell: UICollectionViewCell {
         self.contentView.addSubview(self.selectButton)
         self.contentView.addSubview(self.selectView)
         self.contentView.addSubview(self.indexLabel)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reload(_:)), name: Notification.Name("LKPhotoCellReload_noti"), object: nil)
+    }
+    
+    @objc func reload(_ noti: Notification) {
+        let sets = noti.object as! Array<LKAsset>
+        
+        
+        let index = self.indexAsset(assets: sets)
+        if index == -1 {
+            self.indexLabel.text = ""
+        } else {
+            self.indexLabel.text = String(format: "%d", index+1)
+        }
+    }
+    
+    func indexAsset(assets: Array<LKAsset>) -> Int {
+        guard let asset = self.asset else {
+            return -1
+        }
+        for (i, old_asset) in assets.enumerated() {
+            if old_asset.asset?.localIdentifier == asset.asset?.localIdentifier {
+                return i
+            }
+        }
+        return -1
     }
     
     required init?(coder: NSCoder) {
@@ -31,21 +58,24 @@ class LKPhotoViewCell: UICollectionViewCell {
     lazy var imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.frame = self.bounds
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
         return imageView
     }()
     
     func setup(asset: LKAsset) {
+        self.asset = asset
         guard let mod = asset.asset else { return }
-        
+        let phAsset = mod
         let photoWidth = self.imageView.frame.size.width
         var size = PHImageManagerMaximumSize
-        if photoWidth < 400 {
-            size = CGSize(width: photoWidth*2, height: photoWidth*2)
+        if phAsset.pixelWidth < 400 {
+            size = CGSize(width: phAsset.pixelWidth, height: phAsset.pixelHeight)
         } else {
-            let phAsset = mod
+            
             let aspectRatio =  CGFloat(phAsset.pixelWidth) / CGFloat(phAsset.pixelHeight)
             var pixelWidth = photoWidth * 2
-            if aspectRatio > 1.8 {
+            if aspectRatio > 1.8 { // 宽图
                 pixelWidth = pixelWidth * aspectRatio
             }
             if aspectRatio < 0.2 {
@@ -99,6 +129,7 @@ class LKPhotoViewCell: UICollectionViewCell {
     
     @objc func selectButtonClick(_ btn: UIButton) {
         btn.isSelected = !btn.isSelected
+        self.setupSelected(selected: btn.isSelected)
         self.delegate?.photoViewCell(cell: self, selectButton: btn)
     }
 }
