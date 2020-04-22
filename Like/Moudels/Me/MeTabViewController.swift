@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import SwiftyJSON
 
 class MeTabViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
 
@@ -36,9 +37,7 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         self.view.addSubview(self.tableView)
         self.tableView.tableHeaderView = self.headerView
-        self.headerView.descLabel.text = self.user?.desc
-        self.headerView.nameLabel.text = self.user?.name
-        self.headerView.avatarView.kf.setImage(with: URL(string: self.user?.avatar ?? "")!)
+        self.setupViewDisplay()
         
         NotificationCenter.default.addObserver(self, selector: #selector(userChange), name: .UserLogoutNoti, object: nil)
         
@@ -46,13 +45,37 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.headerView.addGestureRecognizer(gest)
         
         
-        if self.user?.phone == "17600101706" {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "投稿", style: .plain, target: self, action: #selector(post))
-        }
+        
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发嗑", style: .plain, target: self, action: #selector(postStatus))
-    }
     
+        NotificationCenter.default.addObserver(self, selector: #selector(loadUserData), name: NSNotification.Name("UserInfoEdited_noti"), object: nil)
+    }
+    func setupViewDisplay() {
+        guard let user = self.user else {
+            return
+        }
+        
+        self.headerView.descLabel.text = user.desc
+        self.headerView.nameLabel.text = user.name
+        self.headerView.avatarView.kf.setImage(with: URL(string: user.avatar)!)
+        
+        if user.type == 9 {
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "投稿", style: .plain, target: self, action: #selector(post))
+        }
+    }
+    @objc func loadUserData() {
+        let req = UserApiRequest.getCurrentUser(())
+        ApiManager.shared.request(request: req, success: { (data) in
+            let u = User(fromJson: JSON(data))
+            let _ = u.save()
+            self.user = u
+            self.setupViewDisplay()
+        }) { (error) in
+            
+        }
+        
+    }
     @objc func postStatus() {
         let vc = PostStatusViewController()
         self.navigationController?.pushViewController(vc, animated: true)

@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-
+import MBProgressHUD
 class PostStatusViewController: BaseViewController {
 
     var token: String = ""
@@ -116,7 +116,7 @@ class PostStatusViewController: BaseViewController {
     }()
     
     @objc func uploadButtonClick() {
-        let vc = LKPhotoPickerViewController(originalPhoto: true)
+        let vc = LKPhotoPickerViewController(originalPhoto: true, maxCount: 1)
         vc.modalPresentationStyle = .fullScreen
         vc.lk_delegate = self
         self.present(vc, animated: true, completion: nil)
@@ -141,6 +141,7 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
             imgs.append(["a":0])
         }
         
+        MBProgressHUD.showAdded(to: self.view, animated: true)
         for i in 0..<selectPhotos.count {
             let image = selectPhotos[i]
             ApiManager.shared.uploadImage(image: image, token: self.token, success: { (resp) in
@@ -152,8 +153,10 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
                 debugPrint(d)
                 imgs[i] = d
                 self.imagesParam = imgs
+                MBProgressHUD.hide(for: self.view, animated: true)
             }) { (error) in
-                
+                SLUtil.showMessage(error)
+                MBProgressHUD.hide(for: self.view, animated: true)
             }
         }
         

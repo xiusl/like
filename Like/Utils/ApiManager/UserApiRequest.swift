@@ -15,6 +15,7 @@ enum UserApiRequest {
     case getUser(id: String)
     case followUser(id: String, followed: Bool)
     case editUser(id: String, avatar: String, name: String)
+    case getCurrentUser(Void)
     case deafultApi(Void)
 }
 
@@ -42,6 +43,8 @@ extension UserApiRequest: ApiRequest {
     var path: String {
         switch self {
         case .login(_, _):
+            return "authorizations"
+        case .getCurrentUser():
             return "authorizations"
         case .getVerifyCode(_):
             return "verifycodes"

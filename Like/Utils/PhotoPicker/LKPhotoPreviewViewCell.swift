@@ -10,6 +10,8 @@ import UIKit
 import Photos
 
 class LKPhotoPreviewViewCell: UICollectionViewCell {
+    
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -42,11 +44,7 @@ class LKPhotoPreviewViewCell: UICollectionViewCell {
     func setup(asset: LKAsset) {
         guard let mod = asset.asset else { return }
         
-        let top = UIApplication.shared.statusBarFrame.size.height + 44
-        var bottom: CGFloat = 48
-        if UIApplication.shared.statusBarFrame.size.height > 20 {
-            bottom += 10
-        }
+
         let w = self.bounds.size.width
         let h = self.bounds.size.height
         

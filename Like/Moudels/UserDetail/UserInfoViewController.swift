@@ -13,6 +13,7 @@ class UserInfoViewController: BaseViewController {
     var user: User?
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(color: .cF2F4F8), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage(color: .cF2F4F8)
     }
     override func viewDidLoad() {
@@ -59,6 +60,7 @@ class UserInfoViewController: BaseViewController {
         tableView.separatorStyle = .none
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.backgroundColor = .cF2F4F8
         return tableView
     }()
 

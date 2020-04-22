@@ -56,6 +56,8 @@ class UserDetailViewController: BaseViewController {
             }
         }
         
+        NotificationCenter.default.addObserver(self, selector: #selector(loadData), name: NSNotification.Name("UserInfoEdited_noti"), object: nil)
+        
     }
     func setupRefreshControl() {
         let refHeader: RefreshNormalHeader = RefreshNormalHeader.header(withRefreshingTarget: self, refreshingAction: #selector(loadData)) as! RefreshNormalHeader

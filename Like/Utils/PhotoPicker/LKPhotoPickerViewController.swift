@@ -10,6 +10,7 @@ import UIKit
 import PhotosUI
 import Photos
 
+
 protocol LKPhotoPickerViewControllerDelegate {
     func photoPickerViewController(controller: LKPhotoPickerViewController, selectPhotos: Array<LKAsset>)
     func photoPickerViewController(controller: LKPhotoPickerViewController, selectAssets: Array<LKAsset>, selectPhotos: Array<UIImage>)
@@ -18,6 +19,8 @@ protocol LKPhotoPickerViewControllerDelegate {
 class LKPhotoPickerViewController: UINavigationController {
 
     var lk_delegate: LKPhotoPickerViewControllerDelegate?
+    
+    open var maxCount: Int = 9
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -36,10 +39,12 @@ class LKPhotoPickerViewController: UINavigationController {
     
     init(withOldImage: Array<PHAsset>) {
         let vc = LKPhotoPickerRootViewController()
+        vc.maxCount = self.maxCount
         super.init(rootViewController: vc)
     }
-    init(originalPhoto: Bool) {
+    init(originalPhoto: Bool, maxCount: Int = 9) {
         let vc = LKPhotoPickerRootViewController()
+        vc.maxCount = maxCount
         super.init(rootViewController: vc)
     }
 
@@ -47,6 +52,7 @@ class LKPhotoPickerViewController: UINavigationController {
 }
 class LKPhotoPickerRootViewController: UIViewController {
 
+    var maxCount: Int = 9
     var currentAlbum: LKAlbum = LKAlbum()
     var albums: Array<LKAlbum> = []
     var selectAssets: Array<LKAsset> = []
@@ -264,15 +270,17 @@ extension LKPhotoPickerRootViewController: UICollectionViewDataSource, UICollect
         let mdo = self.currentAlbum.models[idx.row]
         
         if selectButton.isSelected {
-//            if !self.selectAssets.contains(mdo) {
-//
-//            }
+            if self.selectAssets.count >= self.maxCount {
+                selectButton.isSelected = false
+                cell.setupSelected(selected: false)
+                SLUtil.showMessage("目前只支持一张图片")
+                return
+            }
+            
             if !self.containAsset(asset: mdo) {
                 self.selectAssets.append(mdo)
             }
-//            let t = String(format: "%d", self.selectAssets.count)
-//            selectButton.setTitle(t, for: .normal)
-            
+        
             let reIdx = self.indexAsset(asset: mdo)
             let t = String(format: "%d", reIdx+1)
             cell.indexLabel.text = t
@@ -320,6 +328,7 @@ extension LKPhotoPickerRootViewController: UICollectionViewDataSource, UICollect
         vc.selectAssets = self.selectAssets
         vc.currentIndex = indexPath.row
         vc.delegate = self
+        vc.maxCount = self.maxCount
         self.present(vc, animated: true, completion: nil)
     }
     
@@ -371,6 +380,7 @@ protocol LKPhotoPickerPreviewViewControllerDelegate {
     func previewViewController(finishClick selectAssets: Array<LKAsset>)
 }
 class LKPhotoPickerPreviewViewController: UIViewController {
+    open var maxCount: Int = 9
     var assets: Array<LKAsset> = []
     var selectAssets: Array<LKAsset> = []
     var currentIndex: Int = 0
@@ -444,6 +454,11 @@ class LKPhotoPickerPreviewViewController: UIViewController {
     @objc func selectButtonClick(_ btn: UIButton) {
         btn.isSelected = !btn.isSelected
         
+        if btn.isSelected && self.selectAssets.count >= self.maxCount {
+            btn.isSelected = false
+            SLUtil.showMessage("目前只支持一张图片")
+            return
+        }
         let mod = self.assets[self.currentIndex]
         if !self.containAsset(asset: mod) {
             self.selectAssets.append(mod)
