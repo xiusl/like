@@ -17,11 +17,8 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
         super.init(frame: frame)
         self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0)
         self.addSubview(self.contentView)
-        self.contentView.addSubview(self.titleLabel)
-        self.contentView.addSubview(self.textView)
-        self.contentView.addSubview(self.okButton)
-        self.textView.addSubview(self.clearButton)
-        self.textView.addSubview(self.pasteButton)
+        
+        self.setupViews()
         
         let tapGest = UITapGestureRecognizer(target: self, action: #selector(hide))
         tapGest.delegate = self
@@ -68,9 +65,48 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
         }
     }
     
+    func setupViews() {
+        self.contentView.addSubview(self.titleLabel)
+        self.contentView.addSubview(self.textView)
+        self.contentView.addSubview(self.okButton)
+        self.contentView.addSubview(self.clearButton)
+        self.contentView.addSubview(self.pasteButton)
+        
+        self.titleLabel.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.top.equalToSuperview().offset(20)
+        }
+        
+        self.textView.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(20)
+            make.right.equalToSuperview().offset(-20)
+            make.top.equalToSuperview().offset(50)
+            make.height.equalTo(120)
+        }
+        
+        self.okButton.snp.makeConstraints { (make) in
+            make.centerX.equalToSuperview()
+            make.top.equalTo(self.textView.snp.bottom).offset(8)
+            make.height.equalTo(32)
+            make.width.equalTo(240)
+        }
+        
+        self.clearButton.snp.makeConstraints { (make) in
+            make.left.equalTo(self.textView)
+            make.bottom.equalTo(self.textView)
+            make.size.equalTo(CGSize(width: 50, height: 30))
+        }
+        
+        self.pasteButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self.textView)
+            make.bottom.equalTo(self.textView)
+            make.size.equalTo(CGSize(width: 50, height: 30))
+        }
+    }
+    
     lazy var contentView: UIView = {
         let contentView = UIView()
-        contentView.frame = CGRect(x: (ScreenWidth-280)/2.0, y: 85+StatusBarHeight, width: 280, height: 202)
+        contentView.frame = CGRect(x: 40, y: 85+StatusBarHeight, width: ScreenWidth-80, height: 220)
         contentView.backgroundColor = .white
         contentView.layer.cornerRadius = 6
         contentView.clipsToBounds = true
@@ -79,7 +115,6 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
     
     lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.frame = CGRect(x: 20, y: 20, width: 240, height: 20)
         titleLabel.font = UIFont.systemFontMedium(ofSize: 18)
         titleLabel.textColor = .blackText
         titleLabel.textAlignment = .center
@@ -89,7 +124,6 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
     
     lazy var textView: UITextView = {
         let textView = UITextView()
-        textView.frame = CGRect(x: 20, y: 50, width: 240, height: 80)
         textView.layer.cornerRadius = 2
         textView.layer.borderColor = UIColor.cF2F4F8.cgColor
         textView.layer.borderWidth = 1
@@ -101,7 +135,6 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
     
     lazy var clearButton: UIButton = {
         let clearButton = UIButton()
-        clearButton.frame = CGRect(x: 0, y: 50, width: 50, height: 30)
         clearButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         clearButton.setTitle("清除", for: .normal)
         clearButton.setTitleColor(.blackText, for: .normal)
@@ -111,7 +144,6 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
     
     lazy var pasteButton: UIButton = {
         let pasteButton = UIButton()
-        pasteButton.frame = CGRect(x: 240-50, y: 50, width: 50, height: 30)
         pasteButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         pasteButton.setTitle("粘贴", for: .normal)
         pasteButton.setTitleColor(.blackText, for: .normal)
@@ -121,7 +153,6 @@ class PostLinkView: UIView, UIGestureRecognizerDelegate {
     
     lazy var okButton: UIButton = {
         let okButton = UIButton()
-        okButton.frame = CGRect(x: 40, y: 150, width: 200, height: 32)
         okButton.setTitle("确定", for: .normal)
         okButton.setTitleColor(.white, for: .normal)
         okButton.titleLabel?.font = UIFont.systemFontMedium(ofSize: 16)

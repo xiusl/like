@@ -45,6 +45,7 @@ class MainTabBarController: UITabBarController {
             item.setTitleTextAttributes([.font: font, .foregroundColor: color], for: .normal)
             item.setTitleTextAttributes([.font: font, .foregroundColor: sColor], for: .selected)
         }
+        self.tabBar.isTranslucent = false
     }
     
         func setupChildVc(vc: UIViewController, title: String, imageName: String, selectedImageName: String) {
