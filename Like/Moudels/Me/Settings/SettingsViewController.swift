@@ -54,7 +54,7 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
         
         cell.setup(title: dic["title"]!, icon: dic["icon"]!)
         
-        cell.lineView.isHidden = (indexPath.section == 0 && indexPath.row+1==arr.count)
+        cell.lineView.isHidden = (indexPath.row+1==arr.count)
         
         return cell
     }
@@ -74,6 +74,12 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
             let vc = WebViewController()
             vc.url = "https://ins.sleen.top/privacy"
             vc.title = "隐私政策"
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if title == "反馈" {
+            let vc = FeedbackPostViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
+        } else if title == "反馈处理" {
+            let vc = AdminFeedbackListViewController()
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
@@ -140,23 +146,33 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
     }()
         
     lazy var tableConfig: Array = { () -> [[[String : String]]] in
-        let arr: Array = [
+        var arr: Array = [
             [
                 ["title": "关于", "icon": "setting_about", "action": ""],
+                ["title": "反馈", "icon": "setting_feedback", "action": ""],
                 ["title": "隐私政策", "icon": "setting_privacy", "action": ""],
             ]
         ]
+        if User.current?.type == 9 {
+            arr.append([
+                ["title": "反馈处理", "icon": "setting_feedback", "action": ""],
+            ])
+        }
+        
         return arr
     }()
     
     lazy var logoutButton: UIButton = {
         let button = UIButton()
-        button.frame = CGRect(x: 24, y: 10, width: ScreenWidth-48, height: 44);
+        button.frame = CGRect(x: 24, y: 10,
+                              width: ScreenWidth-48,
+                              height: 44);
         button.layer.cornerRadius = 6
         button.clipsToBounds = true
         button.setTitle("退出账号", for: .normal)
         button.setTitleColor(.red, for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16,
+                                                    weight: .regular)
         button.addTarget(self, action: #selector(logoutButtonAction), for: .touchUpInside)
         return button
     }()

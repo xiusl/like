@@ -38,6 +38,8 @@ class HomeTabViewController: BaseViewController {
     @objc func loadData() {
         self.page = 1
         let req = ArticleApiRequest.getArticles(page: self.page, count: 10)
+        
+        SLUtil.showLoading(to: view)
         ApiManager.shared.request(request: req, success: { (result) in
             let data = JSON(result)
             self.data = Array()
@@ -46,9 +48,11 @@ class HomeTabViewController: BaseViewController {
             }
             self.tableView.reloadData()
             self.tableView.mj_header?.endRefreshing()
+            SLUtil.hideLoading(from: self.view)
         }) { (error) in
             debugPrint(error)
             self.tableView.mj_header?.endRefreshing()
+            SLUtil.hideLoading(from: self.view)
         }
     }
     @objc func loadMoreData() {

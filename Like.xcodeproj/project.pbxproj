@@ -13,6 +13,11 @@
 		DE424772244EDE22009A0FA6 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE424771244EDE22009A0FA6 /* ProgressHUD.swift */; };
 		DE424774244EE5C1009A0FA6 /* StatusListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE424773244EE5C1009A0FA6 /* StatusListViewController.swift */; };
 		DE424776244EF612009A0FA6 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE424775244EF612009A0FA6 /* UserInfoViewController.swift */; };
+		DE91B7B02452ACA6000FF356 /* FeedbackPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7AF2452ACA6000FF356 /* FeedbackPostViewController.swift */; };
+		DE91B7B22452CC6B000FF356 /* FeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B12452CC6B000FF356 /* FeedbackListViewController.swift */; };
+		DE91B7B42452CDC7000FF356 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B32452CDC7000FF356 /* Feedback.swift */; };
+		DE91B7B62452D462000FF356 /* FeedbackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B52452D462000FF356 /* FeedbackViewCell.swift */; };
+		DE91B7B82452EC39000FF356 /* AdminFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B72452EC39000FF356 /* AdminFeedbackListViewController.swift */; };
 		ECEFF0786D051A6000061807 /* Pods_Like.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */; };
 		FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */; };
 		FF101C5A2354044D00B78D41 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C592354044D00B78D41 /* User.swift */; };
@@ -94,6 +99,11 @@
 		DE424771244EDE22009A0FA6 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		DE424773244EE5C1009A0FA6 /* StatusListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusListViewController.swift; sourceTree = "<group>"; };
 		DE424775244EF612009A0FA6 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
+		DE91B7AF2452ACA6000FF356 /* FeedbackPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPostViewController.swift; sourceTree = "<group>"; };
+		DE91B7B12452CC6B000FF356 /* FeedbackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackListViewController.swift; sourceTree = "<group>"; };
+		DE91B7B32452CDC7000FF356 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
+		DE91B7B52452D462000FF356 /* FeedbackViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewCell.swift; sourceTree = "<group>"; };
+		DE91B7B72452EC39000FF356 /* AdminFeedbackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminFeedbackListViewController.swift; sourceTree = "<group>"; };
 		FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoPreviewViewCell.swift; sourceTree = "<group>"; };
 		FF101C592354044D00B78D41 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTabTableViewCell.swift; sourceTree = "<group>"; };
@@ -210,6 +220,10 @@
 			children = (
 				DE306B2F2446A84000186270 /* SettingsViewController.swift */,
 				FF331B3F244AFD8E005FACFF /* AppAboutViewController.swift */,
+				DE91B7AF2452ACA6000FF356 /* FeedbackPostViewController.swift */,
+				DE91B7B12452CC6B000FF356 /* FeedbackListViewController.swift */,
+				DE91B7B52452D462000FF356 /* FeedbackViewCell.swift */,
+				DE91B7B72452EC39000FF356 /* AdminFeedbackListViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -220,6 +234,7 @@
 				FF101C592354044D00B78D41 /* User.swift */,
 				FF4D27B02445F443000CE644 /* Status.swift */,
 				DE306B2C244696E000186270 /* Article.swift */,
+				DE91B7B32452CDC7000FF356 /* Feedback.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -678,6 +693,7 @@
 				DE306B302446A84000186270 /* SettingsViewController.swift in Sources */,
 				FF4470A72387D403002ED72D /* LKPhotoViewCell.swift in Sources */,
 				FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */,
+				DE91B7B02452ACA6000FF356 /* FeedbackPostViewController.swift in Sources */,
 				FF4135D823506F1F00B27792 /* MainTabBarController.swift in Sources */,
 				FF101C5A2354044D00B78D41 /* User.swift in Sources */,
 				FF34B9B62366B7B200A702AB /* SocialShareView.swift in Sources */,
@@ -687,18 +703,22 @@
 				FF331B40244AFD8E005FACFF /* AppAboutViewController.swift in Sources */,
 				FF4D27AF2445EB88000CE644 /* WebViewController.swift in Sources */,
 				FF293D93237E85EB00C244F4 /* UserStatusesViewController.swift in Sources */,
+				DE91B7B62452D462000FF356 /* FeedbackViewCell.swift in Sources */,
 				FF1190552351A4EE004E87E8 /* RefreshBackStateFooter.swift in Sources */,
 				FFFC57FC2355B4F400D79270 /* PostStatusViewController.swift in Sources */,
 				FF4135F42350821F00B27792 /* RefreshBackFooter.swift in Sources */,
 				FF1190532351A3C8004E87E8 /* RefreshBackNormalFooter.swift in Sources */,
 				FF4470A52387CF4B002ED72D /* LKAlbum.swift in Sources */,
 				FF4135EA235070DD00B27792 /* ColorUtil.swift in Sources */,
+				DE91B7B42452CDC7000FF356 /* Feedback.swift in Sources */,
 				DE424774244EE5C1009A0FA6 /* StatusListViewController.swift in Sources */,
 				FFFC58002355C1D300D79270 /* StatusViewCell.swift in Sources */,
 				FFFC58022356B66000D79270 /* SettingApiRequest.swift in Sources */,
 				FFFC57FE2355B69100D79270 /* StatusApiRequest.swift in Sources */,
 				FF101C5E23540C0E00B78D41 /* RegisterViewController.swift in Sources */,
+				DE91B7B82452EC39000FF356 /* AdminFeedbackListViewController.swift in Sources */,
 				FF4135E7235070DD00B27792 /* UIFontExten.swift in Sources */,
+				DE91B7B22452CC6B000FF356 /* FeedbackListViewController.swift in Sources */,
 				FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */,
 				FF4135DA2350702900B27792 /* BaseViewController.swift in Sources */,
 				DE306B2D244696E000186270 /* Article.swift in Sources */,

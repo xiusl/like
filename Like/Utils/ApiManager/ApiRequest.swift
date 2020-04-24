@@ -91,3 +91,62 @@ extension ArtApiRequest: ApiRequest {
     }
     
 }
+
+
+
+enum AppApiRequest {
+    case createFeedback(conetnt: String, contact: String)
+    case getFeedbacks(userId: String, page: Int, count: Int)
+    case getAllFeedbacks(page: Int, count: Int)
+    case deafultApi(Void)
+}
+
+extension AppApiRequest: ApiRequest {
+    var type: RequestType {
+        switch self {
+        case .createFeedback(_, _):
+            return .bodyPost
+        default:
+            return .get
+        }
+    }
+    
+    var baseUrl: String {
+        return ApiManager.baseUrl
+    }
+    
+    var path: String {
+        switch self {
+        case .createFeedback(_, _):
+            return "/feedbacks"
+        case .getFeedbacks(let userId, _, _):
+            return "/users/\(userId)/feedbacks"
+        case .getAllFeedbacks(_, _):
+            return "/feedbacks"
+        default:
+            return ""
+        }
+    }
+    
+    var params: Any {
+        switch self {
+        case .createFeedback(let content, let contact):
+            return ["content": content, "contact": contact]
+        case .getFeedbacks(_, let page, let count):
+            return ["page": page, "count": count]
+        case .getAllFeedbacks(let page, let count):
+            return ["page": page, "count": count]
+        default:
+            return []
+        }
+    }
+    
+    var headers: [String : String] {
+        return [:]
+    }
+    
+    var isShowHUD: Bool {
+        return false
+    }
+
+}

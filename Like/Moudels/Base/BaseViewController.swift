@@ -42,4 +42,13 @@ class BaseViewController: UIViewController {
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
+    
+    func barButtonItem(_ title: String, target: Any?, action: Selector) -> UIBarButtonItem {
+        let button = UIButton()
+        button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.setTitle(title, for: .normal)
+        button.setTitleColor(.theme, for: .normal)
+        button.addTarget(target, action: action, for: .touchUpInside)
+        return UIBarButtonItem(customView: button)
+    }
 }

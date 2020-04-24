@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 import CommonCrypto
+import MBProgressHUD
 
 let ScreenWidth = UIScreen.main.bounds.size.width
 let ScreenHeight = UIScreen.main.bounds.size.height
@@ -72,6 +73,21 @@ class SLUtil {
         hud.label.font = UIFont.systemFontMedium(ofSize: 20)
         hud.label.text = msg
         hud.hide(animated: true, afterDelay: 1.2)
+    }
+    
+    class func showLoading(to view: UIView) {
+        let hud = MBProgressHUD(view: view)
+        hud.show(animated: true)
+        hud.bezelView.color = .black
+        hud.bezelView.style = .solidColor
+        hud.contentColor = .white
+        hud.removeFromSuperViewOnHide = true
+        view.addSubview(hud)
+    }
+    
+    class func hideLoading(from view: UIView) {
+        let hud = MBProgressHUD.forView(view)
+        hud?.hide(animated: true)
     }
 }
 

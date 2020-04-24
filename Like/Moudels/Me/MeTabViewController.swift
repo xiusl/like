@@ -47,7 +47,8 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发嗑", style: .plain, target: self, action: #selector(postStatus))
+        self.navigationItem.rightBarButtonItem = self.barButtonItem("发嗑".localized, target: self, action: #selector(postStatus))
+
     
         NotificationCenter.default.addObserver(self, selector: #selector(loadUserData), name: NSNotification.Name("UserInfoEdited_noti"), object: nil)
     }
@@ -61,7 +62,7 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         self.headerView.avatarView.kf.setImage(with: URL(string: user.avatar)!)
         
         if user.type == 9 {
-            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "投稿", style: .plain, target: self, action: #selector(post))
+            self.navigationItem.leftBarButtonItem = self.barButtonItem("投稿".localized, target: self, action: #selector(post))
         }
     }
     @objc func loadUserData() {
@@ -122,7 +123,7 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
         
         cell.setup(title: dic["title"]!, icon: dic["icon"]!)
         
-        cell.lineView.isHidden = (indexPath.section == 0 && indexPath.row+1==arr.count)
+        cell.lineView.isHidden = (indexPath.row+1==arr.count)
         
         return cell
     }
