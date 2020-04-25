@@ -82,6 +82,7 @@ class SLUtil {
         hud.bezelView.style = .solidColor
         hud.contentColor = .white
         hud.removeFromSuperViewOnHide = true
+        hud.isSquare = true
         view.addSubview(hud)
     }
     

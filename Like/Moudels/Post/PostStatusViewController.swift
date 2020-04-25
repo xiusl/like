@@ -141,7 +141,8 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
             imgs.append(["a":0])
         }
         
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+        SLUtil.showLoading(to: self.photosView)
+        var f = 0;
         for i in 0..<selectPhotos.count {
             let image = selectPhotos[i]
             ApiManager.shared.uploadImage(image: image, token: self.token, success: { (resp) in
@@ -153,10 +154,16 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
                 debugPrint(d)
                 imgs[i] = d
                 self.imagesParam = imgs
-                MBProgressHUD.hide(for: self.view, animated: true)
+                f += 1
+                if f == selectPhotos.count {
+                    SLUtil.hideLoading(from: self.photosView)
+                }
             }) { (error) in
-                SLUtil.showMessage(error)
-                MBProgressHUD.hide(for: self.view, animated: true)
+//                SLUtil.showMessage(error)
+                f += 1
+                if f == selectPhotos.count {
+                    SLUtil.hideLoading(from: self.photosView)
+                }
             }
         }
         
