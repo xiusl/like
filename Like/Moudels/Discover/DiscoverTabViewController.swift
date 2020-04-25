@@ -93,6 +93,7 @@ class DiscoverTabViewController: BaseViewController {
 
 extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate, StatusViewCellDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        self.tableView.mj_footer?.isHidden = (data.count == 0)
         return self.data.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

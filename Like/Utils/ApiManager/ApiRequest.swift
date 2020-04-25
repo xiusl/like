@@ -98,6 +98,7 @@ enum AppApiRequest {
     case createFeedback(conetnt: String, contact: String)
     case getFeedbacks(userId: String, page: Int, count: Int)
     case getAllFeedbacks(page: Int, count: Int)
+    case replayFeedback(feedbackId: String, replay: String)
     case deafultApi(Void)
 }
 
@@ -105,6 +106,8 @@ extension AppApiRequest: ApiRequest {
     var type: RequestType {
         switch self {
         case .createFeedback(_, _):
+            return .bodyPost
+        case .replayFeedback(_, _):
             return .bodyPost
         default:
             return .get
@@ -123,6 +126,8 @@ extension AppApiRequest: ApiRequest {
             return "/users/\(userId)/feedbacks"
         case .getAllFeedbacks(_, _):
             return "/feedbacks"
+        case .replayFeedback(let feedbackId, _):
+            return "/feedbacks/\(feedbackId)"
         default:
             return ""
         }
@@ -136,6 +141,8 @@ extension AppApiRequest: ApiRequest {
             return ["page": page, "count": count]
         case .getAllFeedbacks(let page, let count):
             return ["page": page, "count": count]
+        case .replayFeedback(_, let replay):
+            return ["replay": replay]
         default:
             return []
         }

@@ -10,6 +10,8 @@ import UIKit
 
 class FeedbackViewCell: UITableViewCell {
 
+    var handleFeedback: (() -> ())?
+    
     class func create(tableView: UITableView) -> FeedbackViewCell {
         let idf = NSStringFromClass(self)
         var cell: FeedbackViewCell? = tableView.dequeueReusableCell(withIdentifier: idf) as? FeedbackViewCell
@@ -90,7 +92,7 @@ class FeedbackViewCell: UITableViewCell {
         }
         handleButton.snp.makeConstraints { (make) in
             make.right.equalToSuperview().offset(-16)
-            make.top.equalTo(userButton.snp.bottom).offset(4)
+            make.top.equalTo(userButton.snp.bottom).offset(-2)
         }
     }
     
@@ -139,6 +141,11 @@ class FeedbackViewCell: UITableViewCell {
         button.setTitleColor(.theme, for: .normal)
         button.setTitle("回复", for: .normal)
         button.isHidden = true
+        button.addTarget(self, action: #selector(handleButtonAction), for: .touchUpInside)
         return button
     }()
+    
+    @objc func handleButtonAction() {
+        self.handleFeedback?()
+    }
 }

@@ -14,6 +14,8 @@ class AdminFeedbackListViewController: BaseViewController {
     var page = 1
     var count = 10
     var data = Array<Feedback>()
+    var id: String?
+    var replayTextView: UITextView?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -50,6 +52,41 @@ class AdminFeedbackListViewController: BaseViewController {
         return tableView
     }()
     
+    lazy var replayView: UIView = {
+        let view = UIView()
+        view.frame = CGRect(x: 20, y: 100, width: ScreenWidth-40, height: 200)
+        view.backgroundColor = .cF2F4F8
+        view.isHidden = true
+        
+        
+        let btn = UIButton(type: .custom)
+        btn.setTitle("关闭".localized, for: .normal)
+        btn.setTitleColor(.c999999, for: .normal)
+        btn.frame = CGRect(x: ScreenWidth-80, y: 0, width: 40, height: 40)
+        btn.addTarget(self, action: #selector(closeReplayAction), for: .touchUpInside)
+        view.addSubview(btn)
+        
+        let textView = UITextView()
+        textView.frame = CGRect(x: 12, y: 36, width: ScreenWidth-40-24, height: 120)
+        textView.layer.borderWidth = 1
+        textView.tintColor = .theme
+        textView.font = .systemFont(ofSize: 14)
+        textView.layer.borderColor = UIColor.cF2F4F8.cgColor
+        view.addSubview(textView)
+        self.replayTextView = textView
+        
+        let confirmButton = UIButton()
+        confirmButton.frame = CGRect(x: 12, y: 165, width: ScreenWidth-40-24, height: 32)
+        confirmButton.backgroundColor = .theme
+        confirmButton.layer.cornerRadius = 4
+        confirmButton.clipsToBounds = true
+        confirmButton.setTitle("确认".localized, for: .normal)
+        confirmButton.setTitleColor(.white, for: .normal)
+        confirmButton.addTarget(self, action: #selector(replayConfirmAction), for: .touchUpInside)
+        view.addSubview(confirmButton)
+        
+        return view
+    }()
 }
 
 extension AdminFeedbackListViewController: UITableViewDelegate, UITableViewDataSource {
@@ -69,6 +106,15 @@ extension AdminFeedbackListViewController: UITableViewDelegate, UITableViewDataS
         cell.setupIsAdmin(true)
         cell.setupUserName(user.name)
         
+        let id = feedback.id
+        
+        cell.handleFeedback = { [weak self] in
+            guard let `self` = self else {
+                return
+            }
+            self.handleFeedback(id)
+        }
+        
         return cell
     }
     
@@ -77,4 +123,45 @@ extension AdminFeedbackListViewController: UITableViewDelegate, UITableViewDataS
     }
     
     
+    
+    func handleFeedback(_ id: String?) {
+        if self.replayView.superview == nil {
+            self.view.addSubview(self.replayView)
+        }
+        self.id = id
+        self.replayView.isHidden = false
+        guard let textView = self.replayTextView else {
+            return
+        }
+        textView.becomeFirstResponder()
+    }
+    @objc func closeReplayAction() {
+        self.replayView.isHidden = true
+        self.view.endEditing(true)
+    }
+    @objc func replayConfirmAction() {
+        
+        guard let id = self.id else {
+            return
+        }
+        guard let textView = self.replayTextView else {
+            return
+        }
+        let replay = textView.text ?? ""
+        if replay.count <= 0 {
+            SLUtil.showMessage("你也没写啊？？".localized)
+            return
+        }
+        let req = AppApiRequest.replayFeedback(feedbackId: id, replay: replay)
+        SLUtil.showLoading(to: view)
+        ApiManager.shared.request(request: req, success: { (data) in
+            self.view.endEditing(true)
+            self.replayView.isHidden = true
+            textView.text = ""
+            SLUtil.hideLoading(from: self.view)
+        }) { (error) in
+            SLUtil.showMessage(error)
+            SLUtil.hideLoading(from: self.view)
+        }
+    }
 }
