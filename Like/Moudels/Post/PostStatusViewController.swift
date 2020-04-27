@@ -127,6 +127,8 @@ class PostStatusViewController: BaseViewController {
         
         return photosView
     }()
+    
+    var selectPhotos: Array<UIImage> = []
 }
 extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
     func photoPickerViewController(controller: LKPhotoPickerViewController, selectPhotos: Array<LKAsset>) {
@@ -135,16 +137,17 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
     func photoPickerViewController(controller: LKPhotoPickerViewController, selectAssets: Array<LKAsset>, selectPhotos: Array<UIImage>) {
         print(selectPhotos)
         self.setupPhotos(photos: selectPhotos)
+        self.selectPhotos = selectPhotos
         
         var imgs: Array<[String: Any]> = []
         for _ in 0..<selectPhotos.count {
             imgs.append(["a":0])
         }
         
-        SLUtil.showLoading(to: self.photosView)
-        var f = 0;
         for i in 0..<selectPhotos.count {
             let image = selectPhotos[i]
+            let imv = self.photosView.subviews[i] as! PostPhotoView
+            imv.startUpload()
             ApiManager.shared.uploadImage(image: image, token: self.token, success: { (resp) in
                 let j = JSON(resp)
                 let d = [
@@ -154,16 +157,10 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
                 debugPrint(d)
                 imgs[i] = d
                 self.imagesParam = imgs
-                f += 1
-                if f == selectPhotos.count {
-                    SLUtil.hideLoading(from: self.photosView)
-                }
+                imv.finshedUpload()
             }) { (error) in
 //                SLUtil.showMessage(error)
-                f += 1
-                if f == selectPhotos.count {
-                    SLUtil.hideLoading(from: self.photosView)
-                }
+                imv.finshedUpload()
             }
         }
         
@@ -179,27 +176,41 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
         let m: CGFloat = 10
         var l: CGFloat = 0
         var t: CGFloat = 0
-        var i: CGFloat = 0
+        var i: Int = 0
         for image in photos {
-            let v = UIImageView()
-            l = i * (w + m)
+            let v = PostPhotoView()
+            l = CGFloat(i) * (w + m)
             if (l+w) > ScreenWidth-32 {
                 l = 0
                 t += (w+10)
                 i = 0
             }
             v.frame = CGRect(x: l, y: t, width: w, height: w)
-            v.image = image
+            v.setupImage(image)
             self.photosView.addSubview(v)
+            
+            let idx = i
+            v.deleteButtonHandle = { [weak self] in
+                guard let `self` = self else { return }
+                self.deletePhoto(idx)
+            }
             i += 1
         }
-        l = i * (w + m)
+        l = CGFloat(i) * (w + m)
         if l > ScreenWidth-32 {
             l = 0
             t += (w+10)
         }
-        self.uploadButton.isHidden = true
+        self.uploadButton.isHidden = photos.count > 0
 //        self.uploadButton.frame = CGRect(x: l+16, y: TopSafeHeight+136+20+t, width: w, height: w)
+        
+    }
+    private func deletePhoto(_ index: Int) {
+        self.selectPhotos.remove(at: index)
+        if self.imagesParam.count > index {
+            self.imagesParam.remove(at: index)
+        }
+        self.setupPhotos(photos: self.selectPhotos)
         
     }
 }

@@ -95,7 +95,11 @@ class LKPhotoPickerRootViewController: UIViewController {
         let opt = PHFetchOptions()
         opt.predicate = NSPredicate(format: "mediaType == %d", PHAssetMediaType.image.rawValue)
         opt.sortDescriptors = [NSSortDescriptor(key: "creationDate", ascending: false)]
-        let smartAlbums :PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: nil)
+        
+        let opt1 = PHFetchOptions()
+        opt1.sortDescriptors = [NSSortDescriptor(key: "endDate", ascending: false)]
+        
+        let smartAlbums :PHFetchResult = PHAssetCollection.fetchAssetCollections(with: .smartAlbum, subtype: .albumRegular, options: opt1)
         
         var arr: Array<LKAlbum> = []
         smartAlbums.enumerateObjects { (collection, idx, stop)  in
@@ -110,7 +114,13 @@ class LKPhotoPickerRootViewController: UIViewController {
             if fetchResult.count <= 0 { return }
             
             let album = LKAlbum.create(withCollection: collection, assetResult: fetchResult)
-            arr.append(album)
+            if (collection.assetCollectionSubtype == .smartAlbumUserLibrary) {
+                arr.insert(album, at: 0)
+            } else if (collection.assetCollectionSubtype.rawValue == 1000000201) {
+                
+            } else {
+                arr.append(album)
+            }
         }
         self.albums = arr
         self.currentAlbum = arr[0]
@@ -118,6 +128,7 @@ class LKPhotoPickerRootViewController: UIViewController {
 //        self.title = self.currentAlbum.name
         self.titleButton.setTitle(self.currentAlbum.name, for: .normal)
         self.titleButton.sizeToFit()
+        self.fixButton(self.titleButton)
         self.tableView.reloadData()
     }
     
@@ -155,8 +166,15 @@ class LKPhotoPickerRootViewController: UIViewController {
         titleButton.setTitleColor(.black, for: .normal)
         titleButton.setTitleColor(.theme, for: .selected)
         titleButton.addTarget(self, action: #selector(titleButtonClick(_:)), for: .touchUpInside)
+        titleButton.setImage(UIImage(named: "photo_picker_tri"), for: .normal)
         return titleButton
     }()
+    
+    func fixButton(_ button: UIButton) {
+        let m: CGFloat = 2.0
+        button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 0 - ( button.imageView?.bounds.size.width ?? 0) - m, bottom: 0, right: ( button.imageView?.bounds.size.width ?? 0) + m);
+        button.imageEdgeInsets = UIEdgeInsets(top: 2, left: (button.titleLabel?.bounds.size.width ?? 0) + m, bottom: -2, right: 0 - (button.titleLabel?.bounds.size.width ?? 0) - m);
+    }
     
     @objc func titleButtonClick(_ btn: UIButton) {
         btn.isSelected = !btn.isSelected
@@ -165,8 +183,10 @@ class LKPhotoPickerRootViewController: UIViewController {
             if btn.isSelected {
                 let h = self.view.frame.size.height
                 self.tableView.transform = CGAffineTransform(translationX: 0, y: h)
+                btn.imageView?.transform = CGAffineTransform(rotationAngle: CGFloat(Double.pi))
             } else {
                 self.tableView.transform = CGAffineTransform.identity
+                btn.imageView?.transform = .identity
             }
         }
     }
@@ -363,14 +383,16 @@ extension LKPhotoPickerRootViewController: UITableViewDataSource,UITableViewDele
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.currentAlbum = self.albums[indexPath.row]
         self.collectionView.reloadData()
-        //        self.title = self.currentAlbum.name
+        
+        UIView.animate(withDuration: 0.2) {
+            self.tableView.transform = .identity
+            self.titleButton.imageView?.transform = .identity
+        }
+        
         self.titleButton.setTitle(self.currentAlbum.name, for: .normal)
         self.titleButton.isSelected = false
         self.titleButton.sizeToFit()
-        
-        UIView.animate(withDuration: 0.2) {
-            self.tableView.transform = CGAffineTransform.identity
-        }
+        self.fixButton(self.titleButton)
     }
 }
 
