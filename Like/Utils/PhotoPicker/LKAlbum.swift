@@ -11,6 +11,15 @@ import Photos
 
 class LKAsset: NSObject {
     var asset: PHAsset?
+    var filePath: String?
+    
+    func getFilePath() -> String {
+        asset?.requestContentEditingInput(with: PHContentEditingInputRequestOptions(), completionHandler: { (input, _) in
+            let url = input?.fullSizeImageURL
+        })
+        
+        return "123"
+    }
 }
 
 class LKAlbum: NSObject {
@@ -24,11 +33,16 @@ class LKAlbum: NSObject {
         ablum.name = collection.localizedTitle ?? ""
         ablum.count = assetResult.count
         
+        let opt = PHImageRequestOptions()
         var arr:Array<LKAsset> = []
         assetResult.enumerateObjects { (asset, idx, stop) in
             let mod = LKAsset()
             mod.asset = asset
             arr.append(mod)
+            
+            PHImageManager.default().requestImageData(for: asset, options: opt) { (data, url, orientation, info) in
+                
+            }
         }
         ablum.models = arr
         

@@ -38,7 +38,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 //            print(error ?? "")
 //        }
         
-        
         return true
     }
 

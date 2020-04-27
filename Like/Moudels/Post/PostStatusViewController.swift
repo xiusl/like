@@ -9,6 +9,8 @@
 import UIKit
 import SwiftyJSON
 import MBProgressHUD
+import Photos
+
 class PostStatusViewController: BaseViewController {
 
     var token: String = ""
@@ -145,22 +147,32 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
         }
         
         for i in 0..<selectPhotos.count {
-            let image = selectPhotos[i]
             let imv = self.photosView.subviews[i] as! PostPhotoView
+        
+            let p = selectAssets[i]
+            
+            guard let asset = p.asset else {
+                continue
+            }
             imv.startUpload()
-            ApiManager.shared.uploadImage(image: image, token: self.token, success: { (resp) in
-                let j = JSON(resp)
-                let d = [
-                    "width": j["w"].intValue,
-                    "height": j["h"].intValue,
-                    "url": j["key"].stringValue] as [String : Any]
-                debugPrint(d)
-                imgs[i] = d
-                self.imagesParam = imgs
-                imv.finshedUpload()
-            }) { (error) in
-//                SLUtil.showMessage(error)
-                imv.finshedUpload()
+            // 上传文件的原始数据，不要压缩~~
+            asset.requestContentEditingInput(with: nil) { (input, info) in
+                let url = input?.fullSizeImageURL
+                let d = try? Data(contentsOf: url!)
+                
+                ApiManager.shared.uploadFile(d!, token: self.token, success: { (resp) in
+                    let j = JSON(resp)
+                    let d = [
+                        "width": j["w"].intValue,
+                        "height": j["h"].intValue,
+                        "url": j["key"].stringValue] as [String : Any]
+                    debugPrint(d)
+                    imgs[i] = d
+                    self.imagesParam = imgs
+                    imv.finshedUpload()
+                }) { (error) in
+                    imv.finshedUpload()
+                }
             }
         }
         

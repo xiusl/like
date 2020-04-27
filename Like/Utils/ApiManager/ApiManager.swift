@@ -81,6 +81,26 @@ class ApiManager: NSObject {
             }
         }
     }
+    
+    public func uploadFile(_ data: Data, token: String, success: @escaping UploadSuccessBlock, failed: @escaping RequestFailedBlock) {
+        let url = "http://upload-z2.qiniup.com"
+        let _ = self.manager.upload(multipartFormData: { (formData) in
+            let k = String(format: "like/%@", qn_eTag(data: data))
+            formData.append(k.data(using: .utf8)!, withName: "key")
+            formData.append(token.data(using: .utf8)!, withName: "token")
+            formData.append(data, withName: "file")
+        }, to: url).uploadProgress{ (progress) in
+            debugPrint(CGFloat(progress.completedUnitCount)/CGFloat(progress.totalUnitCount))
+        }.validate().responseJSON { (response) in
+            
+            switch response.result {
+            case .success(let data):
+                success(data)
+            case .failure(let error):
+                failed(error.localizedDescription)
+            }
+        }
+    }
 }
 
 
