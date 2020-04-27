@@ -42,6 +42,9 @@ class UserAvatarViewController: BaseViewController {
             return
         }
         self.imageView.kf.setImage(with: URL(string: url))
+        
+        
+        self.navigationItem.rightBarButtonItem = self.barButtonItem("更换", target: self, action: #selector(changeAction))
     }
     
     lazy var imageView: UIImageView = {
@@ -53,5 +56,12 @@ class UserAvatarViewController: BaseViewController {
         get {
             return .lightContent
         }
+    }
+    
+    @objc func changeAction() {
+       let vc = LKPhotoPickerViewController(originalPhoto: true, needCrop: true)
+       vc.modalPresentationStyle = .fullScreen
+//       vc.lk_delegate = self
+       self.present(vc, animated: true, completion: nil)
     }
 }

@@ -46,6 +46,7 @@
 		FF1F1945235F1E3400C77C64 /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1F1944235F1E2C00C77C64 /* libsqlite3.0.tbd */; };
 		FF1F1947235F1E4800C77C64 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = FF1F1946235F1E4000C77C64 /* libz.tbd */; };
 		FF293D93237E85EB00C244F4 /* UserStatusesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF293D92237E85EB00C244F4 /* UserStatusesViewController.swift */; };
+		FF2C404524572FDA00A6F3B8 /* LKPhotoCropViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2C404424572FDA00A6F3B8 /* LKPhotoCropViewController.swift */; };
 		FF2CA585234DB46C00D1B433 /* ApiManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2CA583234DB46C00D1B433 /* ApiManager.swift */; };
 		FF2CA586234DB46C00D1B433 /* ApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2CA584234DB46C00D1B433 /* ApiRequest.swift */; };
 		FF2CA588234DC68D00D1B433 /* MainNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF2CA587234DC68D00D1B433 /* MainNavigationController.swift */; };
@@ -143,6 +144,7 @@
 		FF1F1946235F1E4000C77C64 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		FF1F1948235F1EDD00C77C64 /* ll.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ll.entitlements; sourceTree = "<group>"; };
 		FF293D92237E85EB00C244F4 /* UserStatusesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserStatusesViewController.swift; sourceTree = "<group>"; };
+		FF2C404424572FDA00A6F3B8 /* LKPhotoCropViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoCropViewController.swift; sourceTree = "<group>"; };
 		FF2CA583234DB46C00D1B433 /* ApiManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiManager.swift; sourceTree = "<group>"; };
 		FF2CA584234DB46C00D1B433 /* ApiRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiRequest.swift; sourceTree = "<group>"; };
 		FF2CA587234DC68D00D1B433 /* MainNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainNavigationController.swift; sourceTree = "<group>"; };
@@ -459,6 +461,7 @@
 				FF4470A42387CF4B002ED72D /* LKAlbum.swift */,
 				FF4470A62387D403002ED72D /* LKPhotoViewCell.swift */,
 				FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */,
+				FF2C404424572FDA00A6F3B8 /* LKPhotoCropViewController.swift */,
 			);
 			path = PhotoPicker;
 			sourceTree = "<group>";
@@ -710,6 +713,7 @@
 				DE91B7B62452D462000FF356 /* FeedbackViewCell.swift in Sources */,
 				FF1190552351A4EE004E87E8 /* RefreshBackStateFooter.swift in Sources */,
 				FFFC57FC2355B4F400D79270 /* PostStatusViewController.swift in Sources */,
+				FF2C404524572FDA00A6F3B8 /* LKPhotoCropViewController.swift in Sources */,
 				FF4135F42350821F00B27792 /* RefreshBackFooter.swift in Sources */,
 				FF1190532351A3C8004E87E8 /* RefreshBackNormalFooter.swift in Sources */,
 				FF4470A52387CF4B002ED72D /* LKAlbum.swift in Sources */,
@@ -917,7 +921,7 @@
 				CODE_SIGN_ENTITLEMENTS = Like/ll.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 3S73583C2C;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Like/Resources/Info.plist;
@@ -953,7 +957,7 @@
 				CODE_SIGN_ENTITLEMENTS = Like/ll.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = 3S73583C2C;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Like/Resources/Info.plist;

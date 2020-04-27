@@ -47,11 +47,17 @@ class LKPhotoPickerViewController: UINavigationController {
         vc.maxCount = maxCount
         super.init(rootViewController: vc)
     }
-
+    init(originalPhoto: Bool, needCrop: Bool) {
+        let vc = LKPhotoPickerRootViewController()
+        vc.maxCount = 1
+        vc.needCrop = true
+        super.init(rootViewController: vc)
+    }
     
 }
 class LKPhotoPickerRootViewController: UIViewController {
 
+    var needCrop: Bool = false
     var maxCount: Int = 9
     var currentAlbum: LKAlbum = LKAlbum()
     var albums: Array<LKAlbum> = []
@@ -282,6 +288,10 @@ extension LKPhotoPickerRootViewController: UICollectionViewDataSource, UICollect
             cell.setupSelected(selected: false)
         }
         
+        cell.selectButton.isHidden = self.needCrop
+        cell.indexLabel.isHidden = self.needCrop
+        cell.selectView.isHidden = self.needCrop
+        
         return cell
     }
     
@@ -342,6 +352,12 @@ extension LKPhotoPickerRootViewController: UICollectionViewDataSource, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if needCrop {
+            let vc = LKPhotoCropViewController()
+            vc.asster = self.currentAlbum.models[indexPath.row]
+            self.navigationController?.pushViewController(vc, animated: true)
+            return 
+        }
         let vc = LKPhotoPickerPreviewViewController()
         vc.modalPresentationStyle = .fullScreen
         vc.assets = self.currentAlbum.models
