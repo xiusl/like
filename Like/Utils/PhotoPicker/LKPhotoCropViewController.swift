@@ -30,6 +30,7 @@ class LKPhotoCropViewController: UIViewController {
         
         self.view.addSubview(self.cancelButton)
         self.view.addSubview(self.imageView)
+        self.view.addSubview(self.cropView)
         
         
         guard let assert = self.asster?.asset else { return }
@@ -64,8 +65,87 @@ class LKPhotoCropViewController: UIViewController {
         return view
     }()
     
+    lazy var cropView: PhotoCropView = {
+        let w = self.view.bounds.size.width
+        let h = self.view.bounds.size.height
+        let frame = CGRect(x: 0, y: 0, width: w, height: h)
+        let view = PhotoCropView(frame: frame)
+        return view
+    }()
     
     @objc func cancelButtonAction() {
         self.navigationController?.popViewController(animated: true)
+    }
+}
+
+class PhotoCropView: UIView {
+    private var topLeft: CGPoint = .zero
+    private var topRight: CGPoint = .zero
+    private var bottomLeft: CGPoint = .zero
+    private var bottomRight: CGPoint = .zero
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        let viewH = frame.size.height
+        let viewW = frame.size.width
+        
+        self.backgroundColor = UIColor(hex: 0x000000, alpha: 0.3)
+        
+        let cropWH = viewW - 32
+        let cropT = (viewH - cropWH) * 0.5
+        
+        topLeft = CGPoint(x: 16, y: cropT)
+        topRight = CGPoint(x: viewW - 16, y: cropT)
+        bottomLeft = CGPoint(x: 16, y: cropT + cropWH)
+        bottomRight = CGPoint(x: viewW - 16, y: cropT + cropWH)
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+//        let w = rect.size.width
+//        let h = rect.size.height
+        
+        let x = self.topLeft.x
+        let y = self.topLeft.y
+        let wh = self.topRight.x - self.topLeft.x
+        
+        let f = CGRect(x: x, y: y, width: wh, height: wh)
+        let path = UIBezierPath(rect: f)
+        UIColor.white.set()
+        path.lineWidth = 1
+        path.stroke()
+        
+        UIColor.clear.set()
+        path.fill(with: .clear, alpha: 0)
+        
+        let path2 = UIBezierPath()
+        UIColor.white.set()
+        path2.lineWidth = 2
+        
+        path2.move(to: CGPoint(x: self.topLeft.x+20, y: self.topLeft.y))
+        path2.addLine(to: self.topLeft)
+        path2.addLine(to: CGPoint(x: self.topLeft.x, y: self.topLeft.y+20))
+        
+        path2.move(to: CGPoint(x: self.topRight.x-20, y: self.topRight.y))
+        path2.addLine(to: self.topRight)
+        path2.addLine(to: CGPoint(x: self.topRight.x, y: self.topRight.y+20))
+        
+        path2.move(to: CGPoint(x: self.bottomLeft.x+20, y: self.bottomLeft.y))
+        path2.addLine(to: self.bottomLeft)
+        path2.addLine(to: CGPoint(x: self.bottomLeft.x, y: self.bottomLeft.y-20))
+
+        path2.move(to: CGPoint(x: self.bottomRight.x, y: self.bottomRight.y-20))
+        path2.addLine(to: self.bottomRight)
+        path2.addLine(to: CGPoint(x: self.bottomRight.x-20, y: self.bottomRight.y))
+        
+        path2.stroke()
+        
+        let path3 = UIBezierPath()
+        UIColor.white.set()
+        path3.lineWidth = 1
     }
 }
