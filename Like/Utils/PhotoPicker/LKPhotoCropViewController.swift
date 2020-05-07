@@ -9,7 +9,7 @@
 import UIKit
 import Photos
 
-class LKPhotoCropViewController: UIViewController {
+class LKPhotoCropViewController: UIViewController, UIScrollViewDelegate {
 
     var asster: LKAsset?
     
@@ -28,12 +28,29 @@ class LKPhotoCropViewController: UIViewController {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .black
         
-        self.view.addSubview(self.cancelButton)
-        self.view.addSubview(self.imageView)
+        let v = PhotoZoomableView()
+        let w = self.view.bounds.size.width
+        let h = self.view.bounds.size.height
+        v.frame = CGRect(x: 0, y: 0, width: w, height: h)
+        self.view.addSubview(v)
+        
         self.view.addSubview(self.cropView)
+        self.cropView.isUserInteractionEnabled = false
+        
+        guard let assertt = self.asster else { return }
+        
+        v.setImage(assertt)
+        
+        self.view.addSubview(self.cancelButton)
         
         
-        guard let assert = self.asster?.asset else { return }
+        
+        /*
+        self.view.addSubview(self.contentView)
+                self.contentView.addSubview(self.imageView)
+        //
+                
+                self.view.addSubview(self.cancelButton)
         
         PHImageManager.default().requestImage(for: assert, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFit, options: nil) { (image, _) in
             self.imageView.image = image
@@ -43,10 +60,11 @@ class LKPhotoCropViewController: UIViewController {
             let w = self.view.bounds.size.width - 32
             let h = w * s.height / s.width;
             
-            self.imageView.bounds = CGRect(x: 0, y: 0, width: w, height: h)
-            self.imageView.center = self.view.center
+            let hh = self.contentView.frame.size.height
+            self.imageView.frame = CGRect(x: 12, y: (hh-h)*0.5, width: w, height: h)
             
         }
+ */
     }
     
 
@@ -55,7 +73,7 @@ class LKPhotoCropViewController: UIViewController {
         button.titleLabel?.font = .systemFont(ofSize: 14)
         button.setTitle("取消", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.frame = CGRect(x: 12, y: 200, width: 64, height: 40)
+        button.frame = CGRect(x: 12, y: 100, width: 64, height: 40)
         button.addTarget(self, action: #selector(cancelButtonAction), for: .touchUpInside)
         return button
     }()
@@ -65,6 +83,18 @@ class LKPhotoCropViewController: UIViewController {
         return view
     }()
     
+    lazy var contentView: UIScrollView = {
+        let view = UIScrollView()
+        let w = self.view.bounds.size.width
+        let h = self.view.bounds.size.height
+        view.frame = CGRect(x: 0, y: 0, width: w, height: h-48)
+        view.contentSize = CGSize(width: w, height: h-48)
+        view.maximumZoomScale = 10;
+        view.minimumZoomScale = 0.8;
+        view.delegate = self;
+        return view;
+    }()
+    
     lazy var cropView: PhotoCropView = {
         let w = self.view.bounds.size.width
         let h = self.view.bounds.size.height
@@ -72,6 +102,23 @@ class LKPhotoCropViewController: UIViewController {
         let view = PhotoCropView(frame: frame)
         return view
     }()
+    
+//    viewForZooming
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return self.imageView
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        let w = scrollView.bounds.size.width
+        let imW = self.imageView.bounds.size.width
+        let h = scrollView.bounds.size.height
+        let imH = self.imageView.bounds.size.height
+        let x = w > imW ? (w-imW)*0.5 : 0;
+        let y = h > imH ? (h-imH)*0.5 : 0;
+        print("x: \(x), y:\(y), imW:\(imW), imH:\(imH)")
+//        self.imageView.frame = CGRect(x: x, y: y, width: imW, height: imH);
+//        scrollView.contentSize = CGSize(width: imW+30, height: imH+30)
+    }
     
     @objc func cancelButtonAction() {
         self.navigationController?.popViewController(animated: true)
