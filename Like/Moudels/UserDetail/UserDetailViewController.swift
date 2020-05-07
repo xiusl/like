@@ -303,4 +303,7 @@ extension UserDetailViewController: StatusViewCellDelegate {
         vc.userId = u.id
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    func statusCell(_ cell: StatusViewCell, moreClick: Any?) {
+        
+    }
 }

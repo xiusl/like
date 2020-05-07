@@ -15,6 +15,7 @@ protocol StatusViewCellDelegate {
     func statusViewCellLikeButtonClick(_ cell: StatusViewCell)
     func statusCell(_ cell: StatusViewCell, likeClick: Any?)
     func statusCell(_ cell: StatusViewCell, userClick: Any?)
+    func statusCell(_ cell: StatusViewCell, moreClick: Any?)
 }
 
 protocol StatusViewCellData {
@@ -150,6 +151,11 @@ class StatusViewCell: UITableViewCell {
         self.userView.userActionHandle = { [weak self] in
             guard let `self` = self else { return }
             self.delegate?.statusCell(self, userClick: nil)
+        }
+        
+        self.userView.moreActionHandle = { [weak self] in
+            guard let `self` = self else { return }
+            self.delegate?.statusCell(self, moreClick: nil)
         }
     }
     

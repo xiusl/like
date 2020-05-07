@@ -15,6 +15,7 @@ protocol StatusUserViewData {
 class StatusUserView : UIView {
     
     public var userActionHandle: (() -> ())?
+    public var moreActionHandle: (() -> ())?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -44,6 +45,12 @@ class StatusUserView : UIView {
         descLabel.textColor = .cF2F4F8
         return descLabel
     }()
+    
+    lazy var moreButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "more"), for: .normal)
+        return button
+    }()
 }
 extension StatusUserView: StatusUserViewData {
     func setupAvatar(_ avatar: String) {
@@ -58,6 +65,7 @@ extension StatusUserView {
         self.addSubview(self.avatarView)
         self.addSubview(self.nameLabel)
         self.addSubview(self.descLabel)
+        self.addSubview(self.moreButton)
         
         
         self.avatarView.snp.makeConstraints { (make) in
@@ -76,6 +84,12 @@ extension StatusUserView {
             make.left.equalTo(self.nameLabel)
             make.bottom.equalTo(self.avatarView)
         }
+        self.moreButton.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().offset(-6)
+            make.width.equalTo(36)
+            make.height.equalTo(36)
+            make.centerY.equalTo(self.nameLabel)
+        }
     }
     
     func setupAction() {
@@ -86,10 +100,16 @@ extension StatusUserView {
         let tapG2 = UITapGestureRecognizer(target: self, action: #selector(userTapAction))
         self.nameLabel.isUserInteractionEnabled = true
         self.nameLabel.addGestureRecognizer(tapG2)
+        
+        self.moreButton.addTarget(self, action: #selector(moreButtonAction), for: .touchUpInside)
     }
     
     @objc func userTapAction() {
         self.userActionHandle?()
+    }
+    
+    @objc func moreButtonAction() {
+        self.moreActionHandle?()
     }
 }
 

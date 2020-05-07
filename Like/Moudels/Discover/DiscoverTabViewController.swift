@@ -156,4 +156,29 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
         vc.userId = u.id
         self.navigationController?.pushViewController(vc, animated: true)
     }
+    func statusCell(_ cell: StatusViewCell, moreClick: Any?) {
+        guard let index = self.tableView.indexPath(for: cell) else {return}
+        let view = StatusMoreView()
+        view.show()
+        
+        view.actionHandle = { [weak self] in
+            guard let `self` = self else { return }
+            self.removeAtIndex(index: index)
+        }
+    }
+    
+    func removeAtIndex(index: IndexPath) {
+        let status = self.data[index.row]
+        let req = StatusApiRequest.deleteStatus(id: status.id)
+        SLUtil.showLoading(to: self.view)
+        ApiManager.shared.request(request: req, success: { (data) in
+            SLUtil.hideLoading(from: self.view)
+            SLUtil.showMessage("删除成功".localized)
+            self.data.remove(at: index.row)
+            self.tableView.deleteRows(at: [index], with: .none)
+        }) { (error) in
+            SLUtil.hideLoading(from: self.view)
+            SLUtil.showMessage(error)
+        }
+    }
 }
