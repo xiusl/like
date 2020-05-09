@@ -10,8 +10,10 @@ import UIKit
 import Photos
 
 class LKPhotoCropViewController: UIViewController, UIScrollViewDelegate {
-
+    
+    public var didFinishCropping: ((UIImage) -> Void)?
     var asster: LKAsset?
+    var image: UIImage?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -28,43 +30,40 @@ class LKPhotoCropViewController: UIViewController, UIScrollViewDelegate {
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .black
         
-        let v = PhotoZoomableView()
         let w = self.view.bounds.size.width
         let h = self.view.bounds.size.height
-        v.frame = CGRect(x: 0, y: 0, width: w, height: h)
+        
+        
+        guard let `image` = image else { return }
+        
+        let frame = CGRect(x: 0, y: 0, width: w, height: h)
+        let v = LKPhotoCropView(image: image, frame: frame)
+        
         self.view.addSubview(v)
         
-        self.view.addSubview(self.cropView)
-        self.cropView.isUserInteractionEnabled = false
-        
-        guard let assertt = self.asster else { return }
-        
-        v.setImage(assertt)
-        
         self.view.addSubview(self.cancelButton)
+        self.view.addSubview(self.doneButton)
         
+        self.setupGestureRecognizers(v: v)
         
+        self.vv = v
+    }
+    
+    var vv: LKPhotoCropView?
+    
+    private let pinchGR = UIPinchGestureRecognizer()
+    private let panGR = UIPanGestureRecognizer()
+    
+    func setupGestureRecognizers(v: LKPhotoCropView) {
+        // Pinch Gesture
+        pinchGR.addTarget(self, action: #selector(pinch(_:)))
+        pinchGR.delegate = self
+        v.imageView.addGestureRecognizer(pinchGR)
         
-        /*
-        self.view.addSubview(self.contentView)
-                self.contentView.addSubview(self.imageView)
-        //
-                
-                self.view.addSubview(self.cancelButton)
-        
-        PHImageManager.default().requestImage(for: assert, targetSize: PHImageManagerMaximumSize, contentMode: .aspectFit, options: nil) { (image, _) in
-            self.imageView.image = image
-            
-            let s = image!.size
-            
-            let w = self.view.bounds.size.width - 32
-            let h = w * s.height / s.width;
-            
-            let hh = self.contentView.frame.size.height
-            self.imageView.frame = CGRect(x: 12, y: (hh-h)*0.5, width: w, height: h)
-            
-        }
- */
+        // Pan Gesture
+        panGR.addTarget(self, action: #selector(pan(_:)))
+        panGR.delegate = self
+        v.imageView.addGestureRecognizer(panGR)
     }
     
 
@@ -77,6 +76,42 @@ class LKPhotoCropViewController: UIViewController, UIScrollViewDelegate {
         button.addTarget(self, action: #selector(cancelButtonAction), for: .touchUpInside)
         return button
     }()
+    
+    lazy var doneButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = .systemFont(ofSize: 14)
+        button.setTitle("完成", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.frame = CGRect(x: 100, y: 100, width: 64, height: 40)
+        button.addTarget(self, action: #selector(doneButtonAction), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc
+    func doneButtonAction() {
+        guard let v = self.vv else {
+            return
+        }
+        guard let image = v.imageView.image else {
+            return
+        }
+        
+        let xCrop = v.cropArea.frame.minX - v.imageView.frame.minX
+        let yCrop = v.cropArea.frame.minY - v.imageView.frame.minY
+        let widthCrop = v.cropArea.frame.width
+        let heightCrop = v.cropArea.frame.height
+        let scaleRatio = image.size.width / v.imageView.frame.width
+        let scaledCropRect = CGRect(x: xCrop * scaleRatio,
+                                    y: yCrop * scaleRatio,
+                                    width: widthCrop * scaleRatio,
+                                    height: heightCrop * scaleRatio)
+        if let cgImage = image.toCIImage()?.toCGImage(),
+            let imageRef = cgImage.cropping(to: scaledCropRect) {
+            let croppedImage = UIImage(cgImage: imageRef)
+            didFinishCropping?(croppedImage)
+        }
+        self.navigationController?.popViewController(animated: true)
+    }
     
     lazy var imageView: UIImageView = {
         let view = UIImageView()
@@ -194,5 +229,159 @@ class PhotoCropView: UIView {
         let path3 = UIBezierPath()
         UIColor.white.set()
         path3.lineWidth = 1
+    }
+}
+
+
+extension LKPhotoCropViewController: UIGestureRecognizerDelegate {
+    @objc
+    func pinch(_ sender: UIPinchGestureRecognizer) {
+        // TODO: Zoom where the fingers are (more user friendly)
+        guard let v = self.vv else {
+            return
+        }
+        switch sender.state {
+        case .began, .changed:
+            var transform = v.imageView.transform
+            // Apply zoom level.
+            transform = transform.scaledBy(x: sender.scale,
+                                            y: sender.scale)
+            v.imageView.transform = transform
+        case .ended:
+            pinchGestureEnded()
+        case .cancelled, .failed, .possible:
+            ()
+        @unknown default:
+            fatalError()
+        }
+        // Reset the pinch scale.
+        sender.scale = 1.0
+    }
+    
+    private func pinchGestureEnded() {
+        guard let v = self.vv else {
+            return
+        }
+        var transform = v.imageView.transform
+        let kMinZoomLevel: CGFloat = 1.0
+        let kMaxZoomLevel: CGFloat = 3.0
+        var wentOutOfAllowedBounds = false
+        
+        // Prevent zooming out too much
+        if transform.a < kMinZoomLevel {
+            transform = .identity
+            wentOutOfAllowedBounds = true
+        }
+        
+        // Prevent zooming in too much
+        if transform.a > kMaxZoomLevel {
+            transform.a = kMaxZoomLevel
+            transform.d = kMaxZoomLevel
+            wentOutOfAllowedBounds = true
+        }
+        
+        // Animate coming back to the allowed bounds with a haptic feedback.
+        if wentOutOfAllowedBounds {
+            generateHapticFeedback()
+            UIView.animate(withDuration: 0.3, animations: {
+                self.vv?.imageView.transform = transform
+            })
+        }
+    }
+    
+    func generateHapticFeedback() {
+        if #available(iOS 10.0, *) {
+            let generator = UIImpactFeedbackGenerator(style: .light)
+            generator.impactOccurred()
+        }
+    }
+    
+    // MARK: - Pan Gesture
+    
+    @objc
+    func pan(_ sender: UIPanGestureRecognizer) {
+        guard let v = self.vv else {
+            return
+        }
+        let translation = sender.translation(in: view)
+        let imageView = v.imageView
+        
+        // Apply the pan translation to the image.
+        imageView.center = CGPoint(x: imageView.center.x + translation.x, y: imageView.center.y + translation.y)
+        
+        // Reset the pan translation.
+        sender.setTranslation(CGPoint.zero, in: view)
+        
+        if sender.state == .ended {
+            keepImageIntoCropArea()
+        }
+    }
+    
+    private func keepImageIntoCropArea() {
+        guard let v = self.vv else {
+            return
+        }
+        let imageRect = v.imageView.frame
+        let cropRect = v.cropArea.frame
+        var correctedFrame = imageRect
+        
+        // Cap Top.
+        if imageRect.minY > cropRect.minY {
+            correctedFrame.origin.y = cropRect.minY
+        }
+        
+        // Cap Bottom.
+        if imageRect.maxY < cropRect.maxY {
+            correctedFrame.origin.y = cropRect.maxY - imageRect.height
+        }
+        
+        // Cap Left.
+        if imageRect.minX > cropRect.minX {
+            correctedFrame.origin.x = cropRect.minX
+        }
+        
+        // Cap Right.
+        if imageRect.maxX < cropRect.maxX {
+            correctedFrame.origin.x = cropRect.maxX - imageRect.width
+        }
+        
+        // Animate back to allowed bounds
+        if imageRect != correctedFrame {
+            UIView.animate(withDuration: 0.3, animations: {
+                self.vv?.imageView.frame = correctedFrame
+            })
+        }
+    }
+    
+    /// Allow both Pinching and Panning at the same time.
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+}
+
+extension UIImage {
+    func toCIImage() -> CIImage? {
+        return self.ciImage ?? CIImage(cgImage: self.cgImage!)
+    }
+}
+
+internal extension CIImage {
+    func toUIImage() -> UIImage {
+        /* If need to reduce the process time, than use next code. But ot produce a bug with wrong filling in the simulator.
+         return UIImage(ciImage: self)
+         */
+        let context: CIContext = CIContext.init(options: nil)
+        let cgImage: CGImage = context.createCGImage(self, from: self.extent)!
+        let image: UIImage = UIImage(cgImage: cgImage)
+        return image
+    }
+    
+    func toCGImage() -> CGImage? {
+        let context = CIContext(options: nil)
+        if let cgImage = context.createCGImage(self, from: self.extent) {
+            return cgImage
+        }
+        return nil
     }
 }

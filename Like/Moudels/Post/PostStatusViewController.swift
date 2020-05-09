@@ -133,6 +133,10 @@ class PostStatusViewController: BaseViewController {
     var selectPhotos: Array<UIImage> = []
 }
 extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
+    func photoPickerViewController(controller: LKPhotoPickerViewController, cropImage: UIImage) {
+        
+    }
+    
     func photoPickerViewController(controller: LKPhotoPickerViewController, selectPhotos: Array<LKAsset>) {
         
     }

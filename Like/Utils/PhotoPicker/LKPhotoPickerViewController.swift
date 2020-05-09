@@ -14,6 +14,7 @@ import Photos
 protocol LKPhotoPickerViewControllerDelegate {
     func photoPickerViewController(controller: LKPhotoPickerViewController, selectPhotos: Array<LKAsset>)
     func photoPickerViewController(controller: LKPhotoPickerViewController, selectAssets: Array<LKAsset>, selectPhotos: Array<UIImage>)
+    func photoPickerViewController(controller: LKPhotoPickerViewController, cropImage: UIImage)
 }
 
 class LKPhotoPickerViewController: UINavigationController {
@@ -353,10 +354,25 @@ extension LKPhotoPickerRootViewController: UICollectionViewDataSource, UICollect
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if needCrop {
-            let vc = LKPhotoCropViewController()
-            vc.asster = self.currentAlbum.models[indexPath.row]
-            self.navigationController?.pushViewController(vc, animated: true)
-            return 
+            let assert = self.currentAlbum.models[indexPath.row];
+            
+            let opt: PHImageRequestOptions = PHImageRequestOptions()
+            opt.resizeMode = .fast
+            opt.isNetworkAccessAllowed = true
+            opt.isSynchronous = true
+            let _ = PHImageManager.default().requestImage(for: assert.asset!, targetSize: PHImageManagerMaximumSize, contentMode: .default, options: opt) { (image, _) in
+                
+                let vc = LKPhotoCropViewController()
+                vc.image = image
+                self.navigationController?.pushViewController(vc, animated: true)
+                
+                vc.didFinishCropping = { cropImage in
+                    self.navVc?.lk_delegate?.photoPickerViewController(controller: self.navVc!, cropImage: cropImage)
+                    self.navVc?.dismiss(animated: true, completion: nil)
+                }
+            }
+            
+            return
         }
         let vc = LKPhotoPickerPreviewViewController()
         vc.modalPresentationStyle = .fullScreen

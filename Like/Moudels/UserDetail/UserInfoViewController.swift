@@ -98,6 +98,10 @@ UITableViewDelegate {
         let key = form.key
         if key == "avatar" {
             let vc = UserAvatarViewController()
+            guard let u = User.current else {
+                return
+            }
+            vc.id = u.id
             vc.url = form.value
             self.navigationController?.pushViewController(vc, animated: true)
         } else if key == "name" {
