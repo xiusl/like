@@ -133,5 +133,38 @@ extension HomeTabViewController: UITableViewDataSource, UITableViewDelegate, Art
         }
 
     }
+    
+    func articleViewCell(cell: ArticleViewCell, reportIndex: Int) {
+        guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+        
+        reportArticle(at: indexPath)
+    }
+    
+    private func reportArticle(at indexPath: IndexPath) {
+        let reportView = LKReportView()
+        reportView.show()
+        
+        reportView.clickHandle = { [weak self] content in
+            guard let `self` = self else { return }
+            self.reportArticle(at: indexPath, content: content)
+        }
+    }
+
+    
+    private func reportArticle(at indexPath: IndexPath, content: String) {
+        
+        let article = self.data[indexPath.row]
+        let req = AppApiRequest.report(conetnt: content, ref_id: article.id, type: "article")
+        
+        SLUtil.showLoading(to: view)
+        ApiManager.shared.request(request: req, success: { (data) in
+            self.data.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .none)
+            SLUtil.hideLoading(from: self.view)
+        }) { (error) in
+            SLUtil.hideLoading(from: self.view)
+            SLUtil.showMessage(error)
+        }
+    }
 }
 

@@ -12,6 +12,7 @@ import SwiftyJSON
 protocol ArticleViewCellDelegate {
     func articleViewCellLikeButtonClick(_ button: UIButton)
     func articleViewCell(cell: ArticleViewCell, shareIndex: Int)
+    func articleViewCell(cell: ArticleViewCell, reportIndex: Int)
 }
 
 protocol ArticleViewCellData {
@@ -71,6 +72,7 @@ class ArticleViewCell: UITableViewCell {
         self.contentView.addSubview(self.imagesView)
         self.contentView.addSubview(self.likeButton)
         self.contentView.addSubview(self.lineView)
+        self.contentView.addSubview(self.deleteButton)
         
         self.contentLabel.snp.makeConstraints { (make) in
             make.top.equalTo(self.contentView).offset(12)
@@ -89,6 +91,13 @@ class ArticleViewCell: UITableViewCell {
             make.top.equalTo(self.contentLabel.snp.bottom).offset(h+16)
             make.bottom.equalTo(self.contentView).offset(-12)
             make.right.equalTo(self.contentLabel)
+        }
+        
+        self.deleteButton.snp.makeConstraints { (make) in
+            make.left.equalToSuperview().offset(6)
+            make.centerY.equalTo(self.likeButton)
+            make.width.equalTo(32)
+            make.height.equalTo(40)
         }
         
         self.lineView.snp.makeConstraints { (make) in
@@ -146,8 +155,21 @@ class ArticleViewCell: UITableViewCell {
         return lineView
     }()
     
-    @objc func okButtonClick(_ button: UIButton) {
+    private lazy var deleteButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "art_delete"), for: .normal)
+        button.addTarget(self, action: #selector(deleteButtonAction), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc
+    func okButtonClick(_ button: UIButton) {
         self.delegate?.articleViewCell(cell: self, shareIndex: self.index)
+    }
+    
+    @objc
+    private func deleteButtonAction() {
+        self.delegate?.articleViewCell(cell: self, reportIndex: self.index)
     }
 }
 
