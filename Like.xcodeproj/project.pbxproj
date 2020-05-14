@@ -19,6 +19,8 @@
 		DE91B7B62452D462000FF356 /* FeedbackViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B52452D462000FF356 /* FeedbackViewCell.swift */; };
 		DE91B7B82452EC39000FF356 /* AdminFeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B72452EC39000FF356 /* AdminFeedbackListViewController.swift */; };
 		DE91B7BA2456A3D5000FF356 /* PostPhotoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B92456A3D5000FF356 /* PostPhotoView.swift */; };
+		DE96A6F5246CDBBA00F753FE /* PasswordChangeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE96A6F4246CDBBA00F753FE /* PasswordChangeViewController.swift */; };
+		DE96A6F7246CE28F00F753FE /* SLFormInputViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE96A6F6246CE28F00F753FE /* SLFormInputViewCell.swift */; };
 		DED190A82463E41300F5FE1A /* StatusMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED190A72463E41300F5FE1A /* StatusMoreView.swift */; };
 		DED190B72466409800F5FE1A /* LKPhotoCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED190B62466409800F5FE1A /* LKPhotoCropView.swift */; };
 		ECEFF0786D051A6000061807 /* Pods_Like.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */; };
@@ -109,6 +111,8 @@
 		DE91B7B52452D462000FF356 /* FeedbackViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackViewCell.swift; sourceTree = "<group>"; };
 		DE91B7B72452EC39000FF356 /* AdminFeedbackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminFeedbackListViewController.swift; sourceTree = "<group>"; };
 		DE91B7B92456A3D5000FF356 /* PostPhotoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostPhotoView.swift; sourceTree = "<group>"; };
+		DE96A6F4246CDBBA00F753FE /* PasswordChangeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordChangeViewController.swift; sourceTree = "<group>"; };
+		DE96A6F6246CE28F00F753FE /* SLFormInputViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLFormInputViewCell.swift; sourceTree = "<group>"; };
 		DED190A72463E41300F5FE1A /* StatusMoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMoreView.swift; sourceTree = "<group>"; };
 		DED190B62466409800F5FE1A /* LKPhotoCropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoCropView.swift; sourceTree = "<group>"; };
 		FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoPreviewViewCell.swift; sourceTree = "<group>"; };
@@ -232,6 +236,8 @@
 				DE91B7B12452CC6B000FF356 /* FeedbackListViewController.swift */,
 				DE91B7B52452D462000FF356 /* FeedbackViewCell.swift */,
 				DE91B7B72452EC39000FF356 /* AdminFeedbackListViewController.swift */,
+				DE96A6F4246CDBBA00F753FE /* PasswordChangeViewController.swift */,
+				DE96A6F6246CE28F00F753FE /* SLFormInputViewCell.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -737,6 +743,7 @@
 				DE91B7B22452CC6B000FF356 /* FeedbackListViewController.swift in Sources */,
 				FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */,
 				FF4135DA2350702900B27792 /* BaseViewController.swift in Sources */,
+				DE96A6F7246CE28F00F753FE /* SLFormInputViewCell.swift in Sources */,
 				DE306B2D244696E000186270 /* Article.swift in Sources */,
 				FF1C1F322340827C00D635A6 /* AppDelegate.swift in Sources */,
 				FF4135E8235070DD00B27792 /* ConstUtil.swift in Sources */,
@@ -756,6 +763,7 @@
 				FF4470A32387C309002ED72D /* LKPhotoPickerViewController.swift in Sources */,
 				FF4D27B12445F443000CE644 /* Status.swift in Sources */,
 				FF1C1F5E2341978800D635A6 /* UIViewFrameEx.swift in Sources */,
+				DE96A6F5246CDBBA00F753FE /* PasswordChangeViewController.swift in Sources */,
 				FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */,
 				FF11905C2351C354004E87E8 /* RefreshNormalHeader.swift in Sources */,
 				FFD8093B23546A5F00FE0FCB /* PostLinkView.swift in Sources */,
@@ -929,7 +937,7 @@
 				CODE_SIGN_ENTITLEMENTS = Like/ll.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 3S73583C2C;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Like/Resources/Info.plist;
@@ -965,7 +973,7 @@
 				CODE_SIGN_ENTITLEMENTS = Like/ll.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = 3S73583C2C;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Like/Resources/Info.plist;

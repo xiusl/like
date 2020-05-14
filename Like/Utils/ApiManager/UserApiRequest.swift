@@ -15,6 +15,7 @@ enum UserApiRequest {
     case getUser(id: String)
     case followUser(id: String, followed: Bool)
     case editUser(id: String, avatar: String, name: String)
+    case editUserPassword(id: String, password: String, old_password: String)
     case getCurrentUser(Void)
     case deafultApi(Void)
 }
@@ -29,6 +30,8 @@ extension UserApiRequest: ApiRequest {
         case .followUser(_, let followed):
             return followed ? .bodyPost : .delete
         case .editUser(_, _, _):
+            return .bodyPost
+        case .editUserPassword(_, _, _):
             return .bodyPost
         default:
             return .get
@@ -56,6 +59,8 @@ extension UserApiRequest: ApiRequest {
             return "users/\(id)/followers"
         case .editUser(let id, _, _):
             return "users/"+id
+        case .editUserPassword(let id, _, _):
+            return "users/\(id)"
         default:
             return ""
         }
@@ -71,6 +76,8 @@ extension UserApiRequest: ApiRequest {
             return ["phone": phone, "code": code]
         case .editUser(_, let avatar, let name):
             return ["avatar": avatar, "name": name]
+        case .editUserPassword(_, let password, let old_password):
+            return ["password": password, "old_password": old_password]
         default:
             return [:]
         }

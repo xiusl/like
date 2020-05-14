@@ -184,6 +184,7 @@ class User : NSObject, NSCoding{
         }
     }
 
+    @discardableResult
     func save() -> Bool {
         User._user = self
         var filePath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).last!

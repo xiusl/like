@@ -57,6 +57,9 @@ extension UIColor {
     open class var theme: UIColor {
         return UIColor(hex: 0x44C7FB)
     }
+    open class var themeDisable: UIColor {
+        return UIColor(hex: 0x44C7FB, alpha: 0.3)
+    }
     open class var blackText: UIColor {
         return UIColor(hex: 0x1A2C3F)
     }

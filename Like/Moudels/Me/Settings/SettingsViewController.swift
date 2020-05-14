@@ -81,6 +81,9 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
         } else if title == "反馈处理" {
             let vc = AdminFeedbackListViewController()
             self.navigationController?.pushViewController(vc, animated: true)
+        } else if title == "修改密码" {
+            let vc = PasswordChangeViewController()
+            self.navigationController?.pushViewController(vc, animated: true)
         }
     }
     
@@ -149,6 +152,7 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
         var arr: Array = [
             [
                 ["title": "关于", "icon": "setting_about", "action": ""],
+                ["title": "修改密码", "icon": "setting_about", "action": ""],
                 ["title": "反馈", "icon": "setting_feedback", "action": ""],
                 ["title": "隐私政策", "icon": "setting_privacy", "action": ""],
             ]
