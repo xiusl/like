@@ -73,7 +73,7 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
         } else if title == "隐私政策" {
             let vc = WebViewController()
             vc.url = "https://ins.sleen.top/privacy"
-            vc.title = "隐私政策"
+            vc.title = "哩嗑隐私政策"
             self.navigationController?.pushViewController(vc, animated: true)
         } else if title == "反馈" {
             let vc = FeedbackPostViewController()
@@ -84,6 +84,12 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
         } else if title == "修改密码" {
             let vc = PasswordChangeViewController()
             self.navigationController?.pushViewController(vc, animated: true)
+        } else if title == "使用协议" {
+            let vc = WebViewController()
+            vc.url = "https://ins.sleen.top/usage"
+            vc.title = "哩嗑使用协议"
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         }
     }
     
@@ -109,10 +115,7 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 1 {
-            return 10
-        }
-        return 0.001
+        return 10
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -120,12 +123,9 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 1 {
-            let view = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 10))
-            view.backgroundColor = UIColor(hex: 0xF2F4F8)
-            return view
-        }
-        return UIView()
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: ScreenWidth, height: 10))
+        view.backgroundColor = UIColor(hex: 0xF2F4F8)
+        return view
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -154,7 +154,10 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
                 ["title": "关于", "icon": "setting_about", "action": ""],
                 ["title": "修改密码", "icon": "setting_about", "action": ""],
                 ["title": "反馈", "icon": "setting_feedback", "action": ""],
+            ],
+            [
                 ["title": "隐私政策", "icon": "setting_privacy", "action": ""],
+                ["title": "使用协议", "icon": "setting_privacy", "action": ""],
             ]
         ]
         if User.current?.type == 9 {

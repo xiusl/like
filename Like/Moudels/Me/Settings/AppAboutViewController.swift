@@ -102,6 +102,7 @@ class AppAboutViewController: BaseViewController {
         button.setTitle("User Privacy Policy".localized, for: .normal)
         button.setTitleColor(.theme, for: .normal)
         button.addTarget(self, action: #selector(privacyButtonAction), for: .touchUpInside)
+        button.isHidden = true
         return button
     }()
     lazy var copyLabel: UILabel = {

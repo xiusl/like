@@ -93,39 +93,80 @@ class RegisterViewController: BaseViewController {
         let agreeView = UIView()
         agreeView.frame = CGRect(x: 0, y: 326, width: ScreenWidth, height: 36);
         
-        var str = NSMutableAttributedString(string: "Agree to Privacy policy")
-
-        str.addAttribute(.font, value: UIFont.systemFont(ofSize: 12), range: NSMakeRange(0, str.length))
-        str.addAttribute(.foregroundColor, value: UIColor.theme, range: NSMakeRange(9, str.length-9))
-        var l = NSLocale.preferredLanguages.first ?? "zh"
-        if l.starts(with: "zh") {
-            str = NSMutableAttributedString(string: "注册即表示同意隐私协议")
-            str.addAttribute(.font, value: UIFont.systemFont(ofSize: 12), range: NSMakeRange(0, str.length))
-            str.addAttribute(.foregroundColor, value: UIColor.theme, range: NSMakeRange(7, str.length-7))
-        }
+        let font = UIFont.systemFont(ofSize: 12)
+        
+        var str = "注册即表示同意".localized
         
         let label = UILabel()
-        label.attributedText = str
-        label.textAlignment = .center
+        label.text = str
+        label.font = font
+        label.textColor = .blackText
         label.sizeToFit()
-        let w = label.bounds.size.width
-        label.frame = CGRect(x: (ScreenWidth-w)*0.5, y: 0, width: w, height: 36);
         agreeView.addSubview(label)
+        let labelW = label.bounds.size.width
+
+        let button1 = UIButton()
+        button1.titleLabel?.font  = font
+        button1.setTitle("隐私政策".localized, for: .normal)
+        button1.setTitleColor(.theme, for: .normal)
+        button1.titleLabel?.sizeToFit()
+        agreeView.addSubview(button1)
+        let btn1W = button1.titleLabel!.bounds.size.width
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(agreeViewTapAction))
-        agreeView.addGestureRecognizer(tap)
+        let label2 = UILabel()
+        label2.text = "&"
+        label2.font = font
+        label2.textColor = .blackText
+        label2.sizeToFit()
+        agreeView.addSubview(label2)
+        let label2W = label2.bounds.size.width
+        
+        let button2 = UIButton()
+        button2.titleLabel?.font  = font
+        button2.setTitle("使用协议".localized, for: .normal)
+        button2.setTitleColor(.theme, for: .normal)
+        button2.titleLabel?.sizeToFit()
+        agreeView.addSubview(button2)
+        let btn2W = button2.titleLabel!.bounds.size.width
+        
+        let w = labelW + label2W + btn1W + btn2W
+        var left = (ScreenWidth - w) * 0.5
+        
+        label.frame = CGRect(x: left, y: 0, width: labelW, height: 36)
+        
+        left += labelW
+        button1.frame = CGRect(x: left, y: 0, width: btn1W, height: 36)
+        
+        left += btn1W
+        label2.frame = CGRect(x: left, y: 0, width: label2W, height: 36)
+        
+        left += label2W
+        button2.frame = CGRect(x: left, y: 0, width: btn2W, height: 36)
+
+        button1.addTarget(self, action: #selector(privacyButtonAction), for: .touchUpInside)
+        button2.addTarget(self, action: #selector(usageButtonAction), for: .touchUpInside)
         
         return agreeView
     }()
     
-    @objc func agreeViewTapAction() {
+    @objc
+    private func privacyButtonAction() {
         let vc = WebViewController()
         vc.url = "https://ins.sleen.top/privacy"
-        vc.title = "隐私政策"
+        vc.title = "哩嗑隐私政策".localized
         self.navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc func confirmButtonClick() {
+    @objc
+    private func usageButtonAction() {
+        let vc = WebViewController()
+        vc.url = "https://ins.sleen.top/usage"
+        vc.title = "哩嗑使用协议".localized
+        self.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    @objc
+    private func confirmButtonClick() {
         var phone = self.phoneView.textField.text ?? ""
         let whitespace = NSCharacterSet.whitespacesAndNewlines
         phone = phone.trimmingCharacters(in: whitespace)
