@@ -27,6 +27,12 @@ class BaseViewController: UIViewController {
         let backImage = UIImage(named: "nav_back_g")?.withRenderingMode(.alwaysOriginal)
         self.navigationController?.navigationBar.backIndicatorImage = backImage
         self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backImage
+        
+        tipView.addSubview(tipLabel)
+        tipLabel.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
     }
     
 
@@ -51,4 +57,64 @@ class BaseViewController: UIViewController {
         button.addTarget(target, action: action, for: .touchUpInside)
         return UIBarButtonItem(customView: button)
     }
+    
+    func showTipView() {
+        showTipView(tip: "未知错误")
+    }
+    func showTipView(tip: String) {
+        
+    
+        guard let window = UIApplication.shared.keyWindow else {return}
+    
+        if tipView.superview?.isDescendant(of: window) ?? false {
+            return
+        }
+        window.addSubview(tipView)
+        
+        tipLabel.text = tip
+        
+        
+        let st = UIApplication.shared.statusBarFrame.size.height + 6
+        let sourceR = CGRect(x: ScreenWidth*0.5, y: st, width: 0, height: 0)
+        tipView.frame = sourceR
+        
+        let frame = CGRect(x: 16, y: st, width: ScreenWidth-32, height: 32)
+        
+        
+        UIView.animate(withDuration: 0.26, delay: 0, options: .curveEaseOut, animations: {
+            self.tipView.frame = frame
+            self.tipLabel.alpha = 1
+        }) { (finished) in
+            if finished {
+                DispatchQueue.main.asyncAfter(wallDeadline: DispatchWallTime.now()+1) {
+                UIView.animate(withDuration: 0.16, delay: 0, options: .curveEaseIn, animations: {
+                    self.tipView.frame = sourceR
+                    self.tipLabel.alpha = 0
+                }) { (finished) in
+                    if finished {
+                        self.tipView.removeFromSuperview()
+                    }
+                }
+                }
+            }
+        }
+    }
+    
+    lazy var tipView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .init(hex: 0xE64340)
+        let st = UIApplication.shared.statusBarFrame.size.height
+        view.frame = CGRect(x: 16, y: st, width: ScreenWidth-32, height: 0)
+        view.layer.cornerRadius = 4
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    lazy var tipLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .white
+        label.textAlignment = .center
+        return label
+    }()
 }

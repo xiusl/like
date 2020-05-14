@@ -40,6 +40,8 @@ class PasswordChangeViewController: BaseViewController {
         let tableView = UITableView(frame: frame)
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.backgroundColor = .cF2F4F8
+        tableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 0, right: 0)
         return tableView
     }()
     
@@ -117,17 +119,17 @@ extension PasswordChangeViewController: UITableViewDelegate, UITableViewDataSour
         let old_password = inputData["old_password"]!
         
         if password != password2 {
-            SLUtil.showMessage("两次密码不一致")
+            showTipView(tip: "两次密码不一致")
             return
         }
         
         if password.count < 6 {
-            SLUtil.showMessage("密码长度为6-12位")
+            showTipView(tip: "密码长度为6-12位")
             return
         }
         
         if password == old_password {
-            SLUtil.showMessage("新密码不能和旧密码相同")
+            showTipView(tip: "新密码不能和旧密码相同")
             return
         }
         
