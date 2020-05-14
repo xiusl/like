@@ -93,6 +93,12 @@ class StatusListViewController: BaseViewController {
         tableView.separatorStyle = .none
         return tableView
     }()
+    
+    lazy var moreActionView: StatusMoreView = {
+           let view = StatusMoreView()
+           view.delegate = self
+           return view
+       }()
 }
 extension StatusListViewController: UITableViewDataSource, UITableViewDelegate, StatusViewCellDelegate {
     
@@ -155,6 +161,84 @@ extension StatusListViewController: UITableViewDataSource, UITableViewDelegate, 
     }
     
     func statusCell(_ cell: StatusViewCell, moreClick: Any?) {
-        
+            guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+            self.moreActionView.indexPath = indexPath
+            self.moreActionView.show()
+        }
     }
-}
+
+    extension StatusListViewController: StatusMoreViewDelegate {
+        func statusMoreAction(shield: Int, indexPath: IndexPath?) {
+            guard let `indexPath` = indexPath else { return }
+            shieldStatus(at: indexPath)
+        }
+        
+        func statusMoreAction(report: Int, indexPath: IndexPath?) {
+            guard let `indexPath` = indexPath else { return }
+            reportStatus(at: indexPath)
+        }
+        
+        func statusMoreAction(delete: Int, indexPath: IndexPath?) {
+            guard let `indexPath` = indexPath else { return }
+            removeStatus(at: indexPath)
+        }
+        
+        private func removeStatus(at indexPath: IndexPath) {
+            let status = self.data[indexPath.row]
+            let req = StatusApiRequest.deleteStatus(id: status.id)
+            SLUtil.showLoading(to: self.view)
+            ApiManager.shared.request(request: req, success: { (data) in
+                SLUtil.hideLoading(from: self.view)
+                SLUtil.showMessage("删除成功".localized)
+                self.data.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .none)
+                self.moreActionView.dismiss()
+            }) { (error) in
+                SLUtil.hideLoading(from: self.view)
+                SLUtil.showMessage(error)
+            }
+        }
+        
+        private func shieldStatus(at indexPath: IndexPath) {
+            let status = self.data[indexPath.row]
+            let req = StatusApiRequest.shield(id: status.id, shield: true)
+            SLUtil.showLoading(to: self.view)
+            ApiManager.shared.request(request: req, success: { (data) in
+                SLUtil.hideLoading(from: self.view)
+                SLUtil.showMessage("屏蔽成功".localized)
+                self.data.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .none)
+                self.moreActionView.dismiss()
+            }) { (error) in
+                SLUtil.hideLoading(from: self.view)
+                SLUtil.showMessage(error)
+            }
+        }
+        
+        private func reportStatus(at indexPath: IndexPath) {
+            self.moreActionView.dismiss()
+            let reportView = LKReportView()
+            reportView.show()
+            
+            reportView.clickHandle = { [weak self] content in
+                guard let `self` = self else { return }
+                self.reportStatus(at: indexPath, content: content)
+            }
+        }
+        
+        private func reportStatus(at indexPath: IndexPath, content: String) {
+            
+            let status = self.data[indexPath.row]
+            let req = AppApiRequest.report(conetnt: content, ref_id: status.id, type: "status")
+            
+            SLUtil.showLoading(to: view)
+            ApiManager.shared.request(request: req, success: { (data) in
+                self.data.remove(at: indexPath.row)
+                self.tableView.deleteRows(at: [indexPath], with: .none)
+                SLUtil.hideLoading(from: self.view)
+            }) { (error) in
+                SLUtil.hideLoading(from: self.view)
+                SLUtil.showMessage(error)
+            }
+        }
+    }
