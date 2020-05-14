@@ -8,11 +8,19 @@
 
 import UIKit
 
+protocol StatusMoreViewDelegate {
+    func statusMoreAction(shield: Int, indexPath: IndexPath?)
+    func statusMoreAction(report: Int, indexPath: IndexPath?)
+    func statusMoreAction(delete: Int, indexPath: IndexPath?)
+}
+
 class StatusMoreView: UIView {
     
     private var url: String?
     private var title: String?
     private var image: String?
+    
+    var delegate: StatusMoreViewDelegate?
     
     var actionHandle: (() -> ())?
     
@@ -39,23 +47,92 @@ class StatusMoreView: UIView {
         
         self.addSubview(self.contentView)
         
+        let bgV = UIImageView()
+        bgV.frame = CGRect(x: 0, y: 44*3, width: ScreenWidth, height: 12)
+        bgV.backgroundColor = .cF2F4F8
+        contentView.addSubview(bgV)
         
-        let btn = UIButton()
-        btn.frame = CGRect(x: 0, y: 20, width: ScreenWidth, height: 44)
-        btn.setTitle("删除", for: .normal)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        btn.setTitleColor(UIColor(hex: 0x000000), for: .normal)
-        btn.addTarget(self, action: #selector(actionButtonClick), for: .touchUpInside)
-        self.contentView.addSubview(btn)
+        contentView.addSubview(shieldButton)
+        contentView.addSubview(reportButton)
+        contentView.addSubview(deleteButton)
+        contentView.addSubview(cancelButton)
+
     }
-    @objc private func backgroundTap() {
+    lazy var shieldButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 44)
+        button.setTitle("屏蔽", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.setTitleColor(UIColor(hex: 0x000000), for: .normal)
+        button.addTarget(self, action: #selector(shieldButtonAction), for: .touchUpInside)
+        
+        let v = UIImageView()
+        v.backgroundColor = .cF2F4F8
+        v.frame = CGRect(x: 0, y: 43.5, width: ScreenWidth, height: 0.5)
+        button.addSubview(v)
+        
+        return button
+    }()
+    
+    
+    var indexPath: IndexPath?
+    
+    @objc
+    private func shieldButtonAction() {
+        self.delegate?.statusMoreAction(shield: 1, indexPath: indexPath)
+    }
+    @objc
+    private func reportButtonAction() {
+        self.delegate?.statusMoreAction(report: 1, indexPath: indexPath)
+        
+    }
+    @objc
+    private func deleteButtonAction() {
+        self.delegate?.statusMoreAction(delete: 1, indexPath: indexPath)
+        
+    }
+    lazy var reportButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 44, width: ScreenWidth, height: 44)
+        button.setTitle("举报", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.setTitleColor(UIColor(hex: 0x000000), for: .normal)
+        button.addTarget(self, action: #selector(reportButtonAction), for: .touchUpInside)
+        let v = UIImageView()
+        v.backgroundColor = .cF2F4F8
+        v.frame = CGRect(x: 0, y: 43.5, width: ScreenWidth, height: 0.5)
+        button.addSubview(v)
+        return button
+    }()
+    lazy var deleteButton: UIButton = {
+           let button = UIButton()
+           button.frame = CGRect(x: 0, y: 44*2, width: ScreenWidth, height: 44)
+           button.setTitle("删除", for: .normal)
+           button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+           button.setTitleColor(UIColor(hex: 0x000000), for: .normal)
+           button.addTarget(self, action: #selector(deleteButtonAction), for: .touchUpInside)
+        let v = UIImageView()
+        v.backgroundColor = .cF2F4F8
+        v.frame = CGRect(x: 0, y: 43.5, width: ScreenWidth, height: 0.5)
+        button.addSubview(v)
+           return button
+       }()
+    lazy var cancelButton: UIButton = {
+        let button = UIButton()
+        button.frame = CGRect(x: 0, y: 44*3+12, width: ScreenWidth, height: 44)
+        button.setTitle("取消", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        button.setTitleColor(UIColor(hex: 0x000000), for: .normal)
+        button.addTarget(self, action: #selector(backgroundTap), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc
+    private func backgroundTap() {
         self.dismiss()
     }
     
-    @objc private func actionButtonClick() {
-        self.actionHandle?()
-        self.dismiss()
-    }
+    
     
     open func show() {
         if self.superview == nil {

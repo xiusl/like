@@ -17,6 +17,7 @@ enum StatusApiRequest {
     case getUserStatuses(id: String, page: Int, count: Int)
     case getUserLikes(id: String, page: Int, count: Int)
     case deleteStatus(id: String)
+    case shield(id: String, shield: Bool)
     case defaultReq(Void)
 }
 
@@ -33,6 +34,8 @@ extension StatusApiRequest: ApiRequest {
             return (like ? .bodyPost : .delete)
         case .deleteStatus(_):
             return .delete
+        case .shield(_, let shield):
+            return (shield ? .bodyPost : .delete)
         default:
             return .get
         }
@@ -60,6 +63,8 @@ extension StatusApiRequest: ApiRequest {
             return "users/\(id)/likes/statuses"
         case .deleteStatus(let id):
             return "/statuses/\(id)"
+        case .shield(let id, _):
+            return "/statuses/\(id)/shield"
         default:
             return ""
         }

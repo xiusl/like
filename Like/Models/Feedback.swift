@@ -16,6 +16,9 @@ class Feedback : NSObject, NSCoding{
     var replay : String!
     var status : Int!
     var user : User!
+    var statusObj: Status!
+    var articleObj: Article!
+    var type: String!
 
     
     var displayTime: String = ""
@@ -33,8 +36,20 @@ class Feedback : NSObject, NSCoding{
         replay = json["replay"].stringValue
         status = json["status"].intValue
         let userJson = json["user"]
-        if !userJson.isEmpty{
+        if !userJson.isEmpty {
             user = User(fromJson: userJson)
+        }
+        
+        type = json["type"].stringValue
+        
+        
+        let objJson = json["obj"]
+        if !objJson.isEmpty {
+            if type == "status" {
+                statusObj = Status(fromJson: objJson)
+            } else if type == "article" {
+                articleObj = Article(fromJson: objJson)
+            }
         }
         
         let dateFormat = DateFormatter()
@@ -76,6 +91,15 @@ class Feedback : NSObject, NSCoding{
         if user != nil{
             dictionary["user"] = user.toDictionary()
         }
+        if type != nil{
+            dictionary["type"] = type
+        }
+        if statusObj != nil{
+            dictionary["statusObj"] = statusObj.toDictionary()
+        }
+        if articleObj != nil{
+            dictionary["articleObj"] = articleObj.toDictionary()
+        }
         return dictionary
     }
 
@@ -92,6 +116,9 @@ class Feedback : NSObject, NSCoding{
         replay = aDecoder.decodeObject(forKey: "replay") as? String
         status = aDecoder.decodeObject(forKey: "status") as? Int
         user = aDecoder.decodeObject(forKey: "user") as? User
+        type = aDecoder.decodeObject(forKey: "type") as? String
+        statusObj = aDecoder.decodeObject(forKey: "statusObj") as? Status
+        articleObj = aDecoder.decodeObject(forKey: "articleObj") as? Article
     }
 
     /**
@@ -120,6 +147,15 @@ class Feedback : NSObject, NSCoding{
         }
         if user != nil{
             aCoder.encode(user, forKey: "user")
+        }
+        if type != nil {
+            aCoder.encode(type, forKey: "type")
+        }
+        if statusObj != nil{
+            aCoder.encode(statusObj, forKey: "statusObj")
+        }
+        if articleObj != nil{
+            aCoder.encode(user, forKey: "articleObj")
         }
 
     }

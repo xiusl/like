@@ -108,8 +108,16 @@ extension FeedbackListViewController: UITableViewDelegate, UITableViewDataSource
         
         let feedback = self.data[indexPath.row]
         
+        var con = feedback.content ?? ""
+        if feedback.statusObj != nil {
+            let s = feedback.statusObj
+            con += "<\(s?.content ?? "")>"
+        } else if feedback.statusObj != nil {
+            let a = feedback.articleObj
+            con += "<\(a?.title ?? "")>"
+        }
         
-        cell.setupContent(feedback.content)
+        cell.setupContent(con)
         cell.setupReplay(feedback.replay)
         cell.setupTime(feedback.displayTime)
         

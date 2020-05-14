@@ -100,7 +100,15 @@ extension AdminFeedbackListViewController: UITableViewDelegate, UITableViewDataS
         let feedback = self.data[indexPath.row]
         let user = feedback.user!
         
-        cell.setupContent(feedback.content)
+        var con = feedback.content ?? ""
+        if feedback.statusObj != nil {
+            let s = feedback.statusObj
+            con += "<\(s?.content ?? "")>"
+        } else if feedback.statusObj != nil {
+            let a = feedback.articleObj
+            con += "<\(a?.title ?? "")>"
+        }
+        cell.setupContent(con)
         cell.setupReplay(feedback.replay)
         cell.setupTime(feedback.displayTime)
         cell.setupIsAdmin(true)

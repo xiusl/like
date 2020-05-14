@@ -24,9 +24,9 @@ class ApiManager: NSObject {
     static let shared = ApiManager()
 
 //    #if DEBUG
-//        static let baseUrl = "http://127.0.0.1:5000/"
+        static let baseUrl = "http://127.0.0.1:5051/"
 //    #else
-        static let baseUrl = "https://ins-api.sleen.top/"
+//        static let baseUrl = "https://ins-api.sleen.top/"
 //    #endif
     private override init() {
         
