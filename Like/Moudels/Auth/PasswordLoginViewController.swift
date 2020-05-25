@@ -67,7 +67,7 @@ class PasswordLoginViewController: BaseViewController {
         confirmButton.setBackgroundImage(UIImage(named: "bg_enable"), for: .normal)
         confirmButton.setBackgroundImage(UIImage(named: "bg_disable"), for: .disabled)
         confirmButton.isEnabled = false
-        confirmButton.layer.cornerRadius = 2
+        confirmButton.layer.cornerRadius = 4
         confirmButton.clipsToBounds = true
         confirmButton.addTarget(self, action: #selector(confirmButtonClick), for: .touchUpInside)
         return confirmButton
