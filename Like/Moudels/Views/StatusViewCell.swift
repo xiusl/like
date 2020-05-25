@@ -11,37 +11,49 @@ import SwiftyJSON
 import Kingfisher
 
 protocol StatusViewCellDelegate {
-    //    func statusViewCellLikeButtonClick(_ button: UIButton)
-    func statusViewCellLikeButtonClick(_ cell: StatusViewCell)
     func statusCell(_ cell: StatusViewCell, likeClick: Any?)
     func statusCell(_ cell: StatusViewCell, userClick: Any?)
     func statusCell(_ cell: StatusViewCell, moreClick: Any?)
+    func statusCell(_ cell: StatusViewCell, shareClick: Any?)
 }
 
 protocol StatusViewCellData {
-    func setupUserAvatar(_ avatar: String)
-    func setupUserName(_ name: String)
     func setupContent(_ content: String)
     func setupImages(_ images: Array<Image>)
-    func setupLike(_ liked: Bool)
+    func setupLike(_ liked: Bool, count: Int)
 }
 
-extension StatusViewCell: StatusViewCellData {
-    func setupUserAvatar(_ avatar: String) {
-        self.userView.setupAvatar(avatar)
+extension StatusViewCell: StatusViewCellData, StatusUserViewData {
+    func setupAvatar(_ avatar: String) {
+        userView.setupAvatar(avatar)
     }
-    func setupUserName(_ name: String) {
-        self.userView.setupName(name)
+    func setupName(_ name: String) {
+        userView.setupName(name)
+    }
+    func setupDesc(_ desc: String) {
+        userView.setupDesc(desc)
     }
     func setupContent(_ content: String) {
-        self.contentLabel.text = content
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 6
+        
+        let attrDict: Dictionary<NSAttributedString.Key, Any> =
+            [.font: UIFont.systemFont(ofSize: 14),
+             .paragraphStyle: style,
+             .foregroundColor: UIColor.blackText]
+        let attr = NSMutableAttributedString(string: content,
+                                             attributes: attrDict)
+        contentLabel.attributedText = attr
     }
-    func setupLike(_ liked: Bool) {
-        self.likeButton.isSelected = liked
+    func setupLike(_ liked: Bool, count: Int) {
+        likeButton.isSelected = liked
+        
+        let title = count > 0 ? "\(count)" : ""
+        likeButton.setTitle(title, for: .normal)
     }
     func setupImages(_ images: Array<Image>) {
         if images.count == 0 {
-            self.photoView.snp.updateConstraints { (make) in
+            photoView.snp.updateConstraints { (make) in
                 make.height.equalTo(0)
                 make.width.equalTo(0)
             }
@@ -110,36 +122,38 @@ class StatusViewCell: UITableViewCell {
         self.contentView.addSubview(self.userView)
         self.contentView.addSubview(self.contentLabel)
         self.contentView.addSubview(self.photoView)
+        self.contentView.addSubview(self.shareButton)
         self.contentView.addSubview(self.likeButton)
-        self.contentView.addSubview(self.timeLabel)
         self.contentView.addSubview(self.lineView)
         
         self.userView.snp.makeConstraints { (make) in
             make.left.right.top.equalToSuperview()
-            make.height.equalTo(58)
+            make.height.equalTo(44)
         }
         self.contentLabel.snp.makeConstraints { (make) in
-            make.top.equalTo(self.userView.snp.bottom).offset(2)
+            make.top.equalTo(self.userView.snp.bottom)
             make.left.equalTo(self.contentView).offset(16)
             make.right.equalTo(self.contentView).offset(-16)
         }
-        
         self.photoView.snp.makeConstraints { (make) in
-            make.top.equalTo(self.contentLabel.snp.bottom).offset(10)
+            make.top.equalTo(self.contentLabel.snp.bottom).offset(6);
             make.left.equalTo(self.contentView).offset(16)
             make.height.equalTo(0)
             make.width.equalTo(0)
         }
         
         self.likeButton.snp.makeConstraints { (make) in
-            make.top.equalTo(self.photoView.snp.bottom).offset(8)
-            make.bottom.equalTo(self.contentView).offset(-12)
-            make.right.equalTo(self.contentLabel)
+            make.top.equalTo(self.photoView.snp.bottom)
+            make.left.equalTo(self.contentView.snp.right).offset(-88)
+            make.bottom.equalTo(self.contentView).offset(-6)
+            make.height.equalTo(30)
         }
         
-        self.timeLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.contentView).offset(16)
-            make.centerY.equalTo(self.likeButton.snp.centerY)
+        self.shareButton.snp.makeConstraints { (make) in
+            make.right.equalToSuperview().offset(-10)
+            make.width.equalTo(30)
+            make.height.equalTo(30)
+            make.centerY.equalTo(self.likeButton)
         }
         
         self.lineView.snp.makeConstraints { (make) in
@@ -167,7 +181,7 @@ class StatusViewCell: UITableViewCell {
     
     lazy var contentLabel: UILabel = {
         let contentLabel = UILabel()
-        contentLabel.font = UIFont.systemFont(ofSize: 16)
+        contentLabel.font = UIFont.systemFont(ofSize: 14)
         contentLabel.textColor = .blackText
         contentLabel.numberOfLines = 0
         return contentLabel
@@ -178,24 +192,31 @@ class StatusViewCell: UITableViewCell {
         return photoView
     }()
     
-    lazy var timeLabel: UILabel = {
-        let timeLabel = UILabel()
-        timeLabel.font = UIFont.systemFont(ofSize: 12)
-        timeLabel.textColor = UIColor(hex: 0x9B9C9C)
-        return timeLabel
-    }()
-    
     lazy var likeButton: UIButton = {
         let btn = UIButton()
-        btn.frame = CGRect(x: ScreenWidth-60-20, y: 60, width: 60, height: 32)
-        btn.setTitle("点赞", for: .normal)
-        btn.setTitle("已点赞", for: .selected)
-        btn.setTitleColor(.theme, for: .normal)
-        btn.setTitleColor(.blackText, for: .selected)
-        btn.titleLabel?.font = UIFont.systemFont(ofSize: 14)
-        btn.addTarget(self, action: #selector(okButtonClick(_:)), for: .touchUpInside)
+        btn.frame = CGRect(x: ScreenWidth-60-20, y: 60,
+                           width: 60, height: 32)
+        btn.setImage(UIImage(named: "icon_digg"), for: .normal)
+        btn.setImage(UIImage(named: "icon_diggs"), for: .selected)
+        btn.setTitleColor(.cC9C9C9, for: .normal)
+        btn.setTitleColor(.theme, for: .selected)
+        btn.titleLabel?.font = .systemFont(ofSize: 12)
+        btn.addTarget(self, action: #selector(diggButtonAction), for: .touchUpInside)
+        btn.contentHorizontalAlignment = .left
+        btn.titleEdgeInsets = UIEdgeInsets(top: 3,
+                                           left: 0,
+                                           bottom: -3,
+                                           right: 0)
         btn.tag = 101
         return btn
+    }()
+    
+    lazy var shareButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "icon_share"),
+                        for: .normal)
+        button.addTarget(self, action: #selector(shareButtonAction), for: .touchUpInside)
+        return button;
     }()
     
     lazy var lineView: UIImageView = {
@@ -204,7 +225,13 @@ class StatusViewCell: UITableViewCell {
         return lineView
     }()
     
-    @objc func okButtonClick(_ button: UIButton) {
-        self.delegate?.statusViewCellLikeButtonClick(self)
+    @objc
+    private func diggButtonAction() {
+        self.delegate?.statusCell(self, likeClick: nil)
+    }
+    
+    @objc
+    private func shareButtonAction() {
+        self.delegate?.statusCell(self, shareClick: nil)
     }
 }

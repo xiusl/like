@@ -97,7 +97,7 @@ class DiscoverTabViewController: BaseViewController {
     }()
 }
 
-extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate, StatusViewCellDelegate {
+extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         self.tableView.mj_footer?.isHidden = (data.count == 0)
         return self.data.count
@@ -108,23 +108,15 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
         
         let cell = StatusViewCell.create(tableView: tableView)
         
-        cell.setupUserName(user.name)
-        cell.setupUserAvatar(user.avatar)
+        cell.setupName(user.name)
+        cell.setupAvatar(user.avatar)
+        cell.setupDesc(status.displayDateText())
         cell.setupContent(status.content)
-        cell.setupLike(status.isLiked)
+        cell.setupLike(status.isLiked, count: status.likeCount)
         cell.setupImages(status.images)
         
         cell.delegate = self
         return cell
-    }
-    @objc func okButtonClick(_ button: UIButton) {
-        let id = button.title(for: .disabled) ?? ""
-        let request = button.isSelected ? StatusApiRequest.unlikeStatus(id: id) : StatusApiRequest.likeStatus(id: id)
-        ApiManager.shared.request(request: request, success: { (result) in
-            button.isSelected = !button.isSelected
-        }) { (error) in
-            debugPrint(error)
-        }
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
@@ -133,26 +125,26 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
-    
+}
 
-    
-    func statusViewCellLikeButtonClick(_ cell: StatusViewCell) {
+extension DiscoverTabViewController: StatusViewCellDelegate {
+    func statusCell(_ cell: StatusViewCell, likeClick: Any?) {
         guard let index = self.tableView.indexPath(for: cell) else {return}
         
         //        guard let data = self.data[index.row] else { return }
         let data: Status = self.data[index.row]
         let liked = data.isLiked!
+        var count = data.likeCount ?? 0
         guard let id = data.id else { return }
         let request = StatusApiRequest.likeAction(id: id, like: !liked)
         ApiManager.shared.request(request: request, success: { (result) in
-            cell.likeButton.isSelected = !liked
             data.isLiked = !liked
+            count = count - (liked ? 1 : -1)
+            data.likeCount = count
+            cell.setupLike(!liked, count: count)
         }) { (error) in
             debugPrint(error)
         }
-    }
-    func statusCell(_ cell: StatusViewCell, likeClick: Any?) {
-        
     }
     func statusCell(_ cell: StatusViewCell, userClick: Any?) {
         guard let index = self.tableView.indexPath(for: cell) else {return}
@@ -166,6 +158,9 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate,
         guard let indexPath = self.tableView.indexPath(for: cell) else { return }
         self.moreActionView.indexPath = indexPath
         self.moreActionView.show()
+    }
+    func statusCell(_ cell: StatusViewCell, shareClick: Any?) {
+        
     }
 }
 

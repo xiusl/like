@@ -146,8 +146,81 @@ class Status : NSObject, NSCoding{
         }
 
     }
-
+    
+    
+    var dateText: String?
+    
+    func displayDateText() -> String {
+        if (dateText == nil) {
+            let dateFormat = DateFormatter()
+            dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+            
+            let dateFormat1 = DateFormatter()
+            dateFormat1.dateFormat = "yyyy-MM-dd HH:mm"
+            
+            guard let date = dateFormat.date(from: createdAt) else {
+                dateText = createdAt
+                return dateText!
+            }
+            
+            if date.isToday() {
+                let minutes = Int(abs(date.timeIntervalSinceNow) / 60)
+                
+                if minutes < 1 {
+                    dateText = "刚刚"
+                } else if  minutes < 60 {
+                    dateText = "\(minutes)分钟前"
+                } else {
+                    dateText = "\(minutes/60)小时前"
+                }
+            } else if date.isYesterday() {
+                dateFormat1.dateFormat = "HH:mm"
+                dateText = "昨天 \(dateFormat1.string(from: date))"
+            } else if date.isCurrentYear() {
+                dateFormat1.dateFormat = "MM-dd"
+                dateText = dateFormat1.string(from: date)
+            } else {
+                dateFormat1.dateFormat = "yyyy-MM-dd"
+                dateText = dateFormat1.string(from: date)
+            }
+        }
+        return dateText!
+    }
 }
+
+extension Date {
+    var year: Int {
+        return Calendar.current.dateComponents([.year], from: self).year ?? 0
+    }
+    var month: Int {
+        return Calendar.current.dateComponents([.month], from: self).month ?? 0
+    }
+    var day: Int {
+        return Calendar.current.dateComponents([.day], from: self).day ?? 0
+    }
+    
+    func isToday() -> Bool {
+        if abs(self.timeIntervalSinceNow) >= 3600 * 24 {
+            return false
+        }
+        return Date().day == self.day
+    }
+    
+    func isYesterday() -> Bool {
+        let tom = dateByAddingDays(days: 1)
+        return tom.isToday()
+    }
+    
+    func isCurrentYear() -> Bool {
+        return Date().year == self.year
+    }
+    
+    private func dateByAddingDays(days: Int) -> Date {
+        let interval = self.timeIntervalSinceNow + TimeInterval(days * 86400)
+        return Date(timeIntervalSinceReferenceDate: interval)
+    }
+}
+
 
 
 class Image : NSObject, NSCoding{

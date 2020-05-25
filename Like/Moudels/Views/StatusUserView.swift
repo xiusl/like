@@ -11,6 +11,7 @@ import UIKit
 protocol StatusUserViewData {
     func setupAvatar(_ avatar: String)
     func setupName(_ name: String)
+    func setupDesc(_ desc: String)
 }
 class StatusUserView : UIView {
     
@@ -34,30 +35,35 @@ class StatusUserView : UIView {
     
     lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        nameLabel.font = .systemFont(ofSize: 12,
+                                     weight: .medium)
         nameLabel.textColor = .blackText
         return nameLabel
     }()
     
     lazy var descLabel: UILabel = {
         let descLabel = UILabel()
-        descLabel.font = UIFont.systemFont(ofSize: 14)
-        descLabel.textColor = .cF2F4F8
+        descLabel.font = .systemFont(ofSize: 10)
+        descLabel.textColor = .c999999
         return descLabel
     }()
     
     lazy var moreButton: UIButton = {
         let button = UIButton()
-        button.setImage(UIImage(named: "more"), for: .normal)
+        button.setImage(UIImage(named: "icon_more"),
+                        for: .normal)
         return button
     }()
 }
 extension StatusUserView: StatusUserViewData {
     func setupAvatar(_ avatar: String) {
-        self.avatarView.kf.setImage(with: URL(string: avatar))
+        avatarView.kf.setImage(with: URL(string: avatar))
     }
     func setupName(_ name: String) {
-        self.nameLabel.text = name
+        nameLabel.text = name
+    }
+    func setupDesc(_ desc: String) {
+        descLabel.text = desc
     }
 }
 extension StatusUserView {
@@ -69,19 +75,21 @@ extension StatusUserView {
         
         
         self.avatarView.snp.makeConstraints { (make) in
-            make.left.equalTo(self).offset(16)
-            make.size.equalTo(CGSize(width: 32, height: 32))
-            make.top.equalTo(self).offset(6)
+            make.left.equalToSuperview().offset(16)
+            make.size.equalTo(CGSize(width: 28, height: 28))
+            make.top.equalToSuperview().offset(10)
+            make.bottom.equalToSuperview().offset(-6)
         }
-        self.avatarView.layer.cornerRadius = 16
+        self.avatarView.layer.cornerRadius = 14
         
         self.nameLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.avatarView.snp.right).offset(8)
-            make.centerY.equalTo(self.avatarView)
+            make.top.equalTo(self.avatarView)
+            make.height.equalTo(16)
         }
-        
         self.descLabel.snp.makeConstraints { (make) in
             make.left.equalTo(self.nameLabel)
+            make.height.equalTo(12)
             make.bottom.equalTo(self.avatarView)
         }
         self.moreButton.snp.makeConstraints { (make) in

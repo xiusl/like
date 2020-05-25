@@ -233,10 +233,10 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
         
         let cell = StatusViewCell.create(tableView: tableView)
         
-        cell.setupUserName(user.name)
-        cell.setupUserAvatar(user.avatar)
+        cell.setupName(user.name)
+        cell.setupAvatar(user.avatar)
         cell.setupContent(status.content)
-        cell.setupLike(status.isLiked)
+        cell.setupLike(status.isLiked, count: status.likeCount)
         cell.setupImages(status.images)
         
         cell.delegate = self
@@ -314,6 +314,9 @@ extension UserDetailViewController: StatusViewCellDelegate {
         self.moreActionView.indexPath = indexPath
         self.moreActionView.show()
     }
+    func statusCell(_ cell: StatusViewCell, shareClick: Any?) {
+           
+       }
 }
 
 extension UserDetailViewController: StatusMoreViewDelegate {
