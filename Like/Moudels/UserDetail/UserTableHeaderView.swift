@@ -14,9 +14,11 @@ class UserTableHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(avatarView)
-        self.addSubview(nameLabel)
-        self.addSubview(self.followButton)
+        
+        addSubview(avatarView)
+        addSubview(nameLabel)
+        addSubview(descLabel)
+        addSubview(followButton)
         
         let v = UIImageView()
         v.backgroundColor = UIColor(hex: 0xF8F8F8)
@@ -28,7 +30,7 @@ class UserTableHeaderView: UIView {
         
         self.followButton.snp.makeConstraints { (make) in
             make.right.equalTo(self).offset(-16)
-            make.top.equalTo(self).offset(10)
+            make.centerY.equalTo(self.nameLabel)
         }
     }
     
@@ -44,6 +46,11 @@ class UserTableHeaderView: UIView {
     }
     open func setupAvatarAlpha(_ alpha: CGFloat) {
         self.avatarView.alpha = alpha
+    }
+    open func setupDesc(_ desc: String) {
+        self.descLabel.text = desc
+        descLabel.sizeToFit()
+        descLabel.frame = CGRect(x: 16, y: 48, width: ScreenWidth-32, height: descLabel.bounds.size.height)
     }
 //    open func setupFollowed(_ followed: Bool) {
 //        self.followButton.isSelected = followed
@@ -66,14 +73,24 @@ class UserTableHeaderView: UIView {
 
     private lazy var nameLabel: UILabel = {
         let nameLabel = UILabel()
-        nameLabel.frame = CGRect(x: 16, y: 48, width: ScreenWidth, height: 20)
+        nameLabel.frame = CGRect(x: 16+64+8, y: 10, width: ScreenWidth, height: 20)
         nameLabel.font = UIFont.systemFontMedium(ofSize: 16)
         nameLabel.textColor = .blackText
         return nameLabel
     }()
     
+    private lazy var descLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .c999999
+        label.numberOfLines = 2
+        label.frame = CGRect(x: 16, y: 42, width: ScreenWidth-32, height: 0)
+        return label
+    }()
+    
     private lazy var followButton: UIButton = {
         let button = UIButton()
+        button.titleLabel?.font = .systemFont(ofSize: 16)
         button.setTitle("关注", for: .normal)
         button.setTitle("已关注", for: .selected)
         button.setTitleColor(.theme, for: .normal)

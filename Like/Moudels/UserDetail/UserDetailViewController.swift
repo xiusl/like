@@ -95,6 +95,7 @@ class UserDetailViewController: BaseViewController {
             self.user = u
             self.headerView.setupAvatar(u.avatar)
             self.headerView.setupName(u.name)
+            self.headerView.setupDesc(u.desc)
             self.headerView.setupFollowed(u.isFollowing, isCurrUser: u.isCurrnet)
             self.nameLabel.text = u.name
         }) { (error) in
@@ -238,6 +239,7 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
         cell.setupContent(status.content)
         cell.setupLike(status.isLiked, count: status.likeCount)
         cell.setupImages(status.images)
+        cell.setupDesc(status.displayDateText())
         
         cell.delegate = self
         return cell

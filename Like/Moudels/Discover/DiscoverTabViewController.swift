@@ -114,6 +114,7 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate 
         cell.setupContent(status.content)
         cell.setupLike(status.isLiked, count: status.likeCount)
         cell.setupImages(status.images)
+        cell.setupDesc(status.displayDateText())
         
         cell.delegate = self
         return cell
