@@ -1,20 +1,21 @@
 //
-//  UserNameViewController.swift
+//  UserDescEditViewController.swift
 //  Like
 //
-//  Created by xiu on 2020/4/21.
+//  Created by xiu on 2020/5/25.
 //  Copyright © 2020 likeeee. All rights reserved.
 //
 
 import UIKit
 
-class UserNameViewController: BaseViewController {
-    
+fileprivate let DESC_MAX_COUNT = 30
+class UserDescEditViewController: BaseViewController {
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
-        title = "设置名字"
+        title = "设置签名"
         view.backgroundColor = .cF2F4F8
         
         setupNavigationBar()
@@ -22,14 +23,16 @@ class UserNameViewController: BaseViewController {
         view.addSubview(contentView)
         
         let bgView = UIView()
-        bgView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 48)
+        bgView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: textView.bounds.size.height)
         bgView.backgroundColor = .white
-        bgView.addSubview(textField)
+        bgView.addSubview(textView)
         contentView.addSubview(bgView)
+        textView.addSubview(charCountLabel)
         
-        textField.becomeFirstResponder()
+        textView.becomeFirstResponder()
         guard let user = User.current else { return }
-        textField.text = user.name
+        textView.text = user.desc
+        updateCountShow()
     }
     
     private func setupNavigationBar() {
@@ -51,9 +54,10 @@ class UserNameViewController: BaseViewController {
     @objc
     private func saveAction() {
         guard let user = User.current else { return }
-        let req = UserApiRequest.editUser(id: user.id, avatar: "", name: self.textField.text!)
+        let req = UserApiRequest.editUserDesc(id: user.id,
+                                              desc: self.textView.text!)
         ApiManager.shared.request(request: req, success: { (result) in
-            user.name = self.textField.text
+            user.desc = self.textView.text
             let _ = user.save()
             NotificationCenter.default.post(name: NSNotification.Name("UserInfoEdited_noti"), object: nil)
             self.closeAction()
@@ -100,12 +104,43 @@ class UserNameViewController: BaseViewController {
         item.isEnabled = false
         return item
     }()
-    var textField: UITextField = {
-        let textField = UITextField()
-        textField.frame = CGRect(x: 16, y: 0, width: ScreenWidth-32, height: 48)
-        textField.addTarget(self, action: #selector(textChange(_:)), for: .editingChanged)
-        textField.font = UIFont.systemFont(ofSize: 16)
-        
-        return textField
+    private lazy var textView: UITextView = {
+        let view = UITextView()
+        view.font = .systemFont(ofSize: 16)
+        view.frame = CGRect(x: 8, y: 0, width: ScreenWidth-16, height: 88)
+        view.tintColor = .theme
+        view.delegate = self
+        return view
     }()
+    private lazy var charCountLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .c999999
+        label.textAlignment = .right
+        label.frame = CGRect(x: ScreenWidth-30-16, y: 88-18, width: 30, height: 14)
+        return label
+    }()
+}
+
+extension UserDescEditViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let count = textView.text?.count ?? 0
+        if count > DESC_MAX_COUNT {
+            self.textView.text = String(textView.text?.prefix(DESC_MAX_COUNT) ?? "")
+        }
+        updateCountShow()
+        rightItem.isEnabled = count > 0
+    }
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if text == "" {
+            return true
+        }
+        return range.location <= DESC_MAX_COUNT
+    }
+    
+    private func updateCountShow() {
+        let count = textView.text?.count ?? 0
+        charCountLabel.text = "\(DESC_MAX_COUNT - count)"
+    }
 }

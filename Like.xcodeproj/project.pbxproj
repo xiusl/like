@@ -88,6 +88,7 @@
 		FF8043DB244F3756006CB015 /* UserNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8043DA244F3756006CB015 /* UserNameViewController.swift */; };
 		FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0A236C02300083BE5F /* ConfirmActionView.swift */; };
 		FF861D0D236C0A340083BE5F /* ConfirmSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */; };
+		FF977F5A247C08FA006D7396 /* UserDescEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF977F59247C08FA006D7396 /* UserDescEditViewController.swift */; };
 		FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */; };
 		FFD8093B23546A5F00FE0FCB /* PostLinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */; };
 		FFE1B5C9238C03CD00120D56 /* QiNiuTool.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFE1B5C8238C03CD00120D56 /* QiNiuTool.swift */; };
@@ -196,6 +197,7 @@
 		FF8043DA244F3756006CB015 /* UserNameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNameViewController.swift; sourceTree = "<group>"; };
 		FF861D0A236C02300083BE5F /* ConfirmActionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmActionView.swift; sourceTree = "<group>"; };
 		FF861D0C236C0A340083BE5F /* ConfirmSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmSheetView.swift; sourceTree = "<group>"; };
+		FF977F59247C08FA006D7396 /* UserDescEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDescEditViewController.swift; sourceTree = "<group>"; };
 		FFD8093823545A1C00FE0FCB /* UserTableHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTableHeaderView.swift; sourceTree = "<group>"; };
 		FFD8093A23546A5F00FE0FCB /* PostLinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLinkView.swift; sourceTree = "<group>"; };
 		FFE1B5C8238C03CD00120D56 /* QiNiuTool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QiNiuTool.swift; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 				DE424775244EF612009A0FA6 /* UserInfoViewController.swift */,
 				FF8043D8244F33B2006CB015 /* UserAvatarViewController.swift */,
 				FF8043DA244F3756006CB015 /* UserNameViewController.swift */,
+				FF977F59247C08FA006D7396 /* UserDescEditViewController.swift */,
 			);
 			path = UserDetail;
 			sourceTree = "<group>";
@@ -773,6 +776,7 @@
 				DE96A6F5246CDBBA00F753FE /* PasswordChangeViewController.swift in Sources */,
 				FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */,
 				FF11905C2351C354004E87E8 /* RefreshNormalHeader.swift in Sources */,
+				FF977F5A247C08FA006D7396 /* UserDescEditViewController.swift in Sources */,
 				FFD8093B23546A5F00FE0FCB /* PostLinkView.swift in Sources */,
 				FF4135F92351604700B27792 /* PasswordLoginViewController.swift in Sources */,
 				FF4135FB2351608200B27792 /* AuthInputView.swift in Sources */,

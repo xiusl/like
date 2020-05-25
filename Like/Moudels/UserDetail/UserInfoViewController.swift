@@ -109,6 +109,11 @@ UITableViewDelegate {
             let nav = MainNavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             self.present(nav, animated: true, completion: nil)
+        } else if key == "desc" {
+            let vc = UserDescEditViewController()
+            let navVc = MainNavigationController(rootViewController: vc)
+            navVc.modalPresentationStyle = .fullScreen
+            self.present(navVc, animated: true, completion: nil)
         }
     }
     
@@ -178,10 +183,10 @@ class FormInputCell: UITableViewCell {
         }
         self.valueLabel.snp.makeConstraints { (make) in
             make.right.equalTo(self.contentView).offset(-32)
-            make.centerY.equalTo(self.contentView)
-            make.top.equalTo(self.contentView).offset(6)
-            make.bottom.equalTo(self.contentView).offset(-6)
+            make.top.equalTo(self.contentView).offset(10)
+            make.bottom.equalTo(self.contentView).offset(-10)
             make.height.greaterThanOrEqualTo(33)
+            make.left.equalTo(self.contentView).offset(80)
         }
         self.valueView.snp.makeConstraints { (make) in
             make.right.equalTo(self.contentView).offset(-32)
@@ -213,6 +218,8 @@ class FormInputCell: UITableViewCell {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor(hex: 0x000000, alpha: 0.8)
+        label.numberOfLines = 0
+        label.textAlignment = .right
         return label
     }()
     lazy var arrowView: UIImageView = {

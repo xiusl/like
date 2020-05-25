@@ -15,6 +15,7 @@ enum UserApiRequest {
     case getUser(id: String)
     case followUser(id: String, followed: Bool)
     case editUser(id: String, avatar: String, name: String)
+    case editUserDesc(id: String, desc: String)
     case editUserPassword(id: String, password: String, old_password: String)
     case getCurrentUser(Void)
     case deafultApi(Void)
@@ -23,15 +24,13 @@ enum UserApiRequest {
 extension UserApiRequest: ApiRequest {
     var type: RequestType {
         switch self {
-        case .login(_, _):
-            return .bodyPost
-        case .resgiterOrLogin(_, _):
-            return .bodyPost
         case .followUser(_, let followed):
             return followed ? .bodyPost : .delete
-        case .editUser(_, _, _):
-            return .bodyPost
-        case .editUserPassword(_, _, _):
+        case .editUser(_, _, _),
+             .editUserDesc(_, _),
+             .resgiterOrLogin(_, _),
+             .login(_, _),
+             .editUserPassword(_, _, _):
             return .bodyPost
         default:
             return .get
@@ -45,20 +44,20 @@ extension UserApiRequest: ApiRequest {
     
     var path: String {
         switch self {
-        case .login(_, _):
-            return "authorizations"
-        case .getCurrentUser():
-            return "authorizations"
         case .getVerifyCode(_):
             return "verifycodes"
-        case .resgiterOrLogin(_, _):
-            return "authorizations"
-        case .getUser(let id):
-            return "users/"+id
         case .followUser(let id, _):
             return "users/\(id)/followers"
+            
+        case .resgiterOrLogin(_, _), .login(_, _), .getCurrentUser():
+            return "authorizations"
+        
+        case .getUser(let id):
+            fallthrough
         case .editUser(let id, _, _):
-            return "users/"+id
+            fallthrough
+        case .editUserDesc(let id, _):
+            fallthrough
         case .editUserPassword(let id, _, _):
             return "users/\(id)"
         default:
@@ -76,6 +75,8 @@ extension UserApiRequest: ApiRequest {
             return ["phone": phone, "code": code]
         case .editUser(_, let avatar, let name):
             return ["avatar": avatar, "name": name]
+        case .editUserDesc(_, let desc):
+            return ["desc": desc]
         case .editUserPassword(_, let password, let old_password):
             return ["password": password, "old_password": old_password]
         default:
