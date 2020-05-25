@@ -283,23 +283,21 @@ extension UserDetailViewController: UITableViewDataSource, UITableViewDelegate {
     }
 }
 extension UserDetailViewController: StatusViewCellDelegate {
-    func statusViewCellLikeButtonClick(_ cell: StatusViewCell) {
+    func statusCell(_ cell: StatusViewCell, likeClick: Any?) {
         guard let index = self.tableView.indexPath(for: cell) else {return}
-        
-        //        guard let data = self.data[index.row] else { return }
         let data: Status = self.data[index.row]
         let liked = data.isLiked!
+        var count = data.likeCount ?? 0
         guard let id = data.id else { return }
         let request = StatusApiRequest.likeAction(id: id, like: !liked)
         ApiManager.shared.request(request: request, success: { (result) in
-            cell.likeButton.isSelected = !liked
             data.isLiked = !liked
+            count = count - (liked ? 1 : -1)
+            data.likeCount = count
+            cell.setupLike(!liked, count: count)
         }) { (error) in
             debugPrint(error)
         }
-    }
-    func statusCell(_ cell: StatusViewCell, likeClick: Any?) {
-        
     }
     func statusCell(_ cell: StatusViewCell, userClick: Any?) {
         guard let index = self.tableView.indexPath(for: cell) else {return}
@@ -315,8 +313,12 @@ extension UserDetailViewController: StatusViewCellDelegate {
         self.moreActionView.show()
     }
     func statusCell(_ cell: StatusViewCell, shareClick: Any?) {
-           
-       }
+        guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+        let s = self.data[indexPath.row]
+        
+        let shareView = LKStatusShareView(status: s)
+        shareView.show()
+    }
 }
 
 extension UserDetailViewController: StatusMoreViewDelegate {

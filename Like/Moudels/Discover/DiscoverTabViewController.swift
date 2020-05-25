@@ -130,8 +130,6 @@ extension DiscoverTabViewController: UITableViewDataSource, UITableViewDelegate 
 extension DiscoverTabViewController: StatusViewCellDelegate {
     func statusCell(_ cell: StatusViewCell, likeClick: Any?) {
         guard let index = self.tableView.indexPath(for: cell) else {return}
-        
-        //        guard let data = self.data[index.row] else { return }
         let data: Status = self.data[index.row]
         let liked = data.isLiked!
         var count = data.likeCount ?? 0
@@ -160,7 +158,11 @@ extension DiscoverTabViewController: StatusViewCellDelegate {
         self.moreActionView.show()
     }
     func statusCell(_ cell: StatusViewCell, shareClick: Any?) {
+        guard let indexPath = self.tableView.indexPath(for: cell) else { return }
+        let s = self.data[indexPath.row]
         
+        let shareView = LKStatusShareView(status: s)
+        shareView.show()
     }
 }
 

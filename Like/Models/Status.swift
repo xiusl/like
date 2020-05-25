@@ -19,6 +19,10 @@ class Status : NSObject, NSCoding{
     var status : Int!
     var updatedAt : String!
     var user : User!
+    
+    override init() {
+        super.init()
+    }
 
     /**
      * Instantiate the instance using the passed json values to set the properties values
@@ -185,6 +189,25 @@ class Status : NSObject, NSCoding{
             }
         }
         return dateText!
+    }
+    
+    private var shareDateText: String?
+    
+    func dateTextForShare() -> String {
+        if shareDateText == nil {
+            let dateFormat = DateFormatter()
+            dateFormat.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
+            
+            guard let date = dateFormat.date(from: createdAt) else {
+                shareDateText = createdAt
+                return shareDateText!
+            }
+            
+            let dateFormat1 = DateFormatter()
+            dateFormat1.dateFormat = "yyyy-MM-dd"
+            shareDateText = dateFormat1.string(from: date)
+        }
+        return shareDateText!
     }
 }
 

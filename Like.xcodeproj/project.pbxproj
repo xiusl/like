@@ -13,6 +13,7 @@
 		DE424772244EDE22009A0FA6 /* ProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE424771244EDE22009A0FA6 /* ProgressHUD.swift */; };
 		DE424774244EE5C1009A0FA6 /* StatusListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE424773244EE5C1009A0FA6 /* StatusListViewController.swift */; };
 		DE424776244EF612009A0FA6 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE424775244EF612009A0FA6 /* UserInfoViewController.swift */; };
+		DE6BEB6F247BA58F00AF7EE1 /* LKStatusShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6BEB6E247BA58F00AF7EE1 /* LKStatusShareView.swift */; };
 		DE91B7B02452ACA6000FF356 /* FeedbackPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7AF2452ACA6000FF356 /* FeedbackPostViewController.swift */; };
 		DE91B7B22452CC6B000FF356 /* FeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B12452CC6B000FF356 /* FeedbackListViewController.swift */; };
 		DE91B7B42452CDC7000FF356 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B32452CDC7000FF356 /* Feedback.swift */; };
@@ -106,6 +107,7 @@
 		DE424771244EDE22009A0FA6 /* ProgressHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProgressHUD.swift; sourceTree = "<group>"; };
 		DE424773244EE5C1009A0FA6 /* StatusListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusListViewController.swift; sourceTree = "<group>"; };
 		DE424775244EF612009A0FA6 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
+		DE6BEB6E247BA58F00AF7EE1 /* LKStatusShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKStatusShareView.swift; sourceTree = "<group>"; };
 		DE91B7AF2452ACA6000FF356 /* FeedbackPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPostViewController.swift; sourceTree = "<group>"; };
 		DE91B7B12452CC6B000FF356 /* FeedbackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackListViewController.swift; sourceTree = "<group>"; };
 		DE91B7B32452CDC7000FF356 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
@@ -510,6 +512,7 @@
 				FFFC57FF2355C1D300D79270 /* StatusViewCell.swift */,
 				DED190A72463E41300F5FE1A /* StatusMoreView.swift */,
 				DE96A6F8246D27EB00F753FE /* LKReportView.swift */,
+				DE6BEB6E247BA58F00AF7EE1 /* LKStatusShareView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -755,6 +758,7 @@
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
 				DE424776244EF612009A0FA6 /* UserInfoViewController.swift in Sources */,
 				FF8043DB244F3756006CB015 /* UserNameViewController.swift in Sources */,
+				DE6BEB6F247BA58F00AF7EE1 /* LKStatusShareView.swift in Sources */,
 				FFE1B5C9238C03CD00120D56 /* QiNiuTool.swift in Sources */,
 				FF11905A2351BB99004E87E8 /* RefreshStateHeader.swift in Sources */,
 				DE306B2B2445C0B600186270 /* ArticleApiRequest.swift in Sources */,
