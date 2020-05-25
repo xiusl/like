@@ -9,6 +9,7 @@
 import UIKit
 import SwiftyJSON
 
+fileprivate let TIMECOUNT = 59
 class RegisterViewController: BaseViewController {
 
     open var isLogin = false
@@ -35,7 +36,7 @@ class RegisterViewController: BaseViewController {
     }
     lazy var phoneView: AuthInputView = {
         let phoneView: AuthInputView = AuthInputView()
-        phoneView.frame = CGRect(x: 0, y: 120, width: ScreenWidth, height: 60)
+        phoneView.frame = CGRect(x: 0, y: 100, width: ScreenWidth, height: 60)
         phoneView.type = .phone
         phoneView.setupPlaceHolder(text: "RegisterPhonePlaceholder".localized)
         phoneView.delegate = self
@@ -45,7 +46,7 @@ class RegisterViewController: BaseViewController {
     
     lazy var codeView: AuthInputView = {
         let codeView: AuthInputView = AuthInputView()
-        codeView.frame = CGRect(x: 0, y: 180, width: ScreenWidth, height: 60)
+        codeView.frame = CGRect(x: 0, y: 160, width: ScreenWidth, height: 60)
         codeView.type = .verifyCode
         codeView.setupPlaceHolder(text: "Confirmation Code".localized)
         codeView.delegate = self
@@ -75,7 +76,7 @@ class RegisterViewController: BaseViewController {
     
     lazy var confirmButton: UIButton = {
         let confirmButton: UIButton = UIButton()
-        confirmButton.frame = CGRect(x: 24, y: 260, width: ScreenWidth-48, height: 46)
+        confirmButton.frame = CGRect(x: 24, y: 240, width: ScreenWidth-48, height: 46)
         let title = self.isLogin ? "LoginButtonTitle".localized : "Login2RegisterTitle".localized
         confirmButton.setTitle(title, for: .normal)
         confirmButton.setTitleColor(.white, for: .normal)
@@ -91,7 +92,7 @@ class RegisterViewController: BaseViewController {
     
     lazy var agreeView: UIView = {
         let agreeView = UIView()
-        agreeView.frame = CGRect(x: 0, y: 326, width: ScreenWidth, height: 36);
+        agreeView.frame = CGRect(x: 0, y: 306, width: ScreenWidth, height: 36);
         
         let font = UIFont.systemFont(ofSize: 12)
         
@@ -188,12 +189,14 @@ class RegisterViewController: BaseViewController {
             keyWidow?.rootViewController = vc
         }) { (error) in
             self.confirmButton.endLoading()
-            SLUtil.showMessage(error)
+            SLUtil.showTipView(tip: error)
         }
     }
     
-    @objc func sendCodeBtnClick() {
-        if self.timerCount != 59 { return }
+    @objc
+    func sendCodeBtnClick() {
+        if self.timerCount != TIMECOUNT { return }
+
         var phone = self.phoneView.textField.text ?? ""
         let whitespace = NSCharacterSet.whitespacesAndNewlines
         phone = phone.trimmingCharacters(in: whitespace)
@@ -209,22 +212,24 @@ class RegisterViewController: BaseViewController {
                 self.startTimer()
             }
         }) { (error) in
-            SLUtil.showMessage(error)
+            SLUtil.showTipView(tip: error)
         }
         
     }
     
+    
     private var timer: Timer?
-    private var timerCount = 59
+    private var timerCount = TIMECOUNT
     func startTimer() {
         self.sendCodeBtn.setTitle(String(format: "%zds", self.timerCount), for: .normal)
         self.timer = Timer(timeInterval: 1, target: self, selector: #selector(catdown), userInfo: nil, repeats: true)
         RunLoop.current.add(self.timer!, forMode: .common)
     }
-    @objc func catdown() {
+    @objc
+    func catdown() {
         self.timerCount -= 1
         if self.timerCount == 0 {
-            self.timerCount = 59
+            self.timerCount = TIMECOUNT
             self.timer?.invalidate()
             self.timer = nil
             self.sendCodeBtn.setTitle("VerifyCode".localized, for: .normal)

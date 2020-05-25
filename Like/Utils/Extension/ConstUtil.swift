@@ -90,6 +90,67 @@ class SLUtil {
         let hud = MBProgressHUD.forView(view)
         hud?.hide(animated: true)
     }
+    
+    
+    class func showTipView(tip: String) {
+        guard let window = UIApplication.shared.keyWindow else {return}
+    
+        let tipView: UIView = {
+            let view = UIView()
+            view.backgroundColor = .init(hex: 0xE64340, alpha: 0.8)
+            let st = UIApplication.shared.statusBarFrame.size.height
+            view.frame = CGRect(x: 16, y: st, width: ScreenWidth-32, height: 0)
+            view.layer.cornerRadius = 4
+            view.clipsToBounds = true
+            return view
+        }()
+        
+        let tipLabel: UILabel = {
+            let label = UILabel()
+            label.font = .systemFont(ofSize: 16)
+            label.textColor = .white
+            label.textAlignment = .center
+            return label
+        }()
+        
+        window.addSubview(tipView)
+        tipView.addSubview(tipLabel)
+        tipLabel.snp.makeConstraints { (make) in
+            make.left.right.equalToSuperview()
+            make.top.bottom.equalToSuperview()
+        }
+        
+        tipLabel.text = tip
+        
+        
+        let st = UIApplication.shared.statusBarFrame.size.height + 6
+//        let sourceR = CGRect(x: ScreenWidth*0.5, y: st, width: 0, height: 0)
+        let sourceR = CGRect(x: 16, y: st, width: ScreenWidth-32, height: 0)
+        tipView.frame = sourceR
+        
+        let frame = CGRect(x: 16, y: st, width: ScreenWidth-32, height: 48)
+        
+        
+        UIView.animate(withDuration: 0.26, delay: 0, options: .curveEaseOut, animations: {
+            tipView.frame = frame
+            tipLabel.alpha = 1
+        }) { (finished) in
+            if finished {
+                DispatchQueue.main.asyncAfter(wallDeadline: DispatchWallTime.now()+1) {
+                UIView.animate(withDuration: 0.16, delay: 0, options: .curveEaseIn, animations: {
+                    tipView.frame = sourceR
+                    tipLabel.alpha = 0
+                }) { (finished) in
+                    if finished {
+                        tipView.removeFromSuperview()
+                    }
+                }
+                }
+            }
+        }
+    }
+    
+    
 }
 
 

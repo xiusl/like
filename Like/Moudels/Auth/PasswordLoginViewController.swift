@@ -37,7 +37,8 @@ class PasswordLoginViewController: BaseViewController {
     
     lazy var phoneView: AuthInputView = {
         let phoneView: AuthInputView = AuthInputView()
-        phoneView.frame = CGRect(x: 0, y: 220-40, width: ScreenWidth, height: 60)
+        let t = TopSafeHeight+20+64+16
+        phoneView.frame = CGRect(x: 0, y: t, width: ScreenWidth, height: 60)
         phoneView.type = .phoneEmail
         phoneView.setupPlaceHolder(text: "LoginPhonePlaceholder".localized)
         phoneView.delegate = self
@@ -47,7 +48,8 @@ class PasswordLoginViewController: BaseViewController {
 
     lazy var passwdView: AuthInputView = {
         let passwdView: AuthInputView = AuthInputView()
-        passwdView.frame = CGRect(x: 0, y: 288-40, width: ScreenWidth, height: 60)
+        let t = TopSafeHeight+20+64+16+60
+        passwdView.frame = CGRect(x: 0, y: t, width: ScreenWidth, height: 60)
         passwdView.type = .password
         passwdView.setupPlaceHolder(text: "LoginPwdPlaceholder".localized)
         passwdView.delegate = self
@@ -57,7 +59,8 @@ class PasswordLoginViewController: BaseViewController {
 
     lazy var confirmButton: UIButton = {
         let confirmButton: UIButton = UIButton()
-        confirmButton.frame = CGRect(x: 24, y: 380-40, width: ScreenWidth-48, height: 46)
+        let t = TopSafeHeight+20+64+16+60+55+50
+        confirmButton.frame = CGRect(x: 24, y: t, width: ScreenWidth-48, height: 46)
         confirmButton.setTitle("LoginButtonTitle".localized, for: .normal)
         confirmButton.setTitleColor(.white, for: .normal)
         confirmButton.titleLabel?.font = UIFont.systemFontMedium(ofSize: 16)
@@ -77,7 +80,8 @@ class PasswordLoginViewController: BaseViewController {
         loginSMSButton.titleLabel?.font = UIFont.systemFont(ofSize: 12)
         loginSMSButton.titleLabel?.sizeToFit()
         let width = (loginSMSButton.titleLabel?.ex_w ?? 0)+4
-        loginSMSButton.frame = CGRect(x: ScreenWidth-width-24, y: 426-40, width: width, height: 46)
+        let t = TopSafeHeight+20+64+16+60+55
+        loginSMSButton.frame = CGRect(x: ScreenWidth-width-24, y: t, width: width, height: 46)
         loginSMSButton.contentHorizontalAlignment = .right
         loginSMSButton.addTarget(self, action: #selector(loginSMSButtonClick), for: .touchUpInside)
         return loginSMSButton
@@ -126,7 +130,8 @@ extension PasswordLoginViewController: AuthInputViewDelegate {
             self.passwdView.textField.text?.count ?? 0 > 0
     }
     
-    @objc func confirmButtonClick() {
+    @objc
+    private func confirmButtonClick() {
         var phone = self.phoneView.textField.text ?? ""
         let whitespace = NSCharacterSet.whitespacesAndNewlines
         phone = phone.trimmingCharacters(in: whitespace)
@@ -157,7 +162,7 @@ extension PasswordLoginViewController: AuthInputViewDelegate {
             
         }) { (error) in
             debugPrint(error)
-            SLUtil.showMessage(error)
+            SLUtil.showTipView(tip: error)
             self.confirmButton.endLoading()
         }
     }
