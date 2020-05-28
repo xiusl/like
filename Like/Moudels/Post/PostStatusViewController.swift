@@ -19,8 +19,8 @@ class PostStatusViewController: BaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.title = "发布动态"
-        self.setupViews()
+        title = "发布动态"
+        setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     
@@ -28,7 +28,7 @@ class PostStatusViewController: BaseViewController {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: .plain, target: self, action: #selector(okButtonClick))
         
-        self.loadUploadToken()
+        loadUploadToken()
     }
     
     
@@ -40,7 +40,7 @@ class PostStatusViewController: BaseViewController {
         self.textView.snp.makeConstraints { (make) in
             make.left.equalTo(self.view).offset(16)
             make.right.equalTo(self.view).offset(-16)
-            make.height.equalTo(120)
+            make.height.equalTo(100)
             make.top.equalTo(self.view).offset(16)
         }
         
@@ -70,7 +70,8 @@ class PostStatusViewController: BaseViewController {
             }
         }
     }
-    @objc func keyboardFrameChange(_ noti: Notification) {
+    @objc
+    func keyboardFrameChange(_ noti: Notification) {
         let userInfo = noti.userInfo as! Dictionary<String, Any>
         let keybordRect = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
         let endY = keybordRect.cgRectValue.origin.y
@@ -83,6 +84,7 @@ class PostStatusViewController: BaseViewController {
         let textView = UITextView()
         textView.font = UIFont.systemFont(ofSize: 14)
         textView.textColor = .blackText
+        textView.delegate = self
         return textView
     }()
     
@@ -227,6 +229,36 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
             self.imagesParam.remove(at: index)
         }
         self.setupPhotos(photos: self.selectPhotos)
+        
+    }
+}
+
+extension PostStatusViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 6
+        let dict: Dictionary<NSAttributedString.Key, Any> = [
+            .font: UIFont.systemFont(ofSize: 16),
+            .paragraphStyle: style,
+            .foregroundColor: UIColor.blackText
+        ]
+        let attr = NSAttributedString(string: textView.text, attributes: dict)
+        textView.attributedText = attr
+        
+        let calcSize = textView.sizeThatFits(CGSize(width: ScreenWidth-32, height: CGFloat(MAXFLOAT)))
+
+        
+        let keyboardH: CGFloat = 320
+        let imageH: CGFloat = 80
+        let maxH: CGFloat = ScreenHeight - keyboardH - 64 - imageH
+        let h = min(maxH, max(calcSize.height, 100))
+//        var frame = textView.frame
+//        frame.size.height = min(maxH, max(calcSize.height, 100))
+//        textView.frame = frame
+        
+        textView.snp.updateConstraints { (make) in
+            make.height.equalTo(h)
+        }
         
     }
 }
