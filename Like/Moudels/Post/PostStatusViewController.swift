@@ -11,19 +11,22 @@ import SwiftyJSON
 import MBProgressHUD
 import Photos
 
-class PostStatusViewController: BaseViewController {
 
+class PostStatusViewController: BaseViewController {
     var token: String = ""
     var imagesParam: Array<[String: Any]> = []
+    var selectPhotos: Array<UIImage> = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
         title = "发布动态"
+        view.backgroundColor = .cF2F4F8
         setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-    
+        
         self.textView.becomeFirstResponder()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: .plain, target: self, action: #selector(okButtonClick))
@@ -31,31 +34,131 @@ class PostStatusViewController: BaseViewController {
         loadUploadToken()
     }
     
-    
     private func setupViews() {
-        self.view.addSubview(self.textView)
-        self.view.addSubview(self.photosView)
-        self.view.addSubview(self.uploadButton)
-        //textView.frame = CGRect(x: 16, y: TopSafeHeight+16, width: ScreenWidth-32, height: 120)
-        self.textView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view).offset(16)
-            make.right.equalTo(self.view).offset(-16)
-            make.height.equalTo(100)
-            make.top.equalTo(self.view).offset(16)
+        view.addSubview(contentView)
+        contentView.addSubview(textView)
+        contentView.addSubview(imagesView)
+        imagesView.addSubview(uploadButton)
+        view.addSubview(toolView)
+    }
+    
+    lazy var contentView: UIScrollView = {
+        let contentView = UIScrollView()
+        let h = ScreenHeight - TopSafeHeight - 32
+        contentView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: h)
+        contentView.contentSize = contentView.bounds.size
+        contentView.showsVerticalScrollIndicator = false
+        if #available(iOS 11.0, *) {
+            contentView.contentInsetAdjustmentBehavior = .never
+        } else {
+            // Fallback on earlier versions
         }
+        contentView.alwaysBounceVertical = true
+        return contentView
+    }()
+    
+    lazy var textView: LKTextView = {
+        let textView = LKTextView()
+        textView.frame = CGRect(x: 0, y: 0, width: ScreenWidth, height: 148)
+        textView.delegate = self
+        textView.isScrollEnabled = false
         
-        // uploadButton.frame = CGRect(x: 16, y: TopSafeHeight+136+20, width: 64, height: 64)
-        self.uploadButton.snp.makeConstraints { (make) in
-            make.left.equalTo(self.textView)
-            make.top.equalTo(self.textView.snp.bottom).offset(20)
-            make.size.equalTo((ScreenWidth-32-30) / 4.0)
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 6
+        let dict: Dictionary<NSAttributedString.Key, Any> = [
+            .font: UIFont.systemFont(ofSize: 16),
+            .paragraphStyle: style,
+            .foregroundColor: UIColor.darkText
+        ]
+        textView.typingAttributes = dict
+        textView.tintColor = .theme
+        textView.textContainerInset = UIEdgeInsets(top: 4, left: 8, bottom: 4, right: 8)
+        return textView
+    }()
+    
+    lazy var imagesView: UIImageView = {
+        let view = UIImageView()
+        view.frame = CGRect(x: 12, y: 160, width: 88, height: 88)
+        view.isUserInteractionEnabled = true
+        return view
+    }()
+    
+    var keyboardHeight: CGFloat = 0
+    
+    lazy var toolView: UIView = {
+        let toolView = UIView()
+        toolView.frame = CGRect(x: 0, y: ScreenHeight-TopSafeHeight, width: ScreenWidth, height: 32)
+        toolView.backgroundColor = .clear
+        
+        let btn = UIButton()
+        btn.titleLabel?.font = .systemFont(ofSize: 16)
+        btn.frame = CGRect(x: ScreenWidth-64, y: 0, width: 64, height: 32)
+        btn.setTitle("完成", for: .normal)
+        btn.setTitleColor(.theme, for: .normal)
+        btn.addTarget(self, action: #selector(toolViewTap), for: .touchUpInside)
+        toolView.addSubview(btn)
+        
+        
+        return toolView
+    }()
+    
+    lazy var uploadButton: UIButton = {
+        let uploadButton = UIButton()
+        uploadButton.setBackgroundImage(UIImage(named: "photo_upload"), for: .normal)
+        uploadButton.addTarget(self, action: #selector(uploadButtonClick), for: .touchUpInside)
+        uploadButton.frame = CGRect(x: 0, y: 0, width: 88, height: 88)
+        return uploadButton
+    }()
+    
+    
+}
+// MARK: - Evenet
+extension PostStatusViewController {
+    @objc
+    private func okButtonClick() {
+        let request = StatusApiRequest.postStatus(content: self.textView.text, images: self.imagesParam)
+        ApiManager.shared.request(request: request, success: { (result) in
+            debugPrint(result)
+            SLUtil.showMessage("发布成功")
+            self.navigationController?.popViewController(animated: true)
+        }) { (error) in
+            SLUtil.showTipView(tip: error)
         }
-        // photosView.frame = CGRect(x: 16, y: TopSafeHeight+136+20, width: ScreenWidth-32, height: 64)
-        self.photosView.snp.makeConstraints { (make) in
-            make.left.equalTo(self.view).offset(16)
-            make.top.equalTo(self.textView.snp.bottom).offset(20)
-            make.right.equalTo(self.view).offset(-16)
-            make.height.equalTo((ScreenWidth-32-30) / 4.0)
+    }
+    @objc
+    func uploadButtonClick() {
+        let vc = LKPhotoPickerViewController(originalPhoto: true, maxCount: 1)
+        vc.modalPresentationStyle = .fullScreen
+        vc.lk_delegate = self
+        self.present(vc, animated: true, completion: nil)
+    }
+    
+    @objc
+    func toolViewTap() {
+        self.view.endEditing(false)
+        contentView.contentInset = .zero
+    }
+    
+    @objc
+    func keyboardFrameChange(_ noti: Notification) {
+        let userInfo = noti.userInfo as! Dictionary<String, Any>
+        let keybordRect = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
+        let endY = keybordRect.cgRectValue.origin.y
+        keyboardHeight = keybordRect.cgRectValue.size.height+32
+        
+        var f = toolView.frame
+        f.origin.y = endY - 32 - TopSafeHeight
+        toolView.frame = f
+        toolView.isHidden = endY >= ScreenHeight
+        
+        
+        let blankH = ScreenHeight - keyboardHeight - TopSafeHeight
+        let h = textView.bounds.size.height + 100
+        if h > blankH {
+            let inset = min(keyboardHeight-32, h - blankH)
+            contentView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: inset, right: 0)
+            
+            contentView.setContentOffset(CGPoint(x: 0, y:h - blankH), animated: false)
         }
     }
     
@@ -70,80 +173,48 @@ class PostStatusViewController: BaseViewController {
             }
         }
     }
-    @objc
-    func keyboardFrameChange(_ noti: Notification) {
-        let userInfo = noti.userInfo as! Dictionary<String, Any>
-        let keybordRect = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as! NSValue
-        let endY = keybordRect.cgRectValue.origin.y
-        if endY == ScreenHeight {
-        } else {
-        }
-    }
-    
-    lazy var textView: UITextView = {
-        let textView = UITextView()
-        textView.font = UIFont.systemFont(ofSize: 14)
-        textView.textColor = .blackText
-        textView.delegate = self
-        return textView
-    }()
-    
-    lazy var okButton: UIButton = {
-        let okButton = UIButton()
-        okButton.frame = CGRect(x: (ScreenWidth-200)/2.0, y: TopSafeHeight+150, width: 200, height: 32)
-        okButton.setTitle("发布", for: .normal)
-        okButton.setTitleColor(.white, for: .normal)
-        okButton.titleLabel?.font = UIFont.systemFontMedium(ofSize: 16)
-        okButton.layer.cornerRadius = 4
-        okButton.clipsToBounds = true
-        okButton.backgroundColor = .theme
-        okButton.addTarget(self, action: #selector(okButtonClick), for: .touchUpInside)
-        return okButton
-    }()
-    
-    @objc func okButtonClick() {
-        let request = StatusApiRequest.postStatus(content: self.textView.text, images: self.imagesParam)
-        ApiManager.shared.request(request: request, success: { (result) in
-            debugPrint(result)
-            SLUtil.showMessage("发布成功")
-            self.navigationController?.popViewController(animated: true)
-        }) { (error) in
-            debugPrint(error)
-        }
-    }
-    
-    lazy var uploadButton: UIButton = {
-        let uploadButton = UIButton()
-        uploadButton.setBackgroundImage(UIImage(named: "photo_upload"), for: .normal)
-        uploadButton.addTarget(self, action: #selector(uploadButtonClick), for: .touchUpInside)
-        return uploadButton
-    }()
-    
-    @objc func uploadButtonClick() {
-        let vc = LKPhotoPickerViewController(originalPhoto: true, maxCount: 1)
-        vc.modalPresentationStyle = .fullScreen
-        vc.lk_delegate = self
-        self.present(vc, animated: true, completion: nil)
-    }
-    
-    lazy var photosView: UIView = {
-       let photosView = UIView()
-        
-        return photosView
-    }()
-    
-    var selectPhotos: Array<UIImage> = []
 }
-extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
-    func photoPickerViewController(controller: LKPhotoPickerViewController, cropImage: UIImage) {
+
+// MARK: - TextViewDelegate
+extension PostStatusViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        let calcSize = textView.sizeThatFits(CGSize(width: ScreenWidth, height: CGFloat(MAXFLOAT)))
+        
+        
+        var h = max(calcSize.height, 148)
+        
+        var frame = textView.frame
+        frame.size.height = h
+        textView.frame = frame
+        
+        var imageFrame = imagesView.frame
+        imageFrame.origin.y = h + 12
+        imagesView.frame = imageFrame
+        
+        h += 100
+        
+        if h > contentView.bounds.size.height {
+            contentView.contentSize = CGSize(width: ScreenWidth, height: h)
+        }
+        
+        let blankH = ScreenHeight - keyboardHeight - TopSafeHeight
+        if h > blankH {
+            let inset = min(keyboardHeight-32, h - blankH)
+            contentView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: inset, right: 0)
+            
+            contentView.setContentOffset(CGPoint(x: 0, y:h - blankH), animated: false)
+        }
         
     }
-    
+}
+
+// MARK: - PhotoPicker
+extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
     func photoPickerViewController(controller: LKPhotoPickerViewController, selectPhotos: Array<LKAsset>) {
         
     }
+    
     func photoPickerViewController(controller: LKPhotoPickerViewController, selectAssets: Array<LKAsset>, selectPhotos: Array<UIImage>) {
-        print(selectPhotos)
         self.setupPhotos(photos: selectPhotos)
         self.selectPhotos = selectPhotos
         
@@ -153,8 +224,8 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
         }
         
         for i in 0..<selectPhotos.count {
-            let imv = self.photosView.subviews[i] as! PostPhotoView
-        
+            let imv = imagesView.subviews[i] as! PostPhotoView
+            
             let p = selectAssets[i]
             
             guard let asset = p.asset else {
@@ -181,16 +252,19 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
                 }
             }
         }
+    }
+    
+    func photoPickerViewController(controller: LKPhotoPickerViewController, cropImage: UIImage) {
         
     }
     
-    func setupPhotos(photos: Array<UIImage>) {
+    private func setupPhotos(photos: Array<UIImage>) {
         
-        if self.photosView.subviews.count > 0 {
-            self.photosView.subviews.forEach({$0.removeFromSuperview()})
+        if imagesView.subviews.count > 0 {
+            imagesView.subviews.forEach({$0.removeFromSuperview()})
         }
         
-        let w: CGFloat = (ScreenWidth-32-30) / 4.0
+        let w: CGFloat = 88
         let m: CGFloat = 10
         var l: CGFloat = 0
         var t: CGFloat = 0
@@ -205,7 +279,7 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
             }
             v.frame = CGRect(x: l, y: t, width: w, height: w)
             v.setupImage(image)
-            self.photosView.addSubview(v)
+            imagesView.addSubview(v)
             
             let idx = i
             v.deleteButtonHandle = { [weak self] in
@@ -220,9 +294,9 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
             t += (w+10)
         }
         self.uploadButton.isHidden = photos.count > 0
-//        self.uploadButton.frame = CGRect(x: l+16, y: TopSafeHeight+136+20+t, width: w, height: w)
-        
+        imagesView.addSubview(uploadButton)
     }
+    
     private func deletePhoto(_ index: Int) {
         self.selectPhotos.remove(at: index)
         if self.imagesParam.count > index {
@@ -233,32 +307,13 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
     }
 }
 
-extension PostStatusViewController: UITextViewDelegate {
-    func textViewDidChange(_ textView: UITextView) {
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 6
-        let dict: Dictionary<NSAttributedString.Key, Any> = [
-            .font: UIFont.systemFont(ofSize: 16),
-            .paragraphStyle: style,
-            .foregroundColor: UIColor.blackText
-        ]
-        let attr = NSAttributedString(string: textView.text, attributes: dict)
-        textView.attributedText = attr
-        
-        let calcSize = textView.sizeThatFits(CGSize(width: ScreenWidth-32, height: CGFloat(MAXFLOAT)))
-
-        
-        let keyboardH: CGFloat = 320
-        let imageH: CGFloat = 80
-        let maxH: CGFloat = ScreenHeight - keyboardH - 64 - imageH
-        let h = min(maxH, max(calcSize.height, 100))
-//        var frame = textView.frame
-//        frame.size.height = min(maxH, max(calcSize.height, 100))
-//        textView.frame = frame
-        
-        textView.snp.updateConstraints { (make) in
-            make.height.equalTo(h)
-        }
-        
+// MARK: - Custom TextView
+class LKTextView: UITextView {
+    override func caretRect(for position: UITextPosition) -> CGRect {
+        var originalRect = super.caretRect(for: position)
+        originalRect.origin.y += 1
+        originalRect.size.height = self.font?.lineHeight ?? 16 + 2
+        originalRect.size.width = 2;
+        return originalRect
     }
 }
