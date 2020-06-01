@@ -237,7 +237,7 @@ class LKStatusShareView: UIView {
             
             let message = WXMediaMessage()
             message.title = "哩嗑"
-            message.description = "总有点儿话想说~"
+            message.description = "自娱&自乐"
             message.mediaObject = imageObj
             shareMessage(message,
                          scene: Int(WXSceneSession.rawValue))
@@ -250,7 +250,7 @@ class LKStatusShareView: UIView {
             
             let message = WXMediaMessage()
             message.title = "哩嗑"
-            message.description = "总有点儿话想说~"
+            message.description = "自娱&自乐"
             message.mediaObject = imageObj
             shareMessage(message,
                          scene: Int(WXSceneTimeline.rawValue))
