@@ -226,17 +226,13 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
         for i in 0..<selectPhotos.count {
             let imv = imagesView.subviews[i] as! PostPhotoView
             
-            let p = selectAssets[i]
-            
-            guard let asset = p.asset else {
-                continue
-            }
+            let image = selectPhotos[i]
             imv.startUpload()
-            // 上传文件的原始数据，不要压缩~~
-            asset.requestContentEditingInput(with: nil) { (input, info) in
-                let url = input?.fullSizeImageURL
-                let d = try? Data(contentsOf: url!)
-                
+            // 上传文件的原始数据，不要压缩~~ 有点蠢！！
+//            asset.requestContentEditingInput(with: nil) { (input, info) in
+//                let url = input?.fullSizeImageURL
+//                let d = try? Data(contentsOf: url!)
+            let d = image.pngData()
                 ApiManager.shared.uploadFile(d!, token: self.token, success: { (resp) in
                     let j = JSON(resp)
                     let d = [
@@ -250,7 +246,7 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
                 }) { (error) in
                     imv.finshedUpload()
                 }
-            }
+//            }
         }
     }
     
