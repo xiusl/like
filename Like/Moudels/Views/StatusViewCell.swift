@@ -78,6 +78,8 @@ extension StatusViewCell: StatusViewCellData, StatusUserViewData {
             make.width.equalTo(w/scale)
             make.height.equalTo(h/scale)
         }
+        
+        photoUrl = image.url
     }
 }
 
@@ -118,6 +120,7 @@ class StatusViewCell: UITableViewCell {
         super.init(coder: aDecoder)
     }
     
+    private var photoUrl: String?
     func setupViews() {
         self.contentView.addSubview(self.userView)
         self.contentView.addSubview(self.contentLabel)
@@ -171,6 +174,9 @@ class StatusViewCell: UITableViewCell {
             guard let `self` = self else { return }
             self.delegate?.statusCell(self, moreClick: nil)
         }
+        
+        let tapGest = UITapGestureRecognizer(target: self, action: #selector(photoViewTap))
+        self.photoView.addGestureRecognizer(tapGest)
     }
     
     lazy var userView: StatusUserView = {
@@ -189,6 +195,7 @@ class StatusViewCell: UITableViewCell {
     
     lazy var photoView: UIImageView = {
         let photoView = UIImageView()
+        photoView.isUserInteractionEnabled = true
         return photoView
     }()
     
@@ -233,5 +240,17 @@ class StatusViewCell: UITableViewCell {
     @objc
     private func shareButtonAction() {
         self.delegate?.statusCell(self, shareClick: nil)
+    }
+    
+    @objc
+    private func photoViewTap() {
+        guard let url = photoUrl else {
+            return
+        }
+        
+        let model = LKPhotoBrowserModel(url: url, srcView: photoView, srcImage: UIImage())
+        let v = LKPhotoBrowser()
+        v.setup([model])
+        v.show()
     }
 }
