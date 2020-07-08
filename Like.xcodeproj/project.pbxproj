@@ -14,6 +14,7 @@
 		DE424774244EE5C1009A0FA6 /* StatusListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE424773244EE5C1009A0FA6 /* StatusListViewController.swift */; };
 		DE424776244EF612009A0FA6 /* UserInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE424775244EF612009A0FA6 /* UserInfoViewController.swift */; };
 		DE6BEB6F247BA58F00AF7EE1 /* LKStatusShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6BEB6E247BA58F00AF7EE1 /* LKStatusShareView.swift */; };
+		DE6BEC0F247FBE8400AF7EE1 /* LKPhotoBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE6BEC0E247FBE8400AF7EE1 /* LKPhotoBrowser.swift */; };
 		DE91B7B02452ACA6000FF356 /* FeedbackPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7AF2452ACA6000FF356 /* FeedbackPostViewController.swift */; };
 		DE91B7B22452CC6B000FF356 /* FeedbackListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B12452CC6B000FF356 /* FeedbackListViewController.swift */; };
 		DE91B7B42452CDC7000FF356 /* Feedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91B7B32452CDC7000FF356 /* Feedback.swift */; };
@@ -109,6 +110,7 @@
 		DE424773244EE5C1009A0FA6 /* StatusListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusListViewController.swift; sourceTree = "<group>"; };
 		DE424775244EF612009A0FA6 /* UserInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoViewController.swift; sourceTree = "<group>"; };
 		DE6BEB6E247BA58F00AF7EE1 /* LKStatusShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKStatusShareView.swift; sourceTree = "<group>"; };
+		DE6BEC0E247FBE8400AF7EE1 /* LKPhotoBrowser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoBrowser.swift; sourceTree = "<group>"; };
 		DE91B7AF2452ACA6000FF356 /* FeedbackPostViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackPostViewController.swift; sourceTree = "<group>"; };
 		DE91B7B12452CC6B000FF356 /* FeedbackListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedbackListViewController.swift; sourceTree = "<group>"; };
 		DE91B7B32452CDC7000FF356 /* Feedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Feedback.swift; sourceTree = "<group>"; };
@@ -412,6 +414,7 @@
 				FF4470A12387C2DF002ED72D /* PhotoPicker */,
 				FF1C1F582340A44000D635A6 /* RefreshControl */,
 				FF4135E2235070DD00B27792 /* Extension */,
+				DE6BEC0E247FBE8400AF7EE1 /* LKPhotoBrowser.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -772,6 +775,7 @@
 				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,
 				FF4470A32387C309002ED72D /* LKPhotoPickerViewController.swift in Sources */,
 				FF4D27B12445F443000CE644 /* Status.swift in Sources */,
+				DE6BEC0F247FBE8400AF7EE1 /* LKPhotoBrowser.swift in Sources */,
 				FF1C1F5E2341978800D635A6 /* UIViewFrameEx.swift in Sources */,
 				DE96A6F5246CDBBA00F753FE /* PasswordChangeViewController.swift in Sources */,
 				FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */,
@@ -949,7 +953,7 @@
 				CODE_SIGN_ENTITLEMENTS = Like/ll.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3S73583C2C;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Like/Resources/Info.plist;
@@ -985,7 +989,7 @@
 				CODE_SIGN_ENTITLEMENTS = Like/ll.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 3S73583C2C;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = Like/Resources/Info.plist;
