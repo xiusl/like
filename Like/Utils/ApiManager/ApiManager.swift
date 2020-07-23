@@ -176,12 +176,12 @@ extension ApiManager {
     fileprivate func handleResponse(response: AFDataResponse<Any>,
                                     success: RequestSuccessBlock,
                                     failed: RequestFailedBlock) {
-        debugPrint(response)
+//        debugPrint(response)
         switch response.result {
         case .success(let data):
             let d = data as! [String: Any]
             success(d["data"] as Any)
-            print(data)
+//            print(data)
         case .failure(let error):
             do {
                 let json = try JSONSerialization.jsonObject(with: response.data ?? Data(), options: .mutableLeaves)

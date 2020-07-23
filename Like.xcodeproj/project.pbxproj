@@ -34,6 +34,7 @@
 		DEDC0AE524C96FBF00B7956F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0AE424C96FBF00B7956F /* ChatViewController.swift */; };
 		DEDC0AE724C9862C00B7956F /* ChatMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0AE624C9862C00B7956F /* ChatMessageViewCell.swift */; };
 		ECEFF0786D051A6000061807 /* Pods_Like.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */; };
+		FF02A3A424C9E1E2008D7389 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF02A3A324C9E1E2008D7389 /* ConversationListCell.swift */; };
 		FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */; };
 		FF101C5A2354044D00B78D41 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C592354044D00B78D41 /* User.swift */; };
 		FF101C5C235408E000B78D41 /* MeTabTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */; };
@@ -136,6 +137,7 @@
 		DEDC0ADF24C9532F00B7956F /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		DEDC0AE424C96FBF00B7956F /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		DEDC0AE624C9862C00B7956F /* ChatMessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageViewCell.swift; sourceTree = "<group>"; };
+		FF02A3A324C9E1E2008D7389 /* ConversationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoPreviewViewCell.swift; sourceTree = "<group>"; };
 		FF101C592354044D00B78D41 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTabTableViewCell.swift; sourceTree = "<group>"; };
@@ -270,6 +272,7 @@
 				DEDC0AD824C941F600B7956F /* MessageTableViewController.swift */,
 				DEDC0AE424C96FBF00B7956F /* ChatViewController.swift */,
 				DEDC0AE624C9862C00B7956F /* ChatMessageViewCell.swift */,
+				FF02A3A324C9E1E2008D7389 /* ConversationListCell.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -830,6 +833,7 @@
 				DEDC0AE224C9532F00B7956F /* LocationManager.swift in Sources */,
 				FF1C1F5E2341978800D635A6 /* UIViewFrameEx.swift in Sources */,
 				DE96A6F5246CDBBA00F753FE /* PasswordChangeViewController.swift in Sources */,
+				FF02A3A424C9E1E2008D7389 /* ConversationListCell.swift in Sources */,
 				FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */,
 				FF11905C2351C354004E87E8 /* RefreshNormalHeader.swift in Sources */,
 				FF977F5A247C08FA006D7396 /* UserDescEditViewController.swift in Sources */,

@@ -243,6 +243,13 @@ extension AppDelegate {
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        
+        let str = String(data: deviceToken, encoding: .utf8)
+        print(str ?? "")
+        let token = deviceToken.reduce("", {$0 + String(format: "%02x", $1)})
+        
+        print(token)
+        
         Client.installationOperatingQueue.async {
             let installation = LCApplication.default.currentInstallation
             installation.set(deviceToken: deviceToken, apnsTeamId: "3S73583C2C")
@@ -259,10 +266,12 @@ extension AppDelegate {
     
     func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         // handle notification
+        print("收到吐送送神农氏")
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         // handle notification
+        print("收到吐送送神农氏")
     }
 }
 

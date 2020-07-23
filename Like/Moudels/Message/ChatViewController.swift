@@ -9,7 +9,7 @@
 import UIKit
 import LeanCloud
 
-class ChatViewController: UIViewController {
+class ChatViewController: BaseViewController {
     public var userId: String = ""
     
     
@@ -69,6 +69,7 @@ class ChatViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.keyboardDismissMode = .onDrag
         return tableView
     }()
     
@@ -99,15 +100,22 @@ class ChatViewController: UIViewController {
 
 extension ChatViewController {
     func send(message: IMMessage) {
-        let pushData: [String: Any] = [
+        
+        var pushData: [String: Any] = [
             "alert": "您有一条未读的消息",
             "category": "消息",
             "badge": 1,
             "sound": "message.mp3",
             "custom-key": ""
         ]
+        switch message {
+        case let textMessage as IMTextMessage:
+            pushData["alert"] = textMessage.text ?? "您有一条未读的消息"
+        default:
+            fatalError()
+        }
         do {
-            try self.conversation.send(message: message, options: [.isAutoDeliveringWhenOffline], pushData: pushData, completion: { [weak self] (result) in
+            try self.conversation.send(message: message, pushData: pushData, completion: { [weak self] (result) in
                 Client.specificAssertion
                 guard let self = self else {
                     return

@@ -67,6 +67,7 @@ class UserTableHeaderView: UIView {
         } else {
             self.followButton.isSelected = followed
         }
+        self.messageButton.isHidden = isCurrUser
     }
     
     private lazy var avatarView: UIImageView = {
