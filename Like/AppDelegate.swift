@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import LeanCloud
+import SwiftyJSON
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
@@ -37,6 +39,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 //        } catch let error as Error? {
 //            print(error ?? "")
 //        }
+        LCApplication.logLevel = .all
+        do {
+            try LCApplication.default.set(
+                id: "gq4MUUJhLQ3rAy3jhcVbl5H3-gzGzoHsz",
+                key: "Kr4uOYW18Xz2RPtkCFsehKhB",
+                serverURL: "https://like-im.sleen.top")
+        } catch {
+            print(error)
+        }
+        
+        // init
+        _ = LCApplication.default.currentInstallation
+        _ = Client.delegator
+        
+        registerNoti()
+        
         
         return true
     }
@@ -46,8 +64,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
     func reCheckUserAuth() {
         let request = SettingApiRequest.ping(())
-        ApiManager.shared.request(request: request, success: { (result) in
-            
+        ApiManager.shared.request(request: request, success: { [weak self ] (result) in
+            let data = JSON(result)
+            print(data)
+            let uid = data["user_id"].stringValue
+            Configuration.UserOption.clientID.set(value: uid)
+            self?.clientInitializing(isReopen: true)
         }) { (error) in
             if error == "Please login" {
                 User.delete()
@@ -102,6 +124,145 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
             let msgResp = resp as! SendMessageToWXResp
             debugPrint(msgResp.errStr)
         }
+    }
+    
+    func registerNoti() {
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            switch settings.authorizationStatus {
+            case .authorized:
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+            case .notDetermined:
+                UNUserNotificationCenter.current().requestAuthorization(options: [.badge, .alert, .sound]) { (granted, error) in
+                    if granted {
+                        DispatchQueue.main.async {
+                            UIApplication.shared.registerForRemoteNotifications()
+                        }
+                    }
+                }
+            default:
+                break
+            }
+        }
+
+    }
+}
+
+extension AppDelegate {
+    func clientInitializing(isReopen: Bool) {
+        do {
+            
+            let clientID: String = Configuration.UserOption.clientID.stringValue ?? ""
+            let tag: String? = (Configuration.UserOption.isTagEnabled.boolValue ? "mobile" : nil)
+            let options: IMClient.Options = Configuration.UserOption.isLocalStorageEnabled.boolValue
+                ? .default
+                : { var dOptions = IMClient.Options.default; dOptions.remove(.usingLocalStorage); return dOptions }()
+            
+            let client = try IMClient(
+                ID: clientID,
+                tag: tag,
+                options: options,
+                delegate: Client.delegator,
+                eventQueue: Client.queue
+            )
+            
+            if options.contains(.usingLocalStorage) {
+                try client.prepareLocalStorage { (result) in
+                    Client.specificAssertion
+                    switch result {
+                    case .success:
+                        do {
+                            try client.getAndLoadStoredConversations(completion: { (result) in
+                                Client.specificAssertion
+                                switch result {
+                                case .success(value: let storedConversations):
+                                    var conversations: [IMConversation] = []
+                                    var serviceConversations: [IMServiceConversation] = []
+                                    for item in storedConversations {
+                                        if type(of: item) == IMConversation.self {
+                                            conversations.append(item)
+                                        } else if let serviceItem = item as? IMServiceConversation {
+                                            serviceConversations.append(serviceItem)
+                                        }
+                                    }
+                                    self.open(
+                                        client: client,
+                                        isReopen: isReopen,
+                                        storedConversations: (conversations.isEmpty ? nil : conversations),
+                                        storedServiceConversations: (serviceConversations.isEmpty ? nil : serviceConversations)
+                                    )
+                                case .failure(error: let error):
+                                    break
+                                }
+                            })
+                        } catch {
+                            
+                        }
+                    case .failure(error: let error):
+                        break
+                    }
+                }
+            } else {
+                self.open(client: client, isReopen: isReopen)
+            }
+        } catch {
+        }
+    }
+    
+    func open(
+        client: IMClient,
+        isReopen: Bool,
+        storedConversations: [IMConversation]? = nil,
+        storedServiceConversations: [IMServiceConversation]? = nil)
+    {
+        let options: IMClient.SessionOpenOptions
+        if let _ = client.tag {
+            options = Configuration.UserOption.isAutoOpenEnabled.boolValue ? [] : [.forced]
+        } else {
+            options = .default
+        }
+        client.open(options: options, completion: { (result) in
+            Client.specificAssertion
+            
+            switch result {
+            case .success:
+                mainQueueExecuting {
+                    Client.current = client
+                    Client.storedConversations = storedConversations
+                    Client.storedServiceConversations = storedServiceConversations
+                }
+                break
+            case .failure(error: let error):
+                if error.code == 4111 {
+                    Client.delegator.client(client, event: .sessionDidClose(error: error))
+                }
+            }
+        })
+        
+    }
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Client.installationOperatingQueue.async {
+            let installation = LCApplication.default.currentInstallation
+            installation.set(deviceToken: deviceToken, apnsTeamId: "3S73583C2C")
+            if let error = installation.save().error {
+                print(error)
+            }
+            
+        }
+    }
+    
+    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
+        print(error)
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        // handle notification
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        // handle notification
     }
 }
 

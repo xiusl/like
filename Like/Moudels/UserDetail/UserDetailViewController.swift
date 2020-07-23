@@ -55,6 +55,10 @@ class UserDetailViewController: BaseViewController {
                 self.followCurrentUser()
             }
         }
+        headerView.messgaeActionHandle = {[weak self] in
+            guard let `self` = self else { return }
+            self.makeChat()
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(loadData), name: NSNotification.Name("UserInfoEdited_noti"), object: nil)
         
@@ -396,5 +400,45 @@ extension UserDetailViewController: StatusMoreViewDelegate {
             SLUtil.hideLoading(from: self.view)
             SLUtil.showMessage(error)
         }
+    }
+    
+    
+    private func makeChat() {
+        
+        do {
+            try Client.current.createConversation(clientIDs: [self.userId], name: self.user?.name ?? "User", completion: { (result) in
+                switch result {
+                case .success(value: let conversation):
+                    mainQueueExecuting {
+                        let vc = ChatViewController()
+                        vc.conversation = conversation
+                        self.navigationController?.pushViewController(vc, animated: true)
+                    }
+                case .failure(error: let error):
+                    break
+                }
+            })
+        } catch {
+        }
+        
+        
+        /*
+         defer {
+             tableView.deselectRow(at: indexPath, animated: true)
+         }
+         
+         let name = self.commonNames[indexPath.row]
+         if self.selectedSet.contains(name) {
+             self.selectedSet.remove(name)
+         } else {
+             self.selectedSet.insert(name)
+         }
+         tableView.reloadData()
+         
+         if !self.isMultipleSelectionEnabled {
+             self.clientIDSelectedClosure?(self.selectedSet)
+             self.navigationController?.popViewController(animated: true)
+         }
+         */
     }
 }

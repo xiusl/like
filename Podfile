@@ -14,4 +14,6 @@ target 'Like' do
   pod 'MJRefresh'
   pod 'MBProgressHUD'
 
+  pod 'LeanCloud'
+
 end

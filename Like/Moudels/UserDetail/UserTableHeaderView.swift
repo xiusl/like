@@ -11,6 +11,7 @@ import Kingfisher
 class UserTableHeaderView: UIView {
     
     var followActionHandle: (() -> ())?
+    var messgaeActionHandle: (() -> ())?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -19,6 +20,7 @@ class UserTableHeaderView: UIView {
         addSubview(nameLabel)
         addSubview(descLabel)
         addSubview(followButton)
+        addSubview(messageButton)
         
         let v = UIImageView()
         v.backgroundColor = UIColor(hex: 0xF8F8F8)
@@ -30,6 +32,10 @@ class UserTableHeaderView: UIView {
         
         self.followButton.snp.makeConstraints { (make) in
             make.right.equalTo(self).offset(-16)
+            make.centerY.equalTo(self.nameLabel)
+        }
+        messageButton.snp.makeConstraints { (make) in
+            make.right.equalTo(self.followButton.snp.left).offset(-8)
             make.centerY.equalTo(self.nameLabel)
         }
     }
@@ -90,7 +96,7 @@ class UserTableHeaderView: UIView {
     
     private lazy var followButton: UIButton = {
         let button = UIButton()
-        button.titleLabel?.font = .systemFont(ofSize: 16)
+        button.titleLabel?.font = .systemFont(ofSize: 14)
         button.setTitle("关注", for: .normal)
         button.setTitle("已关注", for: .selected)
         button.setTitleColor(.theme, for: .normal)
@@ -98,7 +104,22 @@ class UserTableHeaderView: UIView {
         return button
     }()
     
-    @objc private func followButtonAction() {
+    private lazy var messageButton: UIButton = {
+        let button = UIButton()
+        button.titleLabel?.font = .systemFont(ofSize: 14)
+        button.setTitle("私信", for: .normal)
+        button.setTitleColor(.theme, for: .normal)
+        button.addTarget(self, action: #selector(messageButtonAction), for: .touchUpInside)
+        return button
+    }()
+    
+    @objc
+    private func followButtonAction() {
         self.followActionHandle?()
+    }
+    
+    @objc
+    private func messageButtonAction() {
+        self.messgaeActionHandle?()
     }
 }

@@ -25,6 +25,12 @@ class MainTabBarController: UITabBarController {
                           imageName: "tabbar_discover_nor",
                           selectedImageName: "tabbar_discover_sel")
         
+        let msgVc = MessageTableViewController()
+        self.setupChildVc(vc: msgVc,
+                          title: "消息",
+                          imageName: "tabbar_msg_nor",
+                          selectedImageName: "tabbar_msg_sel")
+        
         let meVc = MeTabViewController()
         self.setupChildVc(vc: meVc,
                           title: "我的",

@@ -26,6 +26,13 @@
 		DE96A6F9246D27EB00F753FE /* LKReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE96A6F8246D27EB00F753FE /* LKReportView.swift */; };
 		DED190A82463E41300F5FE1A /* StatusMoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED190A72463E41300F5FE1A /* StatusMoreView.swift */; };
 		DED190B72466409800F5FE1A /* LKPhotoCropView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED190B62466409800F5FE1A /* LKPhotoCropView.swift */; };
+		DEDC0AD924C941F600B7956F /* MessageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0AD824C941F600B7956F /* MessageTableViewController.swift */; };
+		DEDC0AE024C9532F00B7956F /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0ADC24C9532F00B7956F /* Extension.swift */; };
+		DEDC0AE124C9532F00B7956F /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0ADD24C9532F00B7956F /* Client.swift */; };
+		DEDC0AE224C9532F00B7956F /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0ADE24C9532F00B7956F /* LocationManager.swift */; };
+		DEDC0AE324C9532F00B7956F /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0ADF24C9532F00B7956F /* Configuration.swift */; };
+		DEDC0AE524C96FBF00B7956F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0AE424C96FBF00B7956F /* ChatViewController.swift */; };
+		DEDC0AE724C9862C00B7956F /* ChatMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0AE624C9862C00B7956F /* ChatMessageViewCell.swift */; };
 		ECEFF0786D051A6000061807 /* Pods_Like.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */; };
 		FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */; };
 		FF101C5A2354044D00B78D41 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF101C592354044D00B78D41 /* User.swift */; };
@@ -122,6 +129,13 @@
 		DE96A6F8246D27EB00F753FE /* LKReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKReportView.swift; sourceTree = "<group>"; };
 		DED190A72463E41300F5FE1A /* StatusMoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMoreView.swift; sourceTree = "<group>"; };
 		DED190B62466409800F5FE1A /* LKPhotoCropView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoCropView.swift; sourceTree = "<group>"; };
+		DEDC0AD824C941F600B7956F /* MessageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTableViewController.swift; sourceTree = "<group>"; };
+		DEDC0ADC24C9532F00B7956F /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		DEDC0ADD24C9532F00B7956F /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
+		DEDC0ADE24C9532F00B7956F /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		DEDC0ADF24C9532F00B7956F /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		DEDC0AE424C96FBF00B7956F /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		DEDC0AE624C9862C00B7956F /* ChatMessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageViewCell.swift; sourceTree = "<group>"; };
 		FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoPreviewViewCell.swift; sourceTree = "<group>"; };
 		FF101C592354044D00B78D41 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		FF101C5B235408E000B78D41 /* MeTabTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeTabTableViewCell.swift; sourceTree = "<group>"; };
@@ -250,6 +264,35 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		DEDC0AD724C941D200B7956F /* Message */ = {
+			isa = PBXGroup;
+			children = (
+				DEDC0AD824C941F600B7956F /* MessageTableViewController.swift */,
+				DEDC0AE424C96FBF00B7956F /* ChatViewController.swift */,
+				DEDC0AE624C9862C00B7956F /* ChatMessageViewCell.swift */,
+			);
+			path = Message;
+			sourceTree = "<group>";
+		};
+		DEDC0ADA24C9531A00B7956F /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				DEDC0ADB24C9532F00B7956F /* Capabilities */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		DEDC0ADB24C9532F00B7956F /* Capabilities */ = {
+			isa = PBXGroup;
+			children = (
+				DEDC0ADC24C9532F00B7956F /* Extension.swift */,
+				DEDC0ADD24C9532F00B7956F /* Client.swift */,
+				DEDC0ADE24C9532F00B7956F /* LocationManager.swift */,
+				DEDC0ADF24C9532F00B7956F /* Configuration.swift */,
+			);
+			path = Capabilities;
+			sourceTree = "<group>";
+		};
 		FF101C582354044000B78D41 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -327,6 +370,7 @@
 			children = (
 				FF1F1948235F1EDD00C77C64 /* ll.entitlements */,
 				FF1C1F312340827C00D635A6 /* AppDelegate.swift */,
+				DEDC0ADA24C9531A00B7956F /* Chat */,
 				FF101C582354044000B78D41 /* Models */,
 				FF4D27B42445FF8F000CE644 /* Moudels */,
 				FF4135F02350758D00B27792 /* Resources */,
@@ -500,6 +544,7 @@
 				FF4135F72351602400B27792 /* Auth */,
 				FF293D91237E85C800C244F4 /* Statuses */,
 				FF4D27BA2446004C000CE644 /* Post */,
+				DEDC0AD724C941D200B7956F /* Message */,
 			);
 			path = Moudels;
 			sourceTree = "<group>";
@@ -723,6 +768,7 @@
 				FF331B42244C0582005FACFF /* NoDataViewCell.swift in Sources */,
 				FF2CA588234DC68D00D1B433 /* MainNavigationController.swift in Sources */,
 				DE306B302446A84000186270 /* SettingsViewController.swift in Sources */,
+				DEDC0AE524C96FBF00B7956F /* ChatViewController.swift in Sources */,
 				FF4470A72387D403002ED72D /* LKPhotoViewCell.swift in Sources */,
 				FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */,
 				DE91B7B02452ACA6000FF356 /* FeedbackPostViewController.swift in Sources */,
@@ -730,6 +776,7 @@
 				FF101C5A2354044D00B78D41 /* User.swift in Sources */,
 				FF34B9B62366B7B200A702AB /* SocialShareView.swift in Sources */,
 				FF4135EE2350733A00B27792 /* BaseTableView.swift in Sources */,
+				DEDC0AE124C9532F00B7956F /* Client.swift in Sources */,
 				FF2CA585234DB46C00D1B433 /* ApiManager.swift in Sources */,
 				FF1C1F57234090A000D635A6 /* UIScrollViewMjRefresh.swift in Sources */,
 				FF331B40244AFD8E005FACFF /* AppAboutViewController.swift in Sources */,
@@ -750,6 +797,7 @@
 				FFFC58022356B66000D79270 /* SettingApiRequest.swift in Sources */,
 				FFFC57FE2355B69100D79270 /* StatusApiRequest.swift in Sources */,
 				FF101C5E23540C0E00B78D41 /* RegisterViewController.swift in Sources */,
+				DEDC0AE724C9862C00B7956F /* ChatMessageViewCell.swift in Sources */,
 				DE91B7B82452EC39000FF356 /* AdminFeedbackListViewController.swift in Sources */,
 				FF4135E7235070DD00B27792 /* UIFontExten.swift in Sources */,
 				DE91B7B22452CC6B000FF356 /* FeedbackListViewController.swift in Sources */,
@@ -760,6 +808,7 @@
 				FF1C1F322340827C00D635A6 /* AppDelegate.swift in Sources */,
 				FF4135E8235070DD00B27792 /* ConstUtil.swift in Sources */,
 				FF4136092351753C00B27792 /* UserApiRequest.swift in Sources */,
+				DEDC0AE324C9532F00B7956F /* Configuration.swift in Sources */,
 				FF4135DC2350704100B27792 /* HomeTabViewController.swift in Sources */,
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
 				DE424776244EF612009A0FA6 /* UserInfoViewController.swift in Sources */,
@@ -768,14 +817,17 @@
 				FFE1B5C9238C03CD00120D56 /* QiNiuTool.swift in Sources */,
 				FF11905A2351BB99004E87E8 /* RefreshStateHeader.swift in Sources */,
 				DE306B2B2445C0B600186270 /* ArticleApiRequest.swift in Sources */,
+				DEDC0AE024C9532F00B7956F /* Extension.swift in Sources */,
 				FF101C65235429C200B78D41 /* UserDetailViewController.swift in Sources */,
 				FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */,
 				FF1C1F5523408B3D00D635A6 /* ArticleDetailViewController.swift in Sources */,
 				FF4135DE2350704F00B27792 /* DiscoverTabViewController.swift in Sources */,
+				DEDC0AD924C941F600B7956F /* MessageTableViewController.swift in Sources */,
 				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,
 				FF4470A32387C309002ED72D /* LKPhotoPickerViewController.swift in Sources */,
 				FF4D27B12445F443000CE644 /* Status.swift in Sources */,
 				DE6BEC0F247FBE8400AF7EE1 /* LKPhotoBrowser.swift in Sources */,
+				DEDC0AE224C9532F00B7956F /* LocationManager.swift in Sources */,
 				FF1C1F5E2341978800D635A6 /* UIViewFrameEx.swift in Sources */,
 				DE96A6F5246CDBBA00F753FE /* PasswordChangeViewController.swift in Sources */,
 				FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */,
