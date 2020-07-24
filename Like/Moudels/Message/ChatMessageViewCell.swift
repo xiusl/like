@@ -35,19 +35,29 @@ class ChatMessageViewCell: UITableViewCell {
 
     
     private func setupViews() {
+        contentView.addSubview(userNameLabel)
         contentView.addSubview(messageLabel)
+        
+        userNameLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(self.contentView).offset(14)
+            make.right.equalTo(self.contentView).offset(-14)
+            make.top.equalTo(self.contentView).offset(8)
+        }
+        
         messageLabel.snp.makeConstraints { (make) in
-            make.left.equalTo(self.contentView).offset(12)
-            make.right.equalTo(self.contentView).offset(-12)
-            make.top.equalTo(self.contentView).offset(6)
-            make.bottom.equalTo(self.contentView).offset(-6)
+            make.left.equalTo(self.contentView).offset(32)
+            make.right.equalTo(self.contentView).offset(-80)
+            make.top.equalTo(self.userNameLabel.snp.bottom).offset(10)
+            make.bottom.equalTo(self.contentView).offset(-12)
         }
     }
     
-    public func setupMessageText(_ text: String, fromMe: Bool) {
-        messageLabel.text = text
-        messageLabel.textAlignment = fromMe ? .right : .left
-    }
+    lazy var userNameLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .theme
+        return label
+    }()
     
     lazy var messageLabel: UILabel = {
         let label = UILabel()
@@ -55,4 +65,30 @@ class ChatMessageViewCell: UITableViewCell {
         label.numberOfLines = 0
         return label
     }()
+}
+
+extension ChatMessageViewCell {
+    public func setupUserName(_ name: String) {
+        userNameLabel.text = name
+    }
+    public func setupMessageText(_ text: String, fromMe: Bool) {
+        messageLabel.text = text
+        messageLabel.textAlignment = fromMe ? .right : .left
+        userNameLabel.textAlignment = fromMe ? .right : .left
+    
+        if (fromMe) {
+            messageLabel.snp.updateConstraints { (make) in
+                make.left.equalTo(self.contentView).offset(80)
+                make.right.equalTo(self.contentView).offset(-32)
+                make.top.equalTo(self.userNameLabel.snp.bottom).offset(10)
+                make.bottom.equalTo(self.contentView).offset(-12)
+            }
+        } else {
+            messageLabel.snp.updateConstraints { (make) in
+                make.left.equalTo(self.contentView).offset(32)
+                make.right.equalTo(self.contentView).offset(-80)
+            }
+        }
+    }
+    
 }

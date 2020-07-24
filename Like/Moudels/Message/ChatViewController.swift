@@ -17,50 +17,73 @@ class ChatViewController: BaseViewController {
     var conversation: IMConversation!
     var messages: [IMMessage] = []
     
+    var keyboardDidShowObserver: NSObjectProtocol!
+    var keyboardWillHideObserver: NSObjectProtocol!
+    var isKeyboardObserverActive: Bool = false
+    
+    deinit {
+        Client.removeEventObserver(key: self.uuid)
+        Client.removeSessionObserver(key: self.uuid)
+        NotificationCenter.default.removeObserver(self.keyboardDidShowObserver!)
+        NotificationCenter.default.removeObserver(self.keyboardWillHideObserver!)
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.setBackgroundImage(UIImage.imageWith(color: .white), for: .default)
         self.navigationController?.navigationBar.shadowImage = UIImage(color: .cF2F4F8)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.isKeyboardObserverActive = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.isKeyboardObserverActive = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = .white
         
         view.addSubview(tableView)
-        view.addSubview(textView)
-        view.addSubview(sendButton)
+        view.addSubview(bottomView)
         
         self.navigationItem.title = self.conversation.name
-       
+        
         
         self.queryMessageHistory(isFirst: true) { (_) in
             
         }
         
         self.addObserverForClient()
+        self.addObserverForKeyboard()
+        
+        bottomView.sendButtonHandle = { [weak self] text in
+            guard let `self` = self else {
+                return
+            }
+            
+            let textMessage = IMTextMessage(text: text)
+            self.send(message: textMessage)
+        }
     }
     
-    lazy var textView: UITextView = {
-        let textView = UITextView()
-        textView.frame = CGRect(x: 12, y: 20, width: ScreenWidth-24-60, height: 30)
-        textView.backgroundColor = .cF2F4F8
-        return textView
-    }()
-    
-    lazy var sendButton: UIButton = {
-        let button = UIButton()
-        button.frame = CGRect(x: ScreenWidth-12-60, y: 18, width: 58, height: 34)
-        button.setTitle("发送", for: .normal)
-        button.setTitleColor(.theme, for: .normal)
-        button.titleLabel?.font = .systemFont(ofSize: 14)
-        button.addTarget(self, action: #selector(sendButtonAction), for: .touchUpInside)
-        return button
+    lazy var bottomView: ChatBottomBarView = {
+        let view = ChatBottomBarView()
+        var height = view.ViewHeight
+        if StatusBarHeight > 20 {
+            height += BottomSafeHeight
+        }
+        view.frame = CGRect(x: 0, y: ScreenHeight-TopSafeHeight-height, width: ScreenWidth, height: height)
+        return view
     }()
     
     lazy var tableView: UITableView = {
-        var height = ScreenHeight-TopSafeHeight-TabbarHeight
+        var height = ScreenHeight-TopSafeHeight-50
         if StatusBarHeight > 20 {
             height -= BottomSafeHeight
         }
@@ -91,10 +114,10 @@ class ChatViewController: BaseViewController {
     
     @objc
     private func sendButtonAction() {
-        guard let text = textView.text else { return }
-        
-        let textMessage = IMTextMessage(text: text)
-        send(message: textMessage)
+        //        guard let text = textView.text else { return }
+        //
+        //        let textMessage = IMTextMessage(text: text)
+        //        send(message: textMessage)
     }
 }
 
@@ -127,7 +150,9 @@ extension ChatViewController {
                         let indexPath = IndexPath(row: self.messages.count - 1, section: 0)
                         self.tableView.insertRows(at: [indexPath], with: .bottom)
                         self.tableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                        self.textView.text = ""
+                        //                        self.textView.text = ""
+                        
+                        self.bottomView.clearTextView()
                     }
                 case .failure(error: let error):
                     UIAlertController.show(error: error, controller: self)
@@ -329,6 +354,86 @@ extension ChatViewController {
     
 }
 
+extension ChatViewController {
+    func addObserverForKeyboard() {
+        self.keyboardDidShowObserver = NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardDidShowNotification,
+            object: nil,
+            queue: .main)
+        { [weak self] (notification) in
+            self?.keyboardDidShow(notification: notification)
+        }
+        
+        self.keyboardWillHideObserver = NotificationCenter.default.addObserver(
+            forName: UIResponder.keyboardWillHideNotification,
+            object: nil,
+            queue: .main)
+        { [weak self] (notification) in
+            self?.keyboardWillHide(notification: notification)
+        }
+    }
+    
+    func keyboardDidShow(notification: Notification) {
+        guard
+            self.isKeyboardObserverActive,
+            let info = notification.userInfo,
+            let kbFrame = info[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else
+        {
+            return
+        }
+        
+        
+        let bottomSafe: CGFloat
+        if StatusBarHeight > 20 {
+            bottomSafe = BottomSafeHeight
+        } else {
+            bottomSafe = 0
+        }
+        
+        let kbSize = kbFrame.size
+        
+        let bottom = kbSize.height + self.bottomView.ViewHeight + bottomSafe
+        let insets = UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: bottom,
+            right: 0
+        )
+        
+        
+        self.tableView.contentInset = insets
+        self.bottomView.frame = CGRect(x: 0, y: ScreenHeight - TopSafeHeight - bottom, width: ScreenWidth, height: 50)
+        
+        
+        if !self.messages.isEmpty {
+            self.tableView.scrollToRow(at: IndexPath(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+        }
+    }
+    
+    func keyboardWillHide(notification: Notification) {
+        guard self.isKeyboardObserverActive else {
+            return
+        }
+        
+        
+        
+        let insets = UIEdgeInsets(
+            top: 0,
+            left: 0,
+            bottom: self.bottomView.ViewHeight,
+            right: 0
+        )
+        
+        self.tableView.contentInset = insets
+        //           self.inputViewBottomConstraint.constant = 0
+        
+        var height = bottomView.ViewHeight
+        if StatusBarHeight > 20 {
+            height += BottomSafeHeight
+        }
+        bottomView.frame = CGRect(x: 0, y: ScreenHeight-TopSafeHeight-height, width: ScreenWidth, height: height)
+    }
+}
 extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return messages.count
@@ -345,7 +450,12 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         default:
             fatalError()
         }
-            
+        
+        if (message.ioType == .out) {
+            cell.setupUserName("我")
+        } else {
+            cell.setupUserName(self.conversation.name ?? "某某")
+        }
         
         return cell
     }

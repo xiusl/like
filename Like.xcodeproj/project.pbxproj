@@ -33,6 +33,7 @@
 		DEDC0AE324C9532F00B7956F /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0ADF24C9532F00B7956F /* Configuration.swift */; };
 		DEDC0AE524C96FBF00B7956F /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0AE424C96FBF00B7956F /* ChatViewController.swift */; };
 		DEDC0AE724C9862C00B7956F /* ChatMessageViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0AE624C9862C00B7956F /* ChatMessageViewCell.swift */; };
+		DEDC0AE924CA7A4D00B7956F /* ChatBottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDC0AE824CA7A4D00B7956F /* ChatBottomBarView.swift */; };
 		ECEFF0786D051A6000061807 /* Pods_Like.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */; };
 		FF02A3A424C9E1E2008D7389 /* ConversationListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF02A3A324C9E1E2008D7389 /* ConversationListCell.swift */; };
 		FF0D101F238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */; };
@@ -137,6 +138,7 @@
 		DEDC0ADF24C9532F00B7956F /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
 		DEDC0AE424C96FBF00B7956F /* ChatViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		DEDC0AE624C9862C00B7956F /* ChatMessageViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatMessageViewCell.swift; sourceTree = "<group>"; };
+		DEDC0AE824CA7A4D00B7956F /* ChatBottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBottomBarView.swift; sourceTree = "<group>"; };
 		FF02A3A324C9E1E2008D7389 /* ConversationListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationListCell.swift; sourceTree = "<group>"; };
 		FF0D101E238BAA53009D29C9 /* LKPhotoPreviewViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LKPhotoPreviewViewCell.swift; sourceTree = "<group>"; };
 		FF101C592354044D00B78D41 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -270,9 +272,10 @@
 			isa = PBXGroup;
 			children = (
 				DEDC0AD824C941F600B7956F /* MessageTableViewController.swift */,
+				FF02A3A324C9E1E2008D7389 /* ConversationListCell.swift */,
 				DEDC0AE424C96FBF00B7956F /* ChatViewController.swift */,
 				DEDC0AE624C9862C00B7956F /* ChatMessageViewCell.swift */,
-				FF02A3A324C9E1E2008D7389 /* ConversationListCell.swift */,
+				DEDC0AE824CA7A4D00B7956F /* ChatBottomBarView.swift */,
 			);
 			path = Message;
 			sourceTree = "<group>";
@@ -781,6 +784,7 @@
 				FF4135EE2350733A00B27792 /* BaseTableView.swift in Sources */,
 				DEDC0AE124C9532F00B7956F /* Client.swift in Sources */,
 				FF2CA585234DB46C00D1B433 /* ApiManager.swift in Sources */,
+				DEDC0AE924CA7A4D00B7956F /* ChatBottomBarView.swift in Sources */,
 				FF1C1F57234090A000D635A6 /* UIScrollViewMjRefresh.swift in Sources */,
 				FF331B40244AFD8E005FACFF /* AppAboutViewController.swift in Sources */,
 				FF4D27AF2445EB88000CE644 /* WebViewController.swift in Sources */,
