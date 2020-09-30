@@ -95,6 +95,15 @@ class SettingsViewController: BaseViewController,UITableViewDataSource, UITableV
     
     func logout() {
         User.delete()
+        
+        do {
+            Client.current.close { (res) in
+                
+            }
+        } catch {
+            UIAlertController.show(error: error, controller: self)
+        }
+        
         let vc = PasswordLoginViewController()
         vc.isPrefersHidden = true
         let nav = MainNavigationController(rootViewController: vc)

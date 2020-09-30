@@ -406,7 +406,20 @@ extension UserDetailViewController: StatusMoreViewDelegate {
     private func makeChat() {
         
         do {
-            try Client.current.createConversation(clientIDs: [self.userId], name: self.user?.name ?? "User", completion: { (result) in
+//            try Client.current.createConversation(clientIDs: [self.userId], name: self.user?.name ?? "User", completion: { (result) in
+//                switch result {
+//                case .success(value: let conversation):
+//                    mainQueueExecuting {
+//                        let vc = ChatViewController()
+//                        vc.conversation = conversation
+//                        self.navigationController?.pushViewController(vc, animated: true)
+//                    }
+//                case .failure(error: let error):
+//                    break
+//                }
+//            })
+            
+            try Client.current.createConversation(clientIDs: [self.userId], name: self.user?.name ?? "", attributes: ["from": User.current?.name ?? ""], isUnique: true) { (result) in
                 switch result {
                 case .success(value: let conversation):
                     mainQueueExecuting {
@@ -417,7 +430,7 @@ extension UserDetailViewController: StatusMoreViewDelegate {
                 case .failure(error: let error):
                     break
                 }
-            })
+            }
         } catch {
         }
         

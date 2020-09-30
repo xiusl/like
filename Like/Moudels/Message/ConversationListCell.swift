@@ -43,6 +43,13 @@ class ConversationListCell: UITableViewCell {
             make.top.equalTo(self.contentView).offset(6)
             make.bottom.equalTo(self.contentView).offset(-6)
         }
+        
+        contentView.addSubview(lineView)
+        lineView.snp.makeConstraints { (make) in
+            make.left.right.equalTo(messageLabel)
+            make.height.equalTo(1)
+            make.bottom.equalToSuperview()
+        }
     }
     
     public func setupText(_ text: String) {
@@ -54,5 +61,11 @@ class ConversationListCell: UITableViewCell {
         label.font = .systemFont(ofSize: 16)
         label.numberOfLines = 0
         return label
+    }()
+
+    lazy var lineView: UIImageView = {
+        let lineView = UIImageView()
+        lineView.backgroundColor = .cF2F4F8
+        return lineView
     }()
 }

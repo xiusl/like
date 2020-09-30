@@ -6,7 +6,7 @@ PODS:
   - Kingfisher (5.14.1):
     - Kingfisher/Core (= 5.14.1)
   - Kingfisher/Core (5.14.1)
-  - KMNavigationBarTransition (1.1.5)
+  - KMNavigationBarTransition (1.1.8)
   - LeanCloud (17.6.0):
     - LeanCloud/RTM (= 17.6.0)
   - LeanCloud/Foundation (17.6.0):
@@ -24,7 +24,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - Kingfisher
-  - KMNavigationBarTransition
+  - KMNavigationBarTransition (= 1.1.8)
   - LeanCloud
   - MBProgressHUD
   - MJRefresh
@@ -48,7 +48,7 @@ SPEC CHECKSUMS:
   Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
   GRDB.swift: 8cc3ab7c8b8b4ac1761deb8dca4b51c1c9d429f8
   Kingfisher: 8050bc6f7f68cbf3908bd04df7ccbac188f6d6d6
-  KMNavigationBarTransition: 7a52c9bc25b39b6e3343e980b453facee1591b82
+  KMNavigationBarTransition: 7ee1a05ff758bce9258845a803f7a8b00585bd58
   LeanCloud: 37b7dff1dd6061a572b8d4367464df74f315b74f
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MJRefresh: 53e3e3219f204425ee6d3e62e8733d3295944cd6
@@ -56,6 +56,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: bec1ae7d686ff73dd09d79866154f4970b891410
   SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
 
-PODFILE CHECKSUM: 64d336c0fdd77b0c2baf6fc5e4ea3baa6548bc20
+PODFILE CHECKSUM: e053e74a18b6d6f6c407e212c0b6001363a9f4f7
 
-COCOAPODS: 1.9.1
+COCOAPODS: 1.9.3

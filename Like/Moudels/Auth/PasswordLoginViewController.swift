@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import LeanCloud
 
 class PasswordLoginViewController: BaseViewController {
 
@@ -151,11 +152,12 @@ extension PasswordLoginViewController: AuthInputViewDelegate {
         ApiManager.shared.request(request: UserApiRequest.login(account: phone, password: passwd), success: { (result) in
             debugPrint(result)
             self.confirmButton.endLoading()
-            DispatchQueue.global().async {
+//            DispatchQueue.global().async {
                 let u = User(fromJson: JSON(result))
                 let _ = u.save()
-            }
-            
+//            }
+            Configuration.UserOption.clientID.set(value: u.id ?? "")
+            self.clientInitializing(isReopen: true)
             let vc = MainTabBarController()
             let keyWidow = UIApplication.shared.keyWindow
             keyWidow?.rootViewController = vc
@@ -165,5 +167,98 @@ extension PasswordLoginViewController: AuthInputViewDelegate {
             SLUtil.showTipView(tip: error)
             self.confirmButton.endLoading()
         }
+    }
+    
+    
+    func clientInitializing(isReopen: Bool) {
+        do {
+            
+            let clientID: String = Configuration.UserOption.clientID.stringValue ?? ""
+            let tag: String? = (Configuration.UserOption.isTagEnabled.boolValue ? "mobile" : nil)
+            let options: IMClient.Options = Configuration.UserOption.isLocalStorageEnabled.boolValue
+                ? .default
+                : { var dOptions = IMClient.Options.default; dOptions.remove(.usingLocalStorage); return dOptions }()
+            
+            let client = try IMClient(
+                ID: clientID,
+                tag: tag,
+                options: options,
+                delegate: Client.delegator,
+                eventQueue: Client.queue
+            )
+            
+            if options.contains(.usingLocalStorage) {
+                try client.prepareLocalStorage { (result) in
+                    Client.specificAssertion
+                    switch result {
+                    case .success:
+                        do {
+                            try client.getAndLoadStoredConversations(completion: { (result) in
+                                Client.specificAssertion
+                                switch result {
+                                case .success(value: let storedConversations):
+                                    var conversations: [IMConversation] = []
+                                    var serviceConversations: [IMServiceConversation] = []
+                                    for item in storedConversations {
+                                        if type(of: item) == IMConversation.self {
+                                            conversations.append(item)
+                                        } else if let serviceItem = item as? IMServiceConversation {
+                                            serviceConversations.append(serviceItem)
+                                        }
+                                    }
+                                    self.open(
+                                        client: client,
+                                        isReopen: isReopen,
+                                        storedConversations: (conversations.isEmpty ? nil : conversations),
+                                        storedServiceConversations: (serviceConversations.isEmpty ? nil : serviceConversations)
+                                    )
+                                case .failure(error: let error):
+                                    break
+                                }
+                            })
+                        } catch {
+                            
+                        }
+                    case .failure(error: let error):
+                        break
+                    }
+                }
+            } else {
+                self.open(client: client, isReopen: isReopen)
+            }
+        } catch {
+        }
+    }
+    
+    func open(
+        client: IMClient,
+        isReopen: Bool,
+        storedConversations: [IMConversation]? = nil,
+        storedServiceConversations: [IMServiceConversation]? = nil)
+    {
+        let options: IMClient.SessionOpenOptions
+        if let _ = client.tag {
+            options = Configuration.UserOption.isAutoOpenEnabled.boolValue ? [] : [.forced]
+        } else {
+            options = .default
+        }
+        client.open(options: options, completion: { (result) in
+            Client.specificAssertion
+            
+            switch result {
+            case .success:
+                mainQueueExecuting {
+                    Client.current = client
+                    Client.storedConversations = storedConversations
+                    Client.storedServiceConversations = storedServiceConversations
+                }
+                break
+            case .failure(error: let error):
+                if error.code == 4111 {
+                    Client.delegator.client(client, event: .sessionDidClose(error: error))
+                }
+            }
+        })
+        
     }
 }

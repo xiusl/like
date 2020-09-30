@@ -19,6 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         // Override point for customization after application launch.
         
         self.window = UIWindow.init(frame: UIScreen.main.bounds)
+        
+        LCApplication.logLevel = .all
+        do {
+            try LCApplication.default.set(
+                id: "gq4MUUJhLQ3rAy3jhcVbl5H3-gzGzoHsz",
+                key: "Kr4uOYW18Xz2RPtkCFsehKhB",
+                serverURL: "https://like-im.sleen.top")
+        } catch {
+            print(error)
+        }
+        
         let _ = User.read()
         if User.isLogin {
             let vc = MainTabBarController()
@@ -39,15 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
 //        } catch let error as Error? {
 //            print(error ?? "")
 //        }
-        LCApplication.logLevel = .all
-        do {
-            try LCApplication.default.set(
-                id: "gq4MUUJhLQ3rAy3jhcVbl5H3-gzGzoHsz",
-                key: "Kr4uOYW18Xz2RPtkCFsehKhB",
-                serverURL: "https://like-im.sleen.top")
-        } catch {
-            print(error)
-        }
+
         
         // init
         _ = LCApplication.default.currentInstallation
@@ -64,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
     
     func reCheckUserAuth() {
         let request = SettingApiRequest.ping(())
-        ApiManager.shared.request(request: request, success: { [weak self ] (result) in
+        ApiManager.shared.request(request: request, success: { [weak self] (result) in
             let data = JSON(result)
             print(data)
             let uid = data["user_id"].stringValue
