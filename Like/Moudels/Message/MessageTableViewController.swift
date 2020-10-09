@@ -8,6 +8,7 @@
 
 import UIKit
 import LeanCloud
+import MJRefresh
 
 class MessageTableViewController: UIViewController {
 
@@ -19,6 +20,7 @@ class MessageTableViewController: UIViewController {
 
         view.backgroundColor = .cF2F4F8
         view.addSubview(tableView)
+        tableView.addSubview(nullLabel)
         // Do any additional setup after loading the view.
         if let conversations = Client.storedConversations {
             self.conversations = conversations
@@ -27,6 +29,8 @@ class MessageTableViewController: UIViewController {
         
         queryRecentNormalConversations()
         
+        let header = MJRefreshNormalHeader(refreshingTarget: self, refreshingAction: #selector(queryRecentNormalConversations))
+        self.tableView.mj_header = header
     }
     
 
@@ -43,11 +47,23 @@ class MessageTableViewController: UIViewController {
         tableView.backgroundColor = .cF2F4F8
         return tableView
     }()
+    
+    lazy var nullLabel: UILabel = {
+        let label = UILabel()
+        label.frame = CGRect(x: 0, y: 120, width: ScreenWidth, height: 20)
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .c999999
+        label.text = "还没有消息哦"
+        label.isHidden = true
+        return label
+    }()
 
 }
 
 extension MessageTableViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        nullLabel.isHidden = self.conversations.count > 0
         return self.conversations.count
     }
     
@@ -55,7 +71,15 @@ extension MessageTableViewController: UITableViewDataSource, UITableViewDelegate
         let cell = ConversationListCell()
         let conversation = conversations[indexPath.row]
         
-        cell.setupText(conversation.name ?? "会话")
+        
+        
+        let creator: String = conversation.creator ?? ""
+        if creator == User.current?.id {
+            cell.setupText(conversation.name ?? "会话")
+        } else {
+            let from = conversation.attributes?["from"] as? String
+            cell.setupText(from ?? "会话")
+        }
         
         return cell
     }
@@ -75,7 +99,9 @@ extension MessageTableViewController: UITableViewDataSource, UITableViewDelegate
 
 
 extension MessageTableViewController {
-    func queryRecentNormalConversations() {
+    
+    @objc
+    private func queryRecentNormalConversations() {
         do {
             
             let transientKey: String = "tr"
@@ -116,6 +142,7 @@ extension MessageTableViewController {
                 case .failure(error: let error):
                     UIAlertController.show(error: error, controller: self)
                 }
+                self.tableView.mj_header?.endRefreshing()
             }
         } catch {
             UIAlertController.show(error: error, controller: self)

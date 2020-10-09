@@ -52,8 +52,13 @@ class ChatViewController: BaseViewController {
         view.addSubview(tableView)
         view.addSubview(bottomView)
         
-        self.navigationItem.title = self.conversation.name
-        
+        let creator: String = conversation.creator ?? ""
+        if creator == User.current?.id {
+            self.navigationItem.title = conversation.name ?? "会话"
+        } else {
+            let from = conversation.attributes?["from"] as? String
+            self.navigationItem.title = from ?? "会话"
+        }
         
         self.queryMessageHistory(isFirst: true) { (_) in
             
@@ -68,6 +73,7 @@ class ChatViewController: BaseViewController {
             }
             
             let textMessage = IMTextMessage(text: text)
+            textMessage.attributes = ["sender": User.current?.name ?? "某某"]
             self.send(message: textMessage)
         }
     }
@@ -189,7 +195,7 @@ extension ChatViewController {
                     if isFirst {
                         self.conversation.read()
                         if messageResults.isEmpty {
-                            self.send(message: IMTextMessage(text: "Hello."))
+//                            self.send(message: IMTextMessage(text: "Hello."))
                         }
                     }
                     if !messageResults.isEmpty {
@@ -442,7 +448,7 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = ChatMessageViewCell.create(tableView: tableView)
         
-        let message = messages[indexPath.row]
+        let message = messages[indexPath.row] as! IMCategorizedMessage
         
         switch message {
         case let textMessage as IMTextMessage:
@@ -454,7 +460,8 @@ extension ChatViewController: UITableViewDataSource, UITableViewDelegate {
         if (message.ioType == .out) {
             cell.setupUserName("我")
         } else {
-            cell.setupUserName(self.conversation.name ?? "某某")
+            let sender = message.attributes?["sender"] as? String
+            cell.setupUserName(sender ?? "某某")
         }
         
         return cell
