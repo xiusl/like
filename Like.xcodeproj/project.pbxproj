@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BD6B3678254BE0D500CAC5A8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B3677254BE0D500CAC5A8 /* HomeViewModel.swift */; };
+		BD6B3682254BE90900CAC5A8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B3681254BE90900CAC5A8 /* HomeViewController.swift */; };
 		DE306B2B2445C0B600186270 /* ArticleApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */; };
 		DE306B2D244696E000186270 /* Article.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2C244696E000186270 /* Article.swift */; };
 		DE306B302446A84000186270 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2F2446A84000186270 /* SettingsViewController.swift */; };
@@ -111,6 +113,8 @@
 /* Begin PBXFileReference section */
 		1B8CDF32D9A6E94518E7866F /* Pods-Like.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Like.debug.xcconfig"; path = "Target Support Files/Pods-Like/Pods-Like.debug.xcconfig"; sourceTree = "<group>"; };
 		7EEFEB724B4E71FA85A57607 /* Pods-Like.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Like.release.xcconfig"; path = "Target Support Files/Pods-Like/Pods-Like.release.xcconfig"; sourceTree = "<group>"; };
+		BD6B3677254BE0D500CAC5A8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		BD6B3681254BE90900CAC5A8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Like.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleApiRequest.swift; sourceTree = "<group>"; };
 		DE306B2C244696E000186270 /* Article.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Article.swift; sourceTree = "<group>"; };
@@ -577,6 +581,8 @@
 			isa = PBXGroup;
 			children = (
 				FF4135DB2350704100B27792 /* HomeTabViewController.swift */,
+				BD6B3681254BE90900CAC5A8 /* HomeViewController.swift */,
+				BD6B3677254BE0D500CAC5A8 /* HomeViewModel.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -764,6 +770,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD6B3682254BE90900CAC5A8 /* HomeViewController.swift in Sources */,
 				DED190A82463E41300F5FE1A /* StatusMoreView.swift in Sources */,
 				FF8043D9244F33B2006CB015 /* UserAvatarViewController.swift in Sources */,
 				FF4D27B32445F901000CE644 /* StatusUserView.swift in Sources */,
@@ -831,6 +838,7 @@
 				FF4135DE2350704F00B27792 /* DiscoverTabViewController.swift in Sources */,
 				DEDC0AD924C941F600B7956F /* MessageTableViewController.swift in Sources */,
 				FF4136032351645300B27792 /* StringLocalizable.swift in Sources */,
+				BD6B3678254BE0D500CAC5A8 /* HomeViewModel.swift in Sources */,
 				FF4470A32387C309002ED72D /* LKPhotoPickerViewController.swift in Sources */,
 				FF4D27B12445F443000CE644 /* Status.swift in Sources */,
 				DE6BEC0F247FBE8400AF7EE1 /* LKPhotoBrowser.swift in Sources */,
@@ -946,6 +954,8 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				VALID_ARCHS = "x86_64 armv7 arm64";
+				"VALID_ARCHS[sdk=iphonesimulator*]" = x86_64;
 			};
 			name = Debug;
 		};
@@ -1002,6 +1012,7 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = arm64;
 			};
 			name = Release;
 		};

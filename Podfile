@@ -17,4 +17,8 @@ target 'Like' do
 
   pod 'LeanCloud'
 
+
+  pod 'RxSwift'
+  pod 'RxCocoa'
+
 end

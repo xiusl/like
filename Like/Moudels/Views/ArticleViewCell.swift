@@ -30,7 +30,7 @@ extension ArticleViewCell : ArticleViewCellData {
 
 class ArticleViewCell: UITableViewCell {
 
-    
+    static let identifier: String = "ArticelViewCell_ID"
     var delegate: ArticleViewCellDelegate?
     open var index: Int = 0
     override func awakeFromNib() {
