@@ -139,7 +139,10 @@ extension ChatViewController {
         ]
         switch message {
         case let textMessage as IMTextMessage:
-            pushData["alert"] = textMessage.text ?? "您有一条未读的消息"
+            pushData["alert"] = [
+                "title": User.current?.name ?? "某某",
+                "body":textMessage.text ?? "您有一条未读的消息"
+            ]
         default:
             fatalError()
         }
