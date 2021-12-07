@@ -11,7 +11,7 @@ target 'Like' do
   pod 'Alamofire'
   pod 'SwiftyJSON'
   pod 'Kingfisher'
-  pod 'KMNavigationBarTransition', '1.1.8'
+  pod 'KMNavigationBarTransition'
   pod 'MJRefresh'
   pod 'MBProgressHUD'
 

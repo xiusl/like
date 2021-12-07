@@ -16,7 +16,7 @@ class MainNavigationController: UINavigationController {
         // Do any additional setup after loading the view.
         self.navigationBar.setBackgroundImage(UIImage.imageWith(color: .white), for: .default)
         self.navigationBar.shadowImage = UIImage(color: .cF2F4F8)
-        
+        UINavigationBar.appearance().isTranslucent = false
         UIBarButtonItem.appearance().tintColor = .theme
     }
     

@@ -24,7 +24,7 @@ class ApiManager: NSObject {
     static let shared = ApiManager()
 
     #if DEBUG
-//        static let baseUrl = "http://127.0.0.1:5051/"
+//        static let baseUrl = "http://127.0.0.1:5000/"
         static let baseUrl = "https://ins-api.sleen.top/"
     #else
         static let baseUrl = "https://ins-api.sleen.top/"
@@ -39,7 +39,7 @@ class ApiManager: NSObject {
         
         let delegate: SessionDelegate = SessionDelegate()
         let tr = ServerTrustManager(evaluators: [
-            "up-z2.qiniu.com": DisabledEvaluator(),
+            "up-z2.qiniu.com": DefaultTrustEvaluator(),
             "ins-api.sleen.top": DefaultTrustEvaluator()
         ])
         return Session(configuration: config, delegate: delegate, rootQueue: DispatchQueue.main, startRequestsImmediately: true, requestQueue: nil, serializationQueue: nil, interceptor: nil, serverTrustManager: tr, redirectHandler: nil, cachedResponseHandler: nil, eventMonitors: [])

@@ -22,11 +22,9 @@ class BaseViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .white
-        self.automaticallyAdjustsScrollViewInsets = false
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
-        let backImage = UIImage(named: "nav_back_g")?.withRenderingMode(.alwaysOriginal)
-        self.navigationController?.navigationBar.backIndicatorImage = backImage
-        self.navigationController?.navigationBar.backIndicatorTransitionMaskImage = backImage
+        
+        self.setupNavBar()
         
         tipView.addSubview(tipLabel)
         tipLabel.snp.makeConstraints { (make) in
@@ -35,16 +33,19 @@ class BaseViewController: UIViewController {
         }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    private func setupNavBar() {
+        if #available(iOS 15, *) {
+            let barAppearance = UINavigationBarAppearance()
+            barAppearance.configureWithOpaqueBackground()
+            barAppearance.backgroundColor = .white
+            barAppearance.backgroundImage = UIImage(color: .white)
+            barAppearance.shadowImage = UIImage()
+            barAppearance.shadowColor = .clear
+            self.navigationController?.navigationBar.standardAppearance = barAppearance
+            self.navigationController?.navigationBar.scrollEdgeAppearance = barAppearance
+        }
     }
-    */
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .default
     }
