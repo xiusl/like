@@ -79,7 +79,9 @@ class MeTabViewController: BaseViewController, UITableViewDataSource, UITableVie
     }
     @objc func postStatus() {
         let vc = PostStatusViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+        let nav = MainNavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        present(nav, animated: true, completion: nil)
     }
     @objc func post() {
         let view = PostLinkView()

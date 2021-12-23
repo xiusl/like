@@ -20,5 +20,7 @@ target 'Like' do
 
   pod 'RxSwift'
   pod 'RxCocoa'
+  
+  pod 'LookinServer', :configurations => ['Debug']
 
 end

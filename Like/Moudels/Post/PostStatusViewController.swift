@@ -16,13 +16,14 @@ class PostStatusViewController: BaseViewController {
     var token: String = ""
     var imagesParam: Array<[String: Any]> = []
     var selectPhotos: Array<UIImage> = []
+    var emojiState: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         title = "发布动态"
-        view.backgroundColor = .cF2F4F8
+        view.backgroundColor = .white
         setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
@@ -30,8 +31,15 @@ class PostStatusViewController: BaseViewController {
         self.textView.becomeFirstResponder()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "发布", style: .plain, target: self, action: #selector(okButtonClick))
-        
+        let closeImage = UIImage(named: "nav_close")?.withRenderingMode(.alwaysOriginal)
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(image: closeImage, style: .plain, target: self, action: #selector(closeVc))
         loadUploadToken()
+    }
+
+    @objc
+    func closeVc() {
+        //todo: 询问是否保存草稿
+        dismiss(animated: true)
     }
     
     private func setupViews() {
@@ -39,7 +47,7 @@ class PostStatusViewController: BaseViewController {
         contentView.addSubview(textView)
         contentView.addSubview(imagesView)
         imagesView.addSubview(uploadButton)
-        view.addSubview(toolView)
+        view.addSubview(bottomView)
     }
     
     lazy var contentView: UIScrollView = {
@@ -54,6 +62,7 @@ class PostStatusViewController: BaseViewController {
             // Fallback on earlier versions
         }
         contentView.alwaysBounceVertical = true
+        contentView.keyboardDismissMode = .onDrag
         return contentView
     }()
     
@@ -68,7 +77,7 @@ class PostStatusViewController: BaseViewController {
         let dict: Dictionary<NSAttributedString.Key, Any> = [
             .font: UIFont.systemFont(ofSize: 16),
             .paragraphStyle: style,
-            .foregroundColor: UIColor.darkText
+            .foregroundColor: UIColor.blackText
         ]
         textView.typingAttributes = dict
         textView.tintColor = .theme
@@ -84,24 +93,7 @@ class PostStatusViewController: BaseViewController {
     }()
     
     var keyboardHeight: CGFloat = 0
-    
-    lazy var toolView: UIView = {
-        let toolView = UIView()
-        toolView.frame = CGRect(x: 0, y: ScreenHeight-TopSafeHeight, width: ScreenWidth, height: 32)
-        toolView.backgroundColor = .clear
         
-        let btn = UIButton()
-        btn.titleLabel?.font = .systemFont(ofSize: 16)
-        btn.frame = CGRect(x: ScreenWidth-64, y: 0, width: 64, height: 32)
-        btn.setTitle("完成", for: .normal)
-        btn.setTitleColor(.theme, for: .normal)
-        btn.addTarget(self, action: #selector(toolViewTap), for: .touchUpInside)
-        toolView.addSubview(btn)
-        
-        
-        return toolView
-    }()
-    
     lazy var uploadButton: UIButton = {
         let uploadButton = UIButton()
         uploadButton.setBackgroundImage(UIImage(named: "photo_upload"), for: .normal)
@@ -109,10 +101,31 @@ class PostStatusViewController: BaseViewController {
         uploadButton.frame = CGRect(x: 0, y: 0, width: 88, height: 88)
         return uploadButton
     }()
-    
-    
+    lazy var bottomView: PostBottomView = {
+        let view = PostBottomView()
+        view.frame = CGRect(x: 0, y: ScreenHeight-NavbarHeight-80-bottomSafeHeight(), width: ScreenWidth, height: 88)
+        view.delegate = self
+        return view
+    }()
+    lazy var emojiView: EmojiInputView = {
+        let view = EmojiInputView()
+        view.bounds = CGRect(x: 0, y: 0, width: ScreenWidth, height: 320)
+        view.didSelectedEmoji = { [weak self] emoji in
+            guard let `self` = self else { return }
+            var txt = String(self.textView.text)
+            txt.append(emoji)
+            self.textView.text = txt
+        }
+        view.didDeletedEmoji = { [weak self] in
+            guard let `self` = self else { return }
+//            var txt = String(self.textView.text)
+//            txt.substring(to: txt.endIndex.)
+//            self.textView.text = txt
+        }
+        return view
+    }()
 }
-// MARK: - Evenet
+// MARK: - Event
 extension PostStatusViewController {
     @objc
     private func okButtonClick() {
@@ -146,20 +159,20 @@ extension PostStatusViewController {
         let endY = keybordRect.cgRectValue.origin.y
         keyboardHeight = keybordRect.cgRectValue.size.height+32
         
-        var f = toolView.frame
-        f.origin.y = endY - 32 - TopSafeHeight
-        toolView.frame = f
-        toolView.isHidden = endY >= ScreenHeight
-        
-        
         let blankH = ScreenHeight - keyboardHeight - TopSafeHeight
         let h = textView.bounds.size.height + 100
         if h > blankH {
             let inset = min(keyboardHeight-32, h - blankH)
             contentView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: inset, right: 0)
-            
             contentView.setContentOffset(CGPoint(x: 0, y:h - blankH), animated: false)
         }
+        
+        var bottomFrame = bottomView.frame
+        bottomFrame.origin.y = endY - NavbarHeight - 88
+        if endY == ScreenHeight {
+            bottomFrame.origin.y -= bottomSafeHeight()
+        }
+        bottomView.frame = bottomFrame
     }
     
     private func loadUploadToken() {
@@ -301,6 +314,33 @@ extension PostStatusViewController: LKPhotoPickerViewControllerDelegate {
         self.setupPhotos(photos: self.selectPhotos)
         
     }
+}
+
+extension PostStatusViewController: PostBottomViewDelegate {
+    func postBottomView(_ bottomView: PostBottomView, emojiOnClick button: UIButton) {
+        emojiState = !emojiState
+        if emojiState {
+            textView.inputView = emojiView
+            /*
+             if (!self.textInputView.isFirstResponder) {
+                 [self.textInputView becomeFirstResponder];
+             }
+             [self.textInputView reloadInputViews];
+             */
+            if !textView.isFirstResponder {
+                textView.becomeFirstResponder()
+            }
+            textView.reloadInputViews()
+        } else {
+            textView.inputView = nil
+            if !textView.isFirstResponder {
+                textView.becomeFirstResponder()
+            }
+            textView.reloadInputViews()
+
+        }
+    }
+    
 }
 
 // MARK: - Custom TextView

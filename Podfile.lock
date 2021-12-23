@@ -13,6 +13,7 @@ PODS:
     - GRDB.swift (~> 5.8)
     - LeanCloud/Foundation (= 17.9.2)
     - SwiftProtobuf (~> 1.17)
+  - LookinServer (1.0.4)
   - MBProgressHUD (1.2.0)
   - MJRefresh (3.7.5)
   - RxCocoa (6.2.0):
@@ -30,6 +31,7 @@ DEPENDENCIES:
   - Kingfisher
   - KMNavigationBarTransition
   - LeanCloud
+  - LookinServer
   - MBProgressHUD
   - MJRefresh
   - RxCocoa
@@ -44,6 +46,7 @@ SPEC REPOS:
     - Kingfisher
     - KMNavigationBarTransition
     - LeanCloud
+    - LookinServer
     - MBProgressHUD
     - MJRefresh
     - RxCocoa
@@ -59,6 +62,7 @@ SPEC CHECKSUMS:
   Kingfisher: 016c8b653a35add51dd34a3aba36b580041acc74
   KMNavigationBarTransition: ceea7a78462b6d9910cf6dba93465a7e9168a1b7
   LeanCloud: a2b78da1d4a36a89a2af71d345e19cdd9da8e762
+  LookinServer: 743c1681771d0a8dcc38825325a080c3186404a5
   MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
   MJRefresh: fdf5e979eb406a0341468932d1dfc8b7f9fce961
   RxCocoa: 4baf94bb35f2c0ab31bc0cb9f1900155f646ba42
@@ -68,6 +72,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: c3c12645230d9b09c72267e0de89468c5543bd86
   SwiftyJSON: 2f33a42c6fbc52764d96f13368585094bfd8aa5e
 
-PODFILE CHECKSUM: 75de439da885fa7f1211b203f6eeff26fa1842af
+PODFILE CHECKSUM: d0dcb94c8cd93cc53e38f815329b41ebc7ee25d9
 
 COCOAPODS: 1.11.2

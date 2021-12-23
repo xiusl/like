@@ -17,11 +17,23 @@ let ScreenHeight = UIScreen.main.bounds.size.height
 let StatusBarHeight = UIApplication.shared.statusBarFrame.size.height
 
 let TopSafeHeight = 44+StatusBarHeight
-let BottomSafeHeight: CGFloat = 35.0
+let BottomSafeHeight: CGFloat = 34.0
 
 let TabbarHeight: CGFloat = 49.0
+let NavbarHeight: CGFloat = 44 + StatusBarHeight
 
-
+func bottomSafeHeight() -> CGFloat {
+    if StatusBarHeight > 20 {
+        return 34
+    }
+    return 0
+}
+func bottomMargin() -> CGFloat {
+    if StatusBarHeight > 20 {
+        return 34
+    }
+    return 8
+}
 
 class SLUtil {
     class func checkPhone(phone: String) -> Bool {

@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AC95654B27744F9200FDE187 /* PostBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC95654A27744F9200FDE187 /* PostBottomView.swift */; };
+		AC95654D2774687F00FDE187 /* EmojiInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC95654C2774687F00FDE187 /* EmojiInputView.swift */; };
+		AC95654F2774688C00FDE187 /* Emoj.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC95654E2774688C00FDE187 /* Emoj.plist */; };
+		ACCEA0A727649C8400BD7CC1 /* VideoRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCEA0A627649C8400BD7CC1 /* VideoRecordViewController.swift */; };
 		BD6B3678254BE0D500CAC5A8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B3677254BE0D500CAC5A8 /* HomeViewModel.swift */; };
 		BD6B3682254BE90900CAC5A8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B3681254BE90900CAC5A8 /* HomeViewController.swift */; };
 		DE306B2B2445C0B600186270 /* ArticleApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */; };
@@ -113,6 +117,10 @@
 /* Begin PBXFileReference section */
 		1B8CDF32D9A6E94518E7866F /* Pods-Like.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Like.debug.xcconfig"; path = "Target Support Files/Pods-Like/Pods-Like.debug.xcconfig"; sourceTree = "<group>"; };
 		7EEFEB724B4E71FA85A57607 /* Pods-Like.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Like.release.xcconfig"; path = "Target Support Files/Pods-Like/Pods-Like.release.xcconfig"; sourceTree = "<group>"; };
+		AC95654A27744F9200FDE187 /* PostBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBottomView.swift; sourceTree = "<group>"; };
+		AC95654C2774687F00FDE187 /* EmojiInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputView.swift; sourceTree = "<group>"; };
+		AC95654E2774688C00FDE187 /* Emoj.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Emoj.plist; sourceTree = "<group>"; };
+		ACCEA0A627649C8400BD7CC1 /* VideoRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecordViewController.swift; sourceTree = "<group>"; };
 		BD6B3677254BE0D500CAC5A8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		BD6B3681254BE90900CAC5A8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Like.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -255,6 +263,14 @@
 				7EEFEB724B4E71FA85A57607 /* Pods-Like.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		ACCEA0A527649C6500BD7CC1 /* Record */ = {
+			isa = PBXGroup;
+			children = (
+				ACCEA0A627649C8400BD7CC1 /* VideoRecordViewController.swift */,
+			);
+			path = Record;
 			sourceTree = "<group>";
 		};
 		DE306B2E2446A81600186270 /* Settings */ = {
@@ -507,6 +523,7 @@
 		FF4135F02350758D00B27792 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				AC95654E2774688C00FDE187 /* Emoj.plist */,
 				FF1C1F3A2340827E00D635A6 /* Assets.xcassets */,
 				FF1C1F3C2340827E00D635A6 /* LaunchScreen.storyboard */,
 				FF1C1F3F2340827E00D635A6 /* Info.plist */,
@@ -543,6 +560,7 @@
 		FF4D27B42445FF8F000CE644 /* Moudels */ = {
 			isa = PBXGroup;
 			children = (
+				ACCEA0A527649C6500BD7CC1 /* Record */,
 				FF4D27B52445FFEE000CE644 /* Views */,
 				FF4135EC2350732200B27792 /* Base */,
 				FF4135EB2350731000B27792 /* Main */,
@@ -620,7 +638,9 @@
 			isa = PBXGroup;
 			children = (
 				FFFC57FB2355B4F400D79270 /* PostStatusViewController.swift */,
+				AC95654A27744F9200FDE187 /* PostBottomView.swift */,
 				DE91B7B92456A3D5000FF356 /* PostPhotoView.swift */,
+				AC95654C2774687F00FDE187 /* EmojiInputView.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -697,6 +717,7 @@
 			files = (
 				FF1C1F3E2340827E00D635A6 /* LaunchScreen.storyboard in Resources */,
 				FF101C6323541CFE00B78D41 /* MeTableHeaderView.xib in Resources */,
+				AC95654F2774688C00FDE187 /* Emoj.plist in Resources */,
 				FF4135FE2351633F00B27792 /* Localizable.strings in Resources */,
 				FF74780E2341B7350017DC74 /* InfoPlist.strings in Resources */,
 				FF1F193D235F1D3800C77C64 /* README.txt in Resources */,
@@ -772,9 +793,11 @@
 			files = (
 				BD6B3682254BE90900CAC5A8 /* HomeViewController.swift in Sources */,
 				DED190A82463E41300F5FE1A /* StatusMoreView.swift in Sources */,
+				AC95654D2774687F00FDE187 /* EmojiInputView.swift in Sources */,
 				FF8043D9244F33B2006CB015 /* UserAvatarViewController.swift in Sources */,
 				FF4D27B32445F901000CE644 /* StatusUserView.swift in Sources */,
 				DE91B7BA2456A3D5000FF356 /* PostPhotoView.swift in Sources */,
+				ACCEA0A727649C8400BD7CC1 /* VideoRecordViewController.swift in Sources */,
 				FF1C1F5A2340A44B00D635A6 /* RefreshComponent.swift in Sources */,
 				DE424772244EDE22009A0FA6 /* ProgressHUD.swift in Sources */,
 				FF34B9B42366B6C800A702AB /* ArticleViewCell.swift in Sources */,
@@ -853,6 +876,7 @@
 				FF4135F92351604700B27792 /* PasswordLoginViewController.swift in Sources */,
 				FF4135FB2351608200B27792 /* AuthInputView.swift in Sources */,
 				FF2CA586234DB46C00D1B433 /* ApiRequest.swift in Sources */,
+				AC95654B27744F9200FDE187 /* PostBottomView.swift in Sources */,
 				FF4135F22350780200B27792 /* RefreshHeader.swift in Sources */,
 				FF4135E02350705800B27792 /* MeTabViewController.swift in Sources */,
 				FF4135F6235083BC00B27792 /* RefreshAutoFooter.swift in Sources */,
