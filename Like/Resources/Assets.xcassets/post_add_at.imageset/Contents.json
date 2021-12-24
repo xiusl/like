@@ -1,7 +1,6 @@
 {
   "images" : [
     {
-      "filename" : "post_add_at.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -11,6 +10,7 @@
       "scale" : "2x"
     },
     {
+      "filename" : "post_add_at@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

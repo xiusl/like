@@ -12,6 +12,7 @@ enum SettingApiRequest {
     case ping(Void)
     case qiniuToken(Void)
     case deafultApi(Void)
+    case location(lat: Double, lon: Double, page: Int = 1)
 }
 
 extension SettingApiRequest: ApiRequest {
@@ -32,6 +33,8 @@ extension SettingApiRequest: ApiRequest {
             return "setting/ping"
         case .qiniuToken():
             return "qiniu/token"
+        case .location(_, _, _):
+            return "location"
         default:
             return ""
         }
@@ -39,6 +42,8 @@ extension SettingApiRequest: ApiRequest {
     
     var params: Any {
         switch self {
+        case .location(let lat, let lon, let page):
+            return ["lat": lat, "lon": lon, "page": page]
         default:
             return [:]
         }

@@ -12,6 +12,7 @@ import UIKit
 @objc
 protocol PostBottomViewDelegate : NSObjectProtocol {
     @objc optional func postBottomView(_ bottomView: PostBottomView, emojiOnClick button: UIButton)
+    @objc optional func postBottomView(_ bottomView: PostBottomView, locationOnClick button: UIButton?)
 }
 
 class PostBottomView: UIView {
@@ -63,9 +64,19 @@ class PostBottomView: UIView {
             make.left.equalTo(atBtn.snp.right)
             make.centerY.equalTo(photoBtn)
         }
+        
+        let tapGest = UITapGestureRecognizer(target: self, action: #selector(locationTapAction))
+        locationView.addGestureRecognizer(tapGest)
     }
     public func resetEmojiBtn() {
         emojiBtn.isSelected = false
+    }
+    public func setupLocation(_ location: String?) {
+        if let `location` = location {
+            locationView.setupName(location)
+        } else {
+            locationView.setupName("所在位置")
+        }
     }
     
     private lazy var locationView: PostLocationView = {
@@ -74,7 +85,7 @@ class PostBottomView: UIView {
     }()
     private lazy var line: UIImageView = {
         let view = UIImageView()
-        view.backgroundColor = .c999999
+        view.backgroundColor = .cF2F4F8
         return view
     }()
     private lazy var photoBtn: UIButton = {
@@ -108,6 +119,11 @@ extension PostBottomView {
         emojiBtn.isSelected = !emojiBtn.isSelected
         delegate?.postBottomView?(self, emojiOnClick: emojiBtn)
     }
+    
+    @objc
+    private func locationTapAction() {
+        delegate?.postBottomView?(self, locationOnClick: nil)
+    }
 }
 
 class PostLocationView : UIView {
@@ -118,9 +134,13 @@ class PostLocationView : UIView {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
+    public func setupName(_ name: String){
+        label.text = name
+    }
 
     private func setupViews() {
-        backgroundColor = .cC9C9C9
+        backgroundColor = .cF8F8F8
         layer.cornerRadius = 15
         clipsToBounds = true
         

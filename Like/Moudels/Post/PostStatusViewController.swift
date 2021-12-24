@@ -329,12 +329,6 @@ extension PostStatusViewController: PostBottomViewDelegate {
         emojiState = !emojiState
         if emojiState {
             textView.inputView = emojiView
-            /*
-             if (!self.textInputView.isFirstResponder) {
-                 [self.textInputView becomeFirstResponder];
-             }
-             [self.textInputView reloadInputViews];
-             */
             if !textView.isFirstResponder {
                 textView.becomeFirstResponder()
             }
@@ -349,6 +343,22 @@ extension PostStatusViewController: PostBottomViewDelegate {
         }
     }
     
+    func postBottomView(_ bottomView: PostBottomView, locationOnClick button: UIButton?) {
+        let vc = PostLoctionViewController()
+        self.navigationController?.pushViewController(vc, animated: true)
+        
+        vc.didSelectedLocation = {[weak self] location in
+            guard let `self` = self else {return}
+            self.updateLocation(location)
+        }
+    }
+    func updateLocation(_ location: LocationInfo?) {
+        if let `location` = location {
+            bottomView.setupLocation(location.name)
+        } else {
+            bottomView.setupLocation(nil)
+        }
+    }
 }
 
 // MARK: - Custom TextView

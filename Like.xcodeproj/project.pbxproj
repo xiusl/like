@@ -10,6 +10,7 @@
 		AC95654B27744F9200FDE187 /* PostBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC95654A27744F9200FDE187 /* PostBottomView.swift */; };
 		AC95654D2774687F00FDE187 /* EmojiInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC95654C2774687F00FDE187 /* EmojiInputView.swift */; };
 		AC95654F2774688C00FDE187 /* Emoj.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC95654E2774688C00FDE187 /* Emoj.plist */; };
+		AC9565512775663F00FDE187 /* PostLoctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9565502775663F00FDE187 /* PostLoctionViewController.swift */; };
 		ACCEA0A727649C8400BD7CC1 /* VideoRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCEA0A627649C8400BD7CC1 /* VideoRecordViewController.swift */; };
 		BD6B3678254BE0D500CAC5A8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B3677254BE0D500CAC5A8 /* HomeViewModel.swift */; };
 		BD6B3682254BE90900CAC5A8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B3681254BE90900CAC5A8 /* HomeViewController.swift */; };
@@ -120,6 +121,7 @@
 		AC95654A27744F9200FDE187 /* PostBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostBottomView.swift; sourceTree = "<group>"; };
 		AC95654C2774687F00FDE187 /* EmojiInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiInputView.swift; sourceTree = "<group>"; };
 		AC95654E2774688C00FDE187 /* Emoj.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Emoj.plist; sourceTree = "<group>"; };
+		AC9565502775663F00FDE187 /* PostLoctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLoctionViewController.swift; sourceTree = "<group>"; };
 		ACCEA0A627649C8400BD7CC1 /* VideoRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecordViewController.swift; sourceTree = "<group>"; };
 		BD6B3677254BE0D500CAC5A8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		BD6B3681254BE90900CAC5A8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -641,6 +643,7 @@
 				AC95654A27744F9200FDE187 /* PostBottomView.swift */,
 				DE91B7B92456A3D5000FF356 /* PostPhotoView.swift */,
 				AC95654C2774687F00FDE187 /* EmojiInputView.swift */,
+				AC9565502775663F00FDE187 /* PostLoctionViewController.swift */,
 			);
 			path = Post;
 			sourceTree = "<group>";
@@ -803,6 +806,7 @@
 				FF34B9B42366B6C800A702AB /* ArticleViewCell.swift in Sources */,
 				FF331B42244C0582005FACFF /* NoDataViewCell.swift in Sources */,
 				FF2CA588234DC68D00D1B433 /* MainNavigationController.swift in Sources */,
+				AC9565512775663F00FDE187 /* PostLoctionViewController.swift in Sources */,
 				DE306B302446A84000186270 /* SettingsViewController.swift in Sources */,
 				DEDC0AE524C96FBF00B7956F /* ChatViewController.swift in Sources */,
 				FF4470A72387D403002ED72D /* LKPhotoViewCell.swift in Sources */,
