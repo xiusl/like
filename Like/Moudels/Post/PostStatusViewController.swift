@@ -27,6 +27,7 @@ class PostStatusViewController: BaseViewController {
         setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardFrameChange(_:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardwillHide), name: UIResponder.keyboardWillHideNotification, object: nil)
         
         self.textView.becomeFirstResponder()
         
@@ -118,9 +119,10 @@ class PostStatusViewController: BaseViewController {
         }
         view.didDeletedEmoji = { [weak self] in
             guard let `self` = self else { return }
-//            var txt = String(self.textView.text)
-//            txt.substring(to: txt.endIndex.)
-//            self.textView.text = txt
+            var txt = String(self.textView.text)
+            if txt.count <= 0 { return }
+            let sub = txt.prefix(txt.count-1)
+            self.textView.text = String(sub)
         }
         return view
     }()
@@ -173,6 +175,12 @@ extension PostStatusViewController {
             bottomFrame.origin.y -= bottomSafeHeight()
         }
         bottomView.frame = bottomFrame
+    }
+    
+    @objc
+    func keyboardwillHide() {
+        emojiState = false
+        bottomView.resetEmojiBtn()
     }
     
     private func loadUploadToken() {

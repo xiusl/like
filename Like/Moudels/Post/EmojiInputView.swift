@@ -38,9 +38,9 @@ class EmojiInputView: UIView {
             make.edges.equalToSuperview()
         }
         deleteBtn.snp.makeConstraints { make in
-            make.right.equalToSuperview()
+            make.right.equalToSuperview().inset(10)
             make.bottom.equalToSuperview().inset(bottomMargin())
-            make.size.equalTo(CGSize(width: 80, height: 30))
+            make.size.equalTo(CGSize(width: 60, height: 40))
         }
     }
     @objc
@@ -65,7 +65,11 @@ class EmojiInputView: UIView {
     }()
     private lazy var deleteBtn: UIButton = {
         let btn = UIButton()
-        btn.backgroundColor = .red
+        btn.layer.cornerRadius = 20;
+        btn.layer.borderWidth = 1;
+        btn.layer.borderColor = UIColor.cC9C9C9.cgColor
+        btn.clipsToBounds = true
+        btn.setImage(UIImage(named: "emoji_delete"), for: .normal)
         btn.addTarget(self, action: #selector(deleteBtnClickAction), for: .touchUpInside)
         return btn
     }()
@@ -115,7 +119,7 @@ class EmojiInputViewLayout : UICollectionViewFlowLayout {
                 // ScreenWidth - 16 - 9
                 let f = collectionView?.contentOffset.y ?? 0
                 let x = ScreenWidth - 16 - (ScreenWidth/8) * 2 - 1
-                if attr.frame.origin.x > x && (attr.frame.origin.y - f) > 230 {
+                if attr.frame.origin.x > x && (attr.frame.origin.y - f) > 200 {
                     print(f, x, attr.frame.origin.y - f)
                     attr.alpha = 0
                     if let cell = collectionView?.cellForItem(at: attr.indexPath) {

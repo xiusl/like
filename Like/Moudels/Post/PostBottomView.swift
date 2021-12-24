@@ -64,6 +64,9 @@ class PostBottomView: UIView {
             make.centerY.equalTo(photoBtn)
         }
     }
+    public func resetEmojiBtn() {
+        emojiBtn.isSelected = false
+    }
     
     private lazy var locationView: PostLocationView = {
         let view = PostLocationView()
@@ -82,6 +85,7 @@ class PostBottomView: UIView {
     private lazy var emojiBtn: UIButton = {
         let btn = UIButton()
         btn.setImage(UIImage(named: "post_add_emoji"), for: .normal)
+        btn.setImage(UIImage(named: "post_add_keyboard"), for: .selected)
         btn.addTarget(self, action: #selector(emojiBtnAction), for: .touchUpInside)
         return btn
     }()
