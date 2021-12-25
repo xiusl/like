@@ -31,16 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
         }
         
         let _ = User.read()
-        if User.isLogin {
-            let vc = MainTabBarController()
-            self.window?.rootViewController = vc
-            self.reCheckUserAuth()
-        } else {
-            let vc = PasswordLoginViewController()
-            vc.isPrefersHidden = true
-            let nav = MainNavigationController(rootViewController: vc)
-            self.window?.rootViewController = nav
-        }
+//        let vc = MainTabBarController()
+        let vc = MainNavigationController(rootViewController: LkSmsLoginViewController())
+        self.window?.rootViewController = vc
+        self.reCheckUserAuth()
         self.window?.makeKeyAndVisible()
         WXApi.registerApp("wxd07ead9c827a04f5", universalLink: "https://ins.sleen.top/weixin/")
         
@@ -75,11 +69,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, WXApiDelegate {
             self?.clientInitializing(isReopen: true)
         }) { (error) in
             if error == "Please login" {
-                User.delete()
-                let vc = PasswordLoginViewController()
-                vc.isPrefersHidden = true
-                let nav = MainNavigationController(rootViewController: vc)
-                self.window?.rootViewController = nav
+//                User.delete()
+//                let vc = PasswordLoginViewController()
+//                vc.isPrefersHidden = true
+//                let nav = MainNavigationController(rootViewController: vc)
+//                self.window?.rootViewController = nav
             }
         }
     }

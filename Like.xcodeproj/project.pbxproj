@@ -12,6 +12,17 @@
 		AC95654F2774688C00FDE187 /* Emoj.plist in Resources */ = {isa = PBXBuildFile; fileRef = AC95654E2774688C00FDE187 /* Emoj.plist */; };
 		AC9565512775663F00FDE187 /* PostLoctionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC9565502775663F00FDE187 /* PostLoctionViewController.swift */; };
 		ACCEA0A727649C8400BD7CC1 /* VideoRecordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACCEA0A627649C8400BD7CC1 /* VideoRecordViewController.swift */; };
+		ACE8E0252776CA58007EE1B4 /* LkSmsLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E0242776CA58007EE1B4 /* LkSmsLoginViewController.swift */; };
+		ACE8E0272776CE3D007EE1B4 /* UIImageLkEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E0262776CE3D007EE1B4 /* UIImageLkEx.swift */; };
+		ACE8E02A2776CEB1007EE1B4 /* LkImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E0292776CEB1007EE1B4 /* LkImage.swift */; };
+		ACE8E02D2776E729007EE1B4 /* LkLoginInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E02C2776E729007EE1B4 /* LkLoginInputView.swift */; };
+		ACE8E02F2776F1A7007EE1B4 /* StringLkEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E02E2776F1A7007EE1B4 /* StringLkEx.swift */; };
+		ACE8E0312776F922007EE1B4 /* UITapGestureRecognizerLkEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E0302776F922007EE1B4 /* UITapGestureRecognizerLkEx.swift */; };
+		ACE8E0332776FE87007EE1B4 /* UIFontLkEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E0322776FE87007EE1B4 /* UIFontLkEx.swift */; };
+		ACE8E035277700C6007EE1B4 /* LkComfirmButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E034277700C6007EE1B4 /* LkComfirmButton.swift */; };
+		ACE8E03727770952007EE1B4 /* UIViewLkEx.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E03627770952007EE1B4 /* UIViewLkEx.swift */; };
+		ACE8E03927770E0A007EE1B4 /* LkRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E03827770E0A007EE1B4 /* LkRoute.swift */; };
+		ACE8E03B27770FE2007EE1B4 /* LkPwdLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACE8E03A27770FE2007EE1B4 /* LkPwdLoginViewController.swift */; };
 		BD6B3678254BE0D500CAC5A8 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B3677254BE0D500CAC5A8 /* HomeViewModel.swift */; };
 		BD6B3682254BE90900CAC5A8 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD6B3681254BE90900CAC5A8 /* HomeViewController.swift */; };
 		DE306B2B2445C0B600186270 /* ArticleApiRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE306B2A2445C0B600186270 /* ArticleApiRequest.swift */; };
@@ -123,6 +134,17 @@
 		AC95654E2774688C00FDE187 /* Emoj.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Emoj.plist; sourceTree = "<group>"; };
 		AC9565502775663F00FDE187 /* PostLoctionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostLoctionViewController.swift; sourceTree = "<group>"; };
 		ACCEA0A627649C8400BD7CC1 /* VideoRecordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoRecordViewController.swift; sourceTree = "<group>"; };
+		ACE8E0242776CA58007EE1B4 /* LkSmsLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LkSmsLoginViewController.swift; sourceTree = "<group>"; };
+		ACE8E0262776CE3D007EE1B4 /* UIImageLkEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageLkEx.swift; sourceTree = "<group>"; };
+		ACE8E0292776CEB1007EE1B4 /* LkImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LkImage.swift; sourceTree = "<group>"; };
+		ACE8E02C2776E729007EE1B4 /* LkLoginInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LkLoginInputView.swift; sourceTree = "<group>"; };
+		ACE8E02E2776F1A7007EE1B4 /* StringLkEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringLkEx.swift; sourceTree = "<group>"; };
+		ACE8E0302776F922007EE1B4 /* UITapGestureRecognizerLkEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITapGestureRecognizerLkEx.swift; sourceTree = "<group>"; };
+		ACE8E0322776FE87007EE1B4 /* UIFontLkEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIFontLkEx.swift; sourceTree = "<group>"; };
+		ACE8E034277700C6007EE1B4 /* LkComfirmButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LkComfirmButton.swift; sourceTree = "<group>"; };
+		ACE8E03627770952007EE1B4 /* UIViewLkEx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewLkEx.swift; sourceTree = "<group>"; };
+		ACE8E03827770E0A007EE1B4 /* LkRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LkRoute.swift; sourceTree = "<group>"; };
+		ACE8E03A27770FE2007EE1B4 /* LkPwdLoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LkPwdLoginViewController.swift; sourceTree = "<group>"; };
 		BD6B3677254BE0D500CAC5A8 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		BD6B3681254BE90900CAC5A8 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		BDD53ED9B27E1D3624F05FCA /* Pods_Like.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Like.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -275,6 +297,24 @@
 			path = Record;
 			sourceTree = "<group>";
 		};
+		ACE8E0282776CEA1007EE1B4 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				ACE8E0292776CEB1007EE1B4 /* LkImage.swift */,
+				ACE8E03827770E0A007EE1B4 /* LkRoute.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		ACE8E02B2776E712007EE1B4 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				ACE8E02C2776E729007EE1B4 /* LkLoginInputView.swift */,
+				ACE8E034277700C6007EE1B4 /* LkComfirmButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		DE306B2E2446A81600186270 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -396,6 +436,7 @@
 		FF1C1F302340827C00D635A6 /* Like */ = {
 			isa = PBXGroup;
 			children = (
+				ACE8E0282776CEA1007EE1B4 /* Core */,
 				FF1F1948235F1EDD00C77C64 /* ll.entitlements */,
 				FF1C1F312340827C00D635A6 /* AppDelegate.swift */,
 				DEDC0ADA24C9531A00B7956F /* Chat */,
@@ -500,6 +541,11 @@
 				FF4135E4235070DD00B27792 /* ConstUtil.swift */,
 				FF4135E6235070DD00B27792 /* ColorUtil.swift */,
 				FF4136022351645300B27792 /* StringLocalizable.swift */,
+				ACE8E0262776CE3D007EE1B4 /* UIImageLkEx.swift */,
+				ACE8E02E2776F1A7007EE1B4 /* StringLkEx.swift */,
+				ACE8E0322776FE87007EE1B4 /* UIFontLkEx.swift */,
+				ACE8E03627770952007EE1B4 /* UIViewLkEx.swift */,
+				ACE8E0302776F922007EE1B4 /* UITapGestureRecognizerLkEx.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -538,10 +584,13 @@
 		FF4135F72351602400B27792 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				ACE8E02B2776E712007EE1B4 /* Views */,
 				FF4135FA2351608200B27792 /* AuthInputView.swift */,
 				FF4135F82351604700B27792 /* PasswordLoginViewController.swift */,
 				FF101C5D23540C0E00B78D41 /* RegisterViewController.swift */,
 				FF4D27AE2445EB88000CE644 /* WebViewController.swift */,
+				ACE8E0242776CA58007EE1B4 /* LkSmsLoginViewController.swift */,
+				ACE8E03A27770FE2007EE1B4 /* LkPwdLoginViewController.swift */,
 			);
 			path = Auth;
 			sourceTree = "<group>";
@@ -796,6 +845,7 @@
 			files = (
 				BD6B3682254BE90900CAC5A8 /* HomeViewController.swift in Sources */,
 				DED190A82463E41300F5FE1A /* StatusMoreView.swift in Sources */,
+				ACE8E035277700C6007EE1B4 /* LkComfirmButton.swift in Sources */,
 				AC95654D2774687F00FDE187 /* EmojiInputView.swift in Sources */,
 				FF8043D9244F33B2006CB015 /* UserAvatarViewController.swift in Sources */,
 				FF4D27B32445F901000CE644 /* StatusUserView.swift in Sources */,
@@ -809,15 +859,19 @@
 				AC9565512775663F00FDE187 /* PostLoctionViewController.swift in Sources */,
 				DE306B302446A84000186270 /* SettingsViewController.swift in Sources */,
 				DEDC0AE524C96FBF00B7956F /* ChatViewController.swift in Sources */,
+				ACE8E02D2776E729007EE1B4 /* LkLoginInputView.swift in Sources */,
 				FF4470A72387D403002ED72D /* LKPhotoViewCell.swift in Sources */,
+				ACE8E0272776CE3D007EE1B4 /* UIImageLkEx.swift in Sources */,
 				FFD8093923545A1C00FE0FCB /* UserTableHeaderView.swift in Sources */,
 				DE91B7B02452ACA6000FF356 /* FeedbackPostViewController.swift in Sources */,
 				FF4135D823506F1F00B27792 /* MainTabBarController.swift in Sources */,
 				FF101C5A2354044D00B78D41 /* User.swift in Sources */,
 				FF34B9B62366B7B200A702AB /* SocialShareView.swift in Sources */,
 				FF4135EE2350733A00B27792 /* BaseTableView.swift in Sources */,
+				ACE8E03927770E0A007EE1B4 /* LkRoute.swift in Sources */,
 				DEDC0AE124C9532F00B7956F /* Client.swift in Sources */,
 				FF2CA585234DB46C00D1B433 /* ApiManager.swift in Sources */,
+				ACE8E02F2776F1A7007EE1B4 /* StringLkEx.swift in Sources */,
 				DEDC0AE924CA7A4D00B7956F /* ChatBottomBarView.swift in Sources */,
 				FF1C1F57234090A000D635A6 /* UIScrollViewMjRefresh.swift in Sources */,
 				FF331B40244AFD8E005FACFF /* AppAboutViewController.swift in Sources */,
@@ -827,12 +881,15 @@
 				FF1190552351A4EE004E87E8 /* RefreshBackStateFooter.swift in Sources */,
 				DED190B72466409800F5FE1A /* LKPhotoCropView.swift in Sources */,
 				FFFC57FC2355B4F400D79270 /* PostStatusViewController.swift in Sources */,
+				ACE8E02A2776CEB1007EE1B4 /* LkImage.swift in Sources */,
 				FF2C404524572FDA00A6F3B8 /* LKPhotoCropViewController.swift in Sources */,
 				FF4135F42350821F00B27792 /* RefreshBackFooter.swift in Sources */,
 				FF1190532351A3C8004E87E8 /* RefreshBackNormalFooter.swift in Sources */,
 				FF4470A52387CF4B002ED72D /* LKAlbum.swift in Sources */,
 				FF4135EA235070DD00B27792 /* ColorUtil.swift in Sources */,
+				ACE8E0312776F922007EE1B4 /* UITapGestureRecognizerLkEx.swift in Sources */,
 				DE91B7B42452CDC7000FF356 /* Feedback.swift in Sources */,
+				ACE8E0332776FE87007EE1B4 /* UIFontLkEx.swift in Sources */,
 				DE424774244EE5C1009A0FA6 /* StatusListViewController.swift in Sources */,
 				FFFC58002355C1D300D79270 /* StatusViewCell.swift in Sources */,
 				FFFC58022356B66000D79270 /* SettingApiRequest.swift in Sources */,
@@ -853,6 +910,7 @@
 				FF4135DC2350704100B27792 /* HomeTabViewController.swift in Sources */,
 				FF1C1F5C2340A98600D635A6 /* RefreshFooter.swift in Sources */,
 				DE424776244EF612009A0FA6 /* UserInfoViewController.swift in Sources */,
+				ACE8E03727770952007EE1B4 /* UIViewLkEx.swift in Sources */,
 				FF8043DB244F3756006CB015 /* UserNameViewController.swift in Sources */,
 				DE6BEB6F247BA58F00AF7EE1 /* LKStatusShareView.swift in Sources */,
 				FFE1B5C9238C03CD00120D56 /* QiNiuTool.swift in Sources */,
@@ -876,6 +934,7 @@
 				FF861D0B236C02300083BE5F /* ConfirmActionView.swift in Sources */,
 				FF11905C2351C354004E87E8 /* RefreshNormalHeader.swift in Sources */,
 				FF977F5A247C08FA006D7396 /* UserDescEditViewController.swift in Sources */,
+				ACE8E03B27770FE2007EE1B4 /* LkPwdLoginViewController.swift in Sources */,
 				FFD8093B23546A5F00FE0FCB /* PostLinkView.swift in Sources */,
 				FF4135F92351604700B27792 /* PasswordLoginViewController.swift in Sources */,
 				FF4135FB2351608200B27792 /* AuthInputView.swift in Sources */,
@@ -883,6 +942,7 @@
 				AC95654B27744F9200FDE187 /* PostBottomView.swift in Sources */,
 				FF4135F22350780200B27792 /* RefreshHeader.swift in Sources */,
 				FF4135E02350705800B27792 /* MeTabViewController.swift in Sources */,
+				ACE8E0252776CA58007EE1B4 /* LkSmsLoginViewController.swift in Sources */,
 				FF4135F6235083BC00B27792 /* RefreshAutoFooter.swift in Sources */,
 				DE96A6F9246D27EB00F753FE /* LKReportView.swift in Sources */,
 				FF101C6123541CED00B78D41 /* MeTableHeaderView.swift in Sources */,

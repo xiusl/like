@@ -8,23 +8,45 @@
 
 import UIKit
 
-class MainNavigationController: UINavigationController {
+class MainNavigationController: UINavigationController, UIGestureRecognizerDelegate, UINavigationControllerDelegate {
 
+    var currentVc: UIViewController?
+    
+    override init(rootViewController: UIViewController) {
+        super.init(rootViewController: rootViewController)
+        navigationBar.isTranslucent = false
+        self.interactivePopGestureRecognizer?.delegate = self;
+        self.delegate = self;
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-        self.navigationBar.setBackgroundImage(UIImage.imageWith(color: .white), for: .default)
-        self.navigationBar.shadowImage = UIImage(color: .cF2F4F8)
-        UINavigationBar.appearance().isTranslucent = false
-        UIBarButtonItem.appearance().tintColor = .theme
+    }
+    
+    func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if gestureRecognizer == self.interactivePopGestureRecognizer {
+            return currentVc == self.topViewController
+        }
+        return true
     }
     
     override func pushViewController(_ viewController: UIViewController, animated: Bool) {
+        
         if self.viewControllers.count > 0 {
             viewController.hidesBottomBarWhenPushed = true
         }
         super.pushViewController(viewController, animated: animated)
+    }
+    func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+        if viewControllers.count == 1 {
+            currentVc = nil
+        } else {
+            currentVc = viewController
+        }
     }
 
     override var childForStatusBarStyle: UIViewController? {

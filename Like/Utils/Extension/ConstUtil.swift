@@ -34,6 +34,9 @@ func bottomMargin() -> CGFloat {
     }
     return 8
 }
+func calc(_ a: CGFloat) -> CGFloat {
+    return (a * ScreenWidth / 375)
+}
 
 class SLUtil {
     class func checkPhone(phone: String) -> Bool {

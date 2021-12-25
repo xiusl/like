@@ -8,11 +8,13 @@
 
 import UIKit
 
-class MainTabBarController: UITabBarController {
-
+class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.delegate = self
+        
         let homeVc = HomeTabViewController()
         self.setupChildVc(vc: homeVc,
                           title: "首页",
@@ -36,7 +38,7 @@ class MainTabBarController: UITabBarController {
                           title: "我的",
                           imageName: "tabbar_me_nor",
                           selectedImageName: "tabbar_me_sel")
-    
+        
         let font = UIFont.systemFont(ofSize: 10, weight: .medium)
         let color = UIColor.init(hex: 0xB1B1B1)
         let sColor = UIColor.init(hex: 0x44C7FB)
@@ -55,25 +57,37 @@ class MainTabBarController: UITabBarController {
         self.tabBar.isTranslucent = false
     }
     
-        func setupChildVc(vc: UIViewController, title: String, imageName: String, selectedImageName: String) {
-            let navVc = MainNavigationController.init(rootViewController: vc)
-            vc.title = title
-            navVc.tabBarItem.title = title
-            navVc.tabBarItem.image = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal)
-            navVc.tabBarItem.selectedImage = UIImage(named: selectedImageName)?.withRenderingMode(.alwaysOriginal)
-            
-            let font = UIFont.systemFont(ofSize: 10, weight: .medium)
-            let color = UIColor.init(hex: 0xB1B1B1)
-            let sColor = UIColor.init(hex: 0x44C7FB)
-            let textStyle = [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor:color]
-            let sTextStyle = [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor:sColor]
-            
-            navVc.tabBarItem.setTitleTextAttributes(textStyle, for: .normal)
-            navVc.tabBarItem.setTitleTextAttributes(sTextStyle, for: .selected)
-            
-            
-            self.addChild(navVc)
+    func setupChildVc(vc: UIViewController, title: String, imageName: String, selectedImageName: String) {
+        let navVc = MainNavigationController.init(rootViewController: vc)
+        vc.title = title
+        navVc.tabBarItem.title = title
+        navVc.tabBarItem.image = UIImage(named: imageName)?.withRenderingMode(.alwaysOriginal)
+        navVc.tabBarItem.selectedImage = UIImage(named: selectedImageName)?.withRenderingMode(.alwaysOriginal)
+        
+        let font = UIFont.systemFont(ofSize: 10, weight: .medium)
+        let color = UIColor.init(hex: 0xB1B1B1)
+        let sColor = UIColor.init(hex: 0x44C7FB)
+        let textStyle = [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor:color]
+        let sTextStyle = [NSAttributedString.Key.font: font, NSAttributedString.Key.foregroundColor:sColor]
+        
+        navVc.tabBarItem.setTitleTextAttributes(textStyle, for: .normal)
+        navVc.tabBarItem.setTitleTextAttributes(sTextStyle, for: .selected)
+        
+        
+        self.addChild(navVc)
+    }
+    
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
+        if viewController.isKind(of: HomeTabViewController.self) ||
+            viewController.isKind(of: DiscoverTabViewController.self){
+            return true
         }
+        if User.isLogin {
+            return true
+        }
+        present(LkRoute.loginVc(), animated: true, completion: nil)
+        return false
+    }
     
     
     override var childForStatusBarStyle: UIViewController? {

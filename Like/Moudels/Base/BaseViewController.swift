@@ -22,6 +22,7 @@ class BaseViewController: UIViewController {
 
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .white
+        self.navigationController?.navigationBar.insertSubview(navLine, at: 0)
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: nil, style: .plain, target: nil, action: nil)
         
         self.setupNavBar()
@@ -117,5 +118,12 @@ class BaseViewController: UIViewController {
         label.textColor = .white
         label.textAlignment = .center
         return label
+    }()
+    
+    open lazy var navLine: UIImageView = {
+        let view = UIImageView()
+        view.backgroundColor = .cF2F4F8
+        view.frame = CGRect(x: 0, y: 43, width: ScreenWidth, height: 1)
+        return view
     }()
 }

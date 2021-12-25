@@ -79,4 +79,17 @@ extension UIColor {
     open class var cC9C9C9: UIColor {
         return UIColor(hex: 0xC9C9C9)
     }
+    
+    open class var c121212: UIColor {
+        return UIColor(hex: 0x121212)
+    }
+    open class var cBDBDBD: UIColor {
+        return UIColor(hex: 0xBDBDBD)
+    }
+    open class var c2196F3: UIColor {
+        return UIColor(hex: 0x2196F3)
+    }
+    open class var cBBDEFB: UIColor {
+        return UIColor(hex: 0xBBDEFB)
+    }
 }
